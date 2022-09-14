@@ -1,4 +1,4 @@
-eenableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
     repositories {
@@ -16,5 +16,7 @@ dependencyResolutionManagement {
     }
 }
 
+includeBuild("build-logic")
+
 rootProject.name = "android-app-template"
-include ':app'
+include(":app")
