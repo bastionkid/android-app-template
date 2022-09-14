@@ -20,3 +20,7 @@ includeBuild("build-logic")
 
 rootProject.name = "android-app-template"
 include(":app")
+include(":login")
+include(":login:data")
+include(":login:domain")
+include(":login:presentation")
