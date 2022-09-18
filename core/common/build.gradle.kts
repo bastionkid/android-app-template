@@ -1,9 +1,10 @@
 plugins {
     id("android.library")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
-    namespace = "com.azuredragon.login.data"
+    namespace = "com.azuredragon.core.common"
 
     buildTypes {
         release {
@@ -17,5 +18,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.serialization.json)
     testImplementation(libs.junit4)
 }

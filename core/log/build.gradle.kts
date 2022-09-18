@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.azuredragon.login.data"
+    namespace = "com.azuredragon.core.log"
 
     buildTypes {
         release {
