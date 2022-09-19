@@ -34,6 +34,7 @@ Reference: https://github.com/android/nowinandroid
 
 ## TODO
 
+- [ ] Add Compose checks - https://github.com/twitter/compose-rules
 - [ ] Add https://github.com/littlerobots/version-catalog-update-plugin to know about dependency updates
 - [ ] Add lint module for TODO & STOPSHIP formatter
 - [ ] Add MacroBenchmark module
