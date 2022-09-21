@@ -1,5 +1,6 @@
 plugins {
     id("android.library")
+    id("android.library.compose")
 }
 
 android {
@@ -16,8 +17,8 @@ android {
 }
 
 dependencies {
-    implementation(projects.login.domain)
     implementation(projects.core.ui)
+    implementation(projects.login.domain)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
