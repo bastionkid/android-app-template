@@ -17,5 +17,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.network)
+
     testImplementation(libs.junit4)
 }

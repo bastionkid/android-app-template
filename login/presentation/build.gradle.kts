@@ -16,6 +16,9 @@ android {
 }
 
 dependencies {
+    implementation(projects.login.domain)
+    implementation(projects.core.ui)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     testImplementation(libs.junit4)

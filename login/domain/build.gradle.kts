@@ -18,6 +18,8 @@ android {
 }
 
 dependencies {
+    implementation(projects.login.data)
+
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext)
 }
