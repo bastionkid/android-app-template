@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    //alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.firebase.performance)
 }
@@ -71,6 +72,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material)
 //    implementation(libs.androidx.compose.material3)
+
+    implementation(libs.firebase.crashlytics.ndk)
 
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext)

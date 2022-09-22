@@ -20,6 +20,8 @@ android {
 dependencies {
     implementation(projects.feature.login.data)
 
+    api(libs.androidx.lifecycle.viewModelCompose)
+
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext)
 }

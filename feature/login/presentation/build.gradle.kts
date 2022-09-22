@@ -20,7 +20,9 @@ dependencies {
     implementation(projects.core.ui)
     implementation(projects.feature.login.domain)
 
-    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
+
     implementation(libs.androidx.appcompat)
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext)

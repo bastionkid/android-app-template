@@ -18,13 +18,10 @@ android {
 }
 
 dependencies {
-    implementation(libs.kotlinx.coroutines.android)
+    api(libs.kotlinx.coroutines.android)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.lifecycle.viewModelCompose)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.constraintlayout.compose)
+    api(libs.androidx.core.ktx)
+    api(libs.androidx.constraintlayout.compose)
 
     api(libs.androidx.compose.runtime)
     api(libs.androidx.compose.foundation)
@@ -37,10 +34,11 @@ dependencies {
     api(libs.androidx.compose.ui.tooling.preview)
     debugApi(libs.androidx.compose.ui.tooling)
 
-    implementation(libs.accompanist.systemuicontroller)
-    implementation(libs.accompanist.flowlayout)
+    api(libs.accompanist.systemuicontroller)
+    api(libs.accompanist.flowlayout)
 
     implementation(libs.coil.kt.compose)
+    implementation(libs.coil.kt.svg)
 
     androidTestImplementation(libs.junit4)
 }
