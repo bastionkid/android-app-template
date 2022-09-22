@@ -35,6 +35,7 @@ Reference: https://github.com/android/nowinandroid
 ## TODO
 
 - [ ] Add Compose checks - https://github.com/twitter/compose-rules
+- [ ] Add material3 support & dynamic color scheme for Android 12+
 - [ ] Add https://github.com/littlerobots/version-catalog-update-plugin to know about dependency updates
 - [ ] Add lint module for TODO & STOPSHIP formatter
 - [ ] Add MacroBenchmark module
