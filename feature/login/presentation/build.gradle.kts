@@ -18,7 +18,7 @@ android {
 
 dependencies {
     implementation(projects.core.ui)
-    implementation(projects.login.domain)
+    implementation(projects.feature.login.domain)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

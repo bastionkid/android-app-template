@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.azuredragon.login.data"
+    namespace = "com.azuredragon.login.domain"
 
     buildTypes {
         release {
@@ -18,7 +18,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.login.data)
+    implementation(projects.feature.login.data)
 
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext)

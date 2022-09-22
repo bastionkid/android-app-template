@@ -62,7 +62,7 @@ android {
 
 dependencies {
     implementation(projects.core.ui)
-    implementation(projects.login.presentation)
+    implementation(projects.feature.login.presentation)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle)
