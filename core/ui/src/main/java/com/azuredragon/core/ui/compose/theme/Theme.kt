@@ -141,7 +141,7 @@ fun AppTheme(
     ProvideThemeColors(colors) {
         MaterialTheme(
             colors = debugColors(darkTheme),
-            typography = Typography,
+            typography = MaterialTypography,
             shapes = Shapes,
             content = content
         )

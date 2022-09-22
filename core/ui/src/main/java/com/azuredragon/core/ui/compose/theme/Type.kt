@@ -33,7 +33,7 @@ private val Inter = FontFamily(
 
 // STOPSHIP: (akashkhunt) Update the Typography as per the theme in Figma project
 // https://www.figma.com/file/lgwhK0DGbGCPrUmsxs7lKU/nolo.money?node-id=237%3A4138
-val Typography = Typography(
+val MaterialTypography = Typography(
     h1 = TextStyle(
         fontFamily = Inter,
         fontSize = 96.sp,
