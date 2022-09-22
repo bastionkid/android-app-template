@@ -1,4 +1,4 @@
-package com.azuredragon.app
+package com.azuredragon.app.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
