@@ -37,6 +37,6 @@ Reference: https://github.com/android/nowinandroid
 - [ ] Add Compose checks - https://github.com/twitter/compose-rules
 - [ ] Add material3 support & dynamic color scheme for Android 12+
 - [ ] Add https://github.com/littlerobots/version-catalog-update-plugin to know about dependency updates
-- [ ] Add lint module for TODO & STOPSHIP formatter
+- [ ] Add lint checks for TODO & STOPSHIP formatter
 - [ ] Add MacroBenchmark module
 - [ ] Add JankStats compose extensions from https://github.com/android/nowinandroid/blob/main/core/ui/src/main/java/com/google/samples/apps/nowinandroid/core/ui/JankStatsExtensions.kt
