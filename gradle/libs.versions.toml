@@ -3,6 +3,7 @@ accompanist = "0.24.8-beta"
 androidDesugarJdkLibs = "1.1.5"
 androidGradlePlugin = "7.3.0"
 androidxActivity = "1.5.1"
+androidxFragment = "1.5.3"
 androidxAppCompat = "1.5.1"
 androidxCompose = "1.3.0-beta02"
 #androidxComposeRuntimeTracing = "1.0.0-alpha01"
@@ -29,10 +30,11 @@ androidxTestExt = "1.1.3"
 androidxTracing = "1.1.0"
 androidxUiAutomator = "2.2.0"
 androidxWork = "2.7.1"
+androidxDatatore = "1.0.0"
 coil = "2.1.0"
 hilt = "2.42"
 hiltExt = "1.0.0"
-koin = "3.2.1"
+#koin = "3.2.1"
 junit4 = "4.13.2"
 kotlin = "1.7.10"
 kotlinxCoroutines = "1.6.4"
@@ -40,7 +42,7 @@ kotlinxDatetime = "0.4.0"
 kotlinxSerializationJson = "1.4.0"
 ksp = "1.7.10-1.0.6"
 #ktlint = "0.43.0"
-lint = "30.3.0-rc01"
+lint = "30.3.0"
 okhttp = "4.10.0"
 #protobuf = "3.21.5"
 #protobufPlugin = "0.8.19"
@@ -64,6 +66,8 @@ accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
+androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "androidxFragment" }
+androidx-fragment-testing = { group = "androidx.fragment", name = "fragment-testing", version.ref = "androidxFragment" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppCompat" }
 androidx-benchmark-macro = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "androidxMacroBenchmark" }
 androidx-compose-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "androidxCompose" }
@@ -95,6 +99,8 @@ androidx-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-k
 androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 androidx-metrics = { group = "androidx.metrics", name = "metrics-performance", version.ref = "androidxMetrics" }
+androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "androidxNavigation" }
+androidx-navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "androidxNavigation" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
 androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "androidxNavigation" }
 androidx-profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "androidxProfileinstaller" }
@@ -110,6 +116,7 @@ androidx-test-uiautomator = { group = "androidx.test.uiautomator", name = "uiaut
 androidx-tracing-ktx = {group = "androidx.tracing", name="tracing-ktx", version.ref = "androidxTracing" }
 androidx-work-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidxWork" }
 androidx-work-testing = { group = "androidx.work", name = "work-testing", version.ref = "androidxWork" }
+androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "androidxDatatore" }
 coil-kt = { group = "io.coil-kt", name = "coil", version.ref = "coil"}
 coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil"}
 coil-kt-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil"}
@@ -118,10 +125,10 @@ hilt-ext-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hi
 hilt-ext-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltExt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
-koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
-koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
-koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
-koin-test-junit = { group = "io.insert-koin", name = "koin-test-junit4", version.ref = "koin" }
+#koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+#koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+#koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
+#koin-test-junit = { group = "io.insert-koin", name = "koin-test-junit4", version.ref = "koin" }
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
@@ -155,6 +162,7 @@ spotless-gradlePlugin = { group = "com.diffplug.spotless", name = "spotless-plug
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
+navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
