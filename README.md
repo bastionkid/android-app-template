@@ -9,7 +9,7 @@ Reference: https://github.com/android/nowinandroid
 - Retrofit + kotlinx-serialization (networking)
 - Jetpack Compose (ui toolkit)
 - Coroutines (concurrency) & Flows (reactive streams)
-- Dagger/Koin + Hilt (DI)
+- Hilt (DI)
 - Room (local storage)
 - Lottie (animations)
 
