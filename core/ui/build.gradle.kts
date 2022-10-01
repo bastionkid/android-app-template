@@ -18,12 +18,19 @@ android {
 }
 
 dependencies {
-    api(libs.kotlinx.coroutines.android)
+    api(libs.kotlinx.coroutines.core)
 
     api(libs.androidx.core.ktx)
+    api(libs.androidx.appcompat)
     api(libs.androidx.constraintlayout.compose)
+    api(libs.androidx.fragment)
+    implementation(libs.androidx.navigation.fragment)
 
+    implementation(libs.lottie.compose)
+
+    api(libs.androidx.compose.ui)
     api(libs.androidx.compose.runtime)
+    api(libs.androidx.lifecycle.runtimeCompose)
     api(libs.androidx.compose.foundation)
     api(libs.androidx.compose.foundation.layout)
     api(libs.androidx.compose.ui.util)

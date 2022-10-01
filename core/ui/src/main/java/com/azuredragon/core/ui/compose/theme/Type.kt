@@ -31,8 +31,6 @@ private val Inter = FontFamily(
     Font(R.font.inter_black, FontWeight.Black),
 )
 
-// STOPSHIP: (akashkhunt) Update the Typography as per the theme in Figma project
-// https://www.figma.com/file/lgwhK0DGbGCPrUmsxs7lKU/nolo.money?node-id=237%3A4138
 val MaterialTypography = Typography(
     h1 = TextStyle(
         fontFamily = Inter,
