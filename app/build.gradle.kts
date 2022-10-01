@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.firebase.performance)
+    alias(libs.plugins.navigation.safeargs)
 }
 
 android {
@@ -49,6 +50,7 @@ android {
 
     buildFeatures {
         compose = true
+        dataBinding = true
     }
 
     composeOptions {
@@ -58,6 +60,12 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+    lint {
+        isCheckReleaseBuilds = true
+        isAbortOnError = true
+//        enable("StopShip")
+//        fatal("StopShip")
     }
 }
 
