@@ -62,16 +62,26 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.common)
     implementation(projects.core.ui)
+    implementation(projects.core.network)
+    implementation(projects.core.log)
+    implementation(projects.core.localstorage)
+
+    implementation(projects.feature.login.data)
+    implementation(projects.feature.login.domain)
     implementation(projects.feature.login.presentation)
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material)
 //    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
 
     implementation(libs.firebase.crashlytics.ndk)
 
