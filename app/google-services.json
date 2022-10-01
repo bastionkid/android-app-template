@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1087956169831",
+    "project_id": "android--template-bastionkid",
+    "storage_bucket": "android--template-bastionkid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087956169831:android:f9e05412c28279b2d890c2",
+        "android_client_info": {
+          "package_name": "com.azuredragon.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1087956169831-c5592vir4683u0kljifsd3oo0mon8nd3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGQjOp6fJHT6U_dCek6OfKgwYmdXTSSBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1087956169831-c5592vir4683u0kljifsd3oo0mon8nd3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087956169831:android:7a3ac07ab5eb04aad890c2",
+        "android_client_info": {
+          "package_name": "com.azuredragon.app.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1087956169831-c5592vir4683u0kljifsd3oo0mon8nd3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGQjOp6fJHT6U_dCek6OfKgwYmdXTSSBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1087956169831-c5592vir4683u0kljifsd3oo0mon8nd3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
