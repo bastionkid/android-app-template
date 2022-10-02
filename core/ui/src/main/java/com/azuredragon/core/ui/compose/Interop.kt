@@ -11,9 +11,14 @@ import com.azuredragon.core.ui.compose.components.SurfaceWithAppTheme
 fun Fragment.composeWithSurface(
     context: Context,
     backgroundColor: Color = Color.Unspecified,
+    systemBarColor: Color = Color.Unspecified,
     content: @Composable () -> Unit,
 ): View = ComposeView(context).apply {
     setContent {
-        SurfaceWithAppTheme(backgroundColor, content)
+        SurfaceWithAppTheme(
+            backgroundColor = backgroundColor,
+            systemBarColor = systemBarColor,
+            content = content,
+        )
     }
 }
