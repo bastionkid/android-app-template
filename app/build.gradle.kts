@@ -80,6 +80,10 @@ dependencies {
     implementation(projects.feature.login.domain)
     implementation(projects.feature.login.presentation)
 
+    implementation(projects.feature.home.data)
+    implementation(projects.feature.home.domain)
+    implementation(projects.feature.home.presentation)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle)
