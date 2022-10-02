@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/launchRouterFragment"
-        android:name="com.azuredragon.app.ui.LaunchRouterFragment"
+        android:name="com.azuredragon.app.ui.launchrouter.LaunchRouterFragment"
         android:label="LaunchRouterFragment" />
 
     <include
