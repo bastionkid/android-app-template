@@ -127,15 +127,20 @@ class ThemeColors(
 @Composable
 fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    systemBarColor: Color = Color.Unspecified,
     content: @Composable () -> Unit
 ) {
     val colors = if (darkTheme) DarkColorPalette else LightColorPalette
 
     val sysUiController = rememberSystemUiController()
     SideEffect {
-        sysUiController.setSystemBarsColor(
-            color = colors.uiBackground.copy(alpha = AlphaNearOpaque)
-        )
+        val finalizedSystemBarColor = if (systemBarColor == Color.Unspecified) {
+            colors.uiBackground.copy(alpha = AlphaNearOpaque)
+        } else {
+            systemBarColor
+        }
+
+        sysUiController.setSystemBarsColor(color = finalizedSystemBarColor)
     }
 
     ProvideThemeColors(colors) {
