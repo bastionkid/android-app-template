@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph_home"
+    app:startDestination="homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.azuredragon.home.presentation.HomeFragment"
+        android:label="HomeFragment" >
+
+        <deepLink
+            app:uri="https://www.azuredragon.com/home"
+            android:autoVerify="true" />
+
+        <deepLink app:uri="app://azuredragon.com/home" />
+    </fragment>
+
+</navigation>
