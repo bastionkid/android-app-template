@@ -1,5 +1,6 @@
 plugins {
     id("android.library")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -19,6 +20,9 @@ android {
 dependencies {
     implementation(libs.androidx.dataStore.preferences)
     implementation(libs.kotlinx.coroutines.core)
+
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
 
     testImplementation(libs.junit4)
 }
