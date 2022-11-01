@@ -59,6 +59,8 @@ firebasePerformance = "20.1.1"
 firebasePerformancePlugin = "1.4.1"
 firebaseCrashlytics = "18.2.12"
 firebaseCrashlyticsPlugin = "2.9.2"
+firebaseAnalytics = "21.2.0"
+shell = "1.0.0"
 
 [libraries]
 accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanist" }
@@ -150,6 +152,8 @@ chucker = { group = "com.github.chuckerteam.chucker", name = "library", version.
 chucker-no-op = { group = "com.github.chuckerteam.chucker", name = "library-no-op", version.ref = "chucker" }
 firebase-performance = { group = "com.google.firebase", name = "firebase-perf", version.ref = "firebasePerformance" }
 firebase-crashlytics-ndk = { group = "com.google.firebase", name = "firebase-crashlytics-ndk", version.ref = "firebaseCrashlytics" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx", version.ref = "firebaseAnalytics" }
+kotlin-shell = { group = "com.jaredrummler", name = "ktsh", version.ref = "shell" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
