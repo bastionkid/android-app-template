@@ -1,15 +1,26 @@
 package com.azuredragon.core.network
 
 import com.azuredragon.core.common.DataState
+import com.azuredragon.core.common.DataStateFlow
 import com.azuredragon.core.network.retrofit.RetrofitHttpClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 private const val TAG = "apiCall"
 
 typealias NetworkCall<T> = suspend () -> Response<T>
+
+fun <T> RetrofitHttpClient.apiCallFlow(
+    apiTryCount: Int = 1,
+    block: NetworkCall<T>,
+): DataStateFlow<T> = flow {
+    emit(DataState.InProgress)
+
+    emit(apiCall(apiTryCount, block))
+}
 
 suspend fun <T> RetrofitHttpClient.apiCall(
     apiTryCount: Int = 1,
@@ -21,13 +32,13 @@ suspend fun <T> RetrofitHttpClient.apiCall(
         result = worker(block)
     }
 
-    for (i in 1..apiTryCount) {
+    for (tryCount in 1..apiTryCount) {
         fetchData()
 
         if (result is DataState.Error) {
-            delay(500)
-            logger.d(TAG, "API call retry count: $i, error: ${(result as DataState.Error).errorMessage}")
-            fetchData()
+            logger.d(TAG, "API call try count: $tryCount, error: ${(result as DataState.Error).errorMessage}")
+
+            if (tryCount < apiTryCount) delay(500)
         } else {
             break
         }
@@ -59,7 +70,7 @@ private suspend fun <T> RetrofitHttpClient.worker(block: NetworkCall<T>): DataSt
             logger.e(TAG, "error", e)
 
             // STOPSHIP: (akashkhunt) errorMsg should be derived from strings.xml
-            val errorMessage = "Cannot Reach GetMega. Please check your connection and try again"
+            val errorMessage = "Cannot Reach Server. Please check your connection and try again"
 
             DataState.Error(errorMessage, null)
         }
