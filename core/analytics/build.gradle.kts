@@ -18,6 +18,12 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.common)
+    implementation(projects.core.localstorage)
+    implementation(projects.core.log)
+    implementation(projects.core.time)
+
     implementation(libs.kotlinx.coroutines.core)
+
     testImplementation(libs.junit4)
 }
