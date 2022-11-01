@@ -20,5 +20,8 @@ dependencies {
     api(libs.kotlinx.coroutines.core)
     api(libs.androidx.lifecycle.viewModelCompose)
 
+    implementation(projects.core.data)
+    implementation(projects.core.log)
+
     testImplementation(libs.junit4)
 }
