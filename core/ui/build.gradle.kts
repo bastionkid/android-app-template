@@ -18,6 +18,10 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.common)
+    implementation(projects.core.data)
+    implementation(projects.core.time)
+
     api(libs.kotlinx.coroutines.core)
 
     api(libs.androidx.core.ktx)
