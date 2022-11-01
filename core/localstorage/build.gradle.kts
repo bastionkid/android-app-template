@@ -18,10 +18,15 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.common)
+    implementation(projects.core.log)
+    implementation(projects.core.time)
+
     implementation(libs.androidx.dataStore.preferences)
     implementation(libs.kotlinx.coroutines.core)
+    api(libs.kotlinx.serialization.json)
 
-    implementation(libs.room.ktx)
+    api(libs.room.ktx)
     ksp(libs.room.compiler)
 
     testImplementation(libs.junit4)
