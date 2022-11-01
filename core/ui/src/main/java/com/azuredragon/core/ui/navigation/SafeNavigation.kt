@@ -9,9 +9,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
+import com.azuredragon.core.ui.R
 
 fun Fragment.navigateSafely(
     @IdRes currentDestinationId: Int,
@@ -51,7 +53,52 @@ fun Fragment.navigateToDeepLinkSafely(
     }
 }
 
+fun Fragment.navigateToDeepLinkWithPopUpToSelf(
+    deepLink: String,
+    isInclusive: Boolean,
+) {
+    val navController = findNavController()
+
+    val currentDestinationId = navController.currentDestination?.id ?: 0
+
+    navigateToDeepLinkSafely(
+        currentDestinationId = currentDestinationId,
+        deepLink = deepLink,
+        navOptions = getNavOptionsForPopUpToSelf(
+            currentDestinationId = currentDestinationId,
+            isInclusive = isInclusive,
+        ),
+    )
+}
+
+fun Fragment.navigateToDeepLinkWithPopUpToSelfInclusive(deepLink: String) {
+    navigateToDeepLinkWithPopUpToSelf(
+        deepLink = deepLink,
+        isInclusive = true,
+    )
+}
+
 fun Fragment.navigateUpSafely(@IdRes currentDestinationId: Int): Boolean {
+    return if (isAdded) {
+        val navController = findNavController()
+
+        if (navController.currentDestination?.id == currentDestinationId) {
+            lifecycleScope.launchWhenStarted {
+                navController.navigateUp()
+            }
+            true
+        } else {
+            false
+        }
+    } else {
+        false
+    }
+}
+
+fun Fragment.popUpToSafely(
+    @IdRes currentDestinationId: Int,
+    @IdRes popUpToId: Int,
+): Boolean {
     return if (isAdded) {
         val navController = findNavController()
 
@@ -100,7 +147,6 @@ private fun LifecycleCoroutineScope.navigateToDeepLinkSafely(
             navController.navigate(
                 deepLink = Uri.parse(deepLink),
                 navOptions = navOptions,
-                navigatorExtras = FragmentNavigatorExtras()
             )
         } else {
             // TODO(akashkhunt): 24/09/22 Log an event here
@@ -108,23 +154,7 @@ private fun LifecycleCoroutineScope.navigateToDeepLinkSafely(
     }
 }
 
-fun Fragment.getNavOptionsForPopToSelf(): NavOptions? {
-    return if (isAdded) {
-        val navController = findNavController()
-
-        navController.currentDestination?.id?.let { currentDestinationId ->
-            navOptions {
-                popUpTo(currentDestinationId) {
-                    inclusive = true
-                }
-            }
-        }
-    } else {
-        null
-    }
-}
-
-fun Fragment.getNavOptionsForPopUpTo(
+fun Fragment.getNavOptionsForPopUpToSelf(
     @IdRes currentDestinationId: Int,
     isInclusive: Boolean,
 ): NavOptions? {
@@ -145,11 +175,11 @@ fun Fragment.getNavOptionsForPopUpTo(
     }
 }
 
-fun Fragment.getNavOptionsForPopUpToInclusive(@IdRes currentDestinationId: Int): NavOptions? {
-    return getNavOptionsForPopUpTo(currentDestinationId, true)
+fun Fragment.getNavOptionsForPopUpToSelfInclusive(@IdRes currentDestinationId: Int): NavOptions? {
+    return getNavOptionsForPopUpToSelf(currentDestinationId, true)
 }
 
-fun Fragment.getNavOptionsForClearBackstack(@IdRes currentDestinationId: Int): NavOptions? {
+fun Fragment.getNavOptionsForClearWholeBackstack(@IdRes currentDestinationId: Int): NavOptions? {
     return if (isAdded) {
         val navController = findNavController()
 
@@ -165,4 +195,68 @@ fun Fragment.getNavOptionsForClearBackstack(@IdRes currentDestinationId: Int): N
     } else {
         null
     }
+}
+
+fun Fragment.getNavOptionsForClearTillRoot(@IdRes currentDestinationId: Int): NavOptions? {
+    return if (isAdded) {
+        val navController = findNavController()
+
+        if (navController.currentDestination?.id == currentDestinationId) {
+            navOptions {
+                popUpTo(navController.backQueue.first().destination.id) {
+                    inclusive = false
+                }
+            }
+        } else {
+            null
+        }
+    } else {
+        null
+    }
+}
+
+fun Fragment.getNavOptionsForPopUpTo(
+    @IdRes currentDestinationId: Int,
+    @IdRes popUpToId: Int,
+    isInclusive: Boolean,
+): NavOptions? {
+    return if (isAdded) {
+        val navController = findNavController()
+
+        if (navController.currentDestination?.id == currentDestinationId) {
+            navOptions {
+                popUpTo(popUpToId) {
+                    inclusive = isInclusive
+                }
+            }
+        } else {
+            null
+        }
+    } else {
+        null
+    }
+}
+
+fun Fragment.getNavOptionsForPopUpToInclusive(
+    @IdRes currentDestinationId: Int,
+    @IdRes popUpToId: Int,
+): NavOptions? {
+    return getNavOptionsForPopUpTo(
+        currentDestinationId = currentDestinationId,
+        popUpToId = popUpToId,
+        isInclusive = true,
+    )
+}
+
+private fun NavOptionsBuilder.addDefaultSlideAnim() {
+    anim {
+        enter = R.anim.slide_in_right
+        exit = R.anim.slide_out_left
+        popEnter = R.anim.slide_in_left
+        popExit = R.anim.slide_out_right
+    }
+}
+
+fun getDefaultSlideAnimNavOptions(): NavOptions {
+    return navOptions { addDefaultSlideAnim() }
 }
