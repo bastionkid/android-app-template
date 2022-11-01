@@ -1,13 +1,14 @@
 package com.azuredragon.core.common
 
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 
 sealed class DataState<out T> {
-    object Loading: DataState<Nothing>()
+    object InProgress: DataState<Nothing>()
 
-    class Success<T>(
-        val data: T
-    ): DataState<T>()
+    class Success<T>(val data: T?): DataState<T>()
 
     class Error<T>(
         val errorMessage: String,
@@ -40,6 +41,6 @@ fun <T> Flow<T>.asResult(): DataStateFlow<T> {
         .map<T, DataState<T>> {
             DataState.Success(it)
         }
-        .onStart { emit(DataState.Loading) }
+        .onStart { emit(DataState.InProgress) }
         .catch { emit(DataState.Error(it.message ?: "", it)) }
 }

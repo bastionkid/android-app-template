@@ -1,10 +1,10 @@
 package com.azuredragon.core.network
 
-import kotlinx.coroutines.*
 import com.azuredragon.core.common.DataState
-import com.azuredragon.core.common.serialization.Serializer
-import com.azuredragon.core.log.Logger
 import com.azuredragon.core.network.retrofit.RetrofitHttpClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 private const val TAG = "apiCall"
@@ -15,7 +15,7 @@ suspend fun <T> RetrofitHttpClient.apiCall(
     apiTryCount: Int = 1,
     block: NetworkCall<T>,
 ): DataState<T> {
-    var result: DataState<T> = DataState.Loading
+    var result: DataState<T> = DataState.InProgress
 
     suspend fun fetchData() {
         result = worker(block)
