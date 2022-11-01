@@ -16,17 +16,18 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.log)
+    api(projects.core.log)
     implementation(projects.core.common)
 
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.retrofit.core)
-    implementation(libs.retrofit.kotlin.serialization)
-    implementation(libs.kotlinx.serialization.json)
+    api(libs.retrofit.core)
+    api(libs.retrofit.kotlin.serialization)
+    api(libs.kotlinx.serialization.json)
     implementation(libs.okhttp.logging)
     implementation(libs.cronet)
-    implementation(libs.firebase.performance)
+//    implementation(libs.firebase.performance)
     debugImplementation(libs.chucker)
+    implementation(libs.kotlin.shell)
     releaseImplementation(libs.chucker.no.op)
 
     testImplementation(libs.junit4)

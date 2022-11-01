@@ -1,21 +1,19 @@
 package com.azuredragon.core.network.cronet
 
+//import com.google.firebase.perf.FirebasePerformance
+//import com.google.firebase.perf.metrics.AddTrace
 import android.content.Context
-import com.google.android.gms.net.CronetProviderInstaller
-import com.google.firebase.perf.FirebasePerformance
-import com.google.firebase.perf.metrics.AddTrace
 import com.azuredragon.core.common.TAG
 import com.azuredragon.core.log.Logger
 import com.azuredragon.core.network.Injector
+import com.google.android.gms.net.CronetProviderInstaller
 import okhttp3.Request
 import okio.Buffer
 import org.chromium.net.CronetEngine
 import org.chromium.net.UploadDataProviders
 import org.chromium.net.UrlRequest
 import java.io.File
-import java.util.*
 import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 /**
  * initializes the Cronet Engine
@@ -36,13 +34,13 @@ class CronetModule(
     private lateinit var engine: CronetEngine
 
     fun install(context: Context) {
-        val trace = FirebasePerformance.startTrace("CronetModule.install")
+//        val trace = FirebasePerformance.startTrace("CronetModule.install")
 
         val installTask = CronetProviderInstaller.installProvider(context)
         installTask.addOnCompleteListener { task ->
             when {
                 task.isSuccessful -> {
-                    trace.putAttribute("success", "true")
+//                    trace.putAttribute("success", "true")
                     logger.i(TAG, "CronetProvider installed. registering engine provider")
 
                     Injector.registerCronetEngineProvider {
@@ -51,22 +49,22 @@ class CronetModule(
                     }
                 }
                 else -> {
-                    trace.putAttribute("success", "false")
+//                    trace.putAttribute("success", "false")
                     logger.w(TAG, "Unable to load Cronet from Google play services")
 
                     task.exception?.let { exception ->
-                        exception.message?.let { trace.putAttribute("exception", it) }
+//                        exception.message?.let { trace.putAttribute("exception", it) }
                         logger.w(TAG, "Error loading cronet", exception)
                     }
                 }
             }
 
-            trace.stop()
+//            trace.stop()
         }
     }
 
     @Synchronized
-    @AddTrace(name = "CronetModule.buildEngineOnce")
+//    @AddTrace(name = "CronetModule.buildEngineOnce")
     private fun buildEngineOnce(context: Context) {
         if (::engine.isInitialized) {
             return
@@ -91,7 +89,7 @@ class CronetModule(
         //URL.setURLStreamHandlerFactory(engine.createURLStreamHandlerFactory())
     }
 
-    @AddTrace(name = "CronetModule.buildRequest")
+//    @AddTrace(name = "CronetModule.buildRequest")
     internal fun buildRequest(engine: CronetEngine, request: Request, callback: UrlRequest.Callback): UrlRequest {
         val requestBuilder = engine.newUrlRequestBuilder(request.url.toString(),
             callback, executor)
