@@ -1,8 +1,7 @@
-package com.azuredragon.core.model
+package com.azuredragon.core.analytics
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
