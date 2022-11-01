@@ -1,5 +1,6 @@
 plugins {
     id("android.library")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -17,7 +18,10 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.log)
+
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.datetime)
 
     testImplementation(libs.junit4)
 }
