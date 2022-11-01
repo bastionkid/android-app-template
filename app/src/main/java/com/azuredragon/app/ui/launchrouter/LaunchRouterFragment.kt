@@ -12,7 +12,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.azuredragon.app.R
 import com.azuredragon.core.ui.compose.composeWithSurface
-import com.azuredragon.core.ui.navigation.getNavOptionsForPopUpToInclusive
+import com.azuredragon.core.ui.navigation.getNavOptionsForPopUpToSelfInclusive
 import com.azuredragon.core.ui.navigation.navigateToDeepLinkSafely
 
 class LaunchRouterFragment: Fragment() {
@@ -28,7 +28,8 @@ class LaunchRouterFragment: Fragment() {
         return composeWithSurface(
             context = requireContext(),
             backgroundColor = Color.Transparent,
-            systemBarColor = Color.Transparent,
+            statusBarColor = Color.Transparent,
+            navigationBarColor = Color.Transparent,
         ) {
             val uiState by viewModel.launchRoute.collectAsStateWithLifecycle()
 
@@ -50,7 +51,7 @@ class LaunchRouterFragment: Fragment() {
         navigateToDeepLinkSafely(
             currentDestinationId = R.id.launchRouterFragment,
             deepLink = deepLink,
-            navOptions = getNavOptionsForPopUpToInclusive(R.id.launchRouterFragment),
+            navOptions = getNavOptionsForPopUpToSelfInclusive(R.id.launchRouterFragment),
         )
     }
 }

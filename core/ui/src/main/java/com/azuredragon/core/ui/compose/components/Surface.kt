@@ -8,10 +8,14 @@ import com.azuredragon.core.ui.compose.theme.AppTheme
 @Composable
 fun SurfaceWithAppTheme(
     backgroundColor: Color = Color.Unspecified,
-    systemBarColor: Color = Color.Unspecified,
+    statusBarColor: Color = Color.Unspecified,
+    navigationBarColor: Color = Color.Unspecified,
     content: @Composable () -> Unit,
 ) {
-    AppTheme(systemBarColor = systemBarColor) {
+    AppTheme(
+        statusBarColor = statusBarColor,
+        navigationBarColor = navigationBarColor,
+    ) {
         val color = if (backgroundColor == Color.Unspecified) {
             AppTheme.colors.uiBackground
         } else {

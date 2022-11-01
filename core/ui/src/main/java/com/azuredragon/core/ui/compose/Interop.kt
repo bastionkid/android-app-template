@@ -12,7 +12,8 @@ import com.azuredragon.core.ui.compose.components.SurfaceWithAppTheme
 fun Fragment.composeWithSurface(
     context: Context,
     backgroundColor: Color = Color.Unspecified,
-    systemBarColor: Color = Color.Unspecified,
+    statusBarColor: Color = Color.Unspecified,
+    navigationBarColor: Color = Color.Unspecified,
     content: @Composable () -> Unit,
 ): View = ComposeView(context).apply {
     setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
@@ -20,7 +21,8 @@ fun Fragment.composeWithSurface(
     setContent {
         SurfaceWithAppTheme(
             backgroundColor = backgroundColor,
-            systemBarColor = systemBarColor,
+            statusBarColor = statusBarColor,
+            navigationBarColor = navigationBarColor,
             content = content,
         )
     }
