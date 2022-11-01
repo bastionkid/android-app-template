@@ -1,4 +1,4 @@
-package money.nolo.core.ui
+package com.azuredragon.core.ui
 
 import androidx.fragment.app.DialogFragment
 
