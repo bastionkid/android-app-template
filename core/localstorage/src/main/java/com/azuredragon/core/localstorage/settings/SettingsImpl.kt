@@ -1,8 +1,6 @@
-package com.azuredragon.core.localstorage
+package com.azuredragon.core.localstorage.settings
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
@@ -10,13 +8,10 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
-
-class PrefsImpl(private val context: Context): Prefs {
+class SettingsImpl(private val context: Context): Settings {
 
     override fun getInt(key: String, default: Int): Flow<Int> {
         return context.dataStore.data.map { it[intPreferencesKey(key)] ?: default }
@@ -67,15 +62,19 @@ class PrefsImpl(private val context: Context): Prefs {
         }
     }
 
-    override suspend fun putString(key: String, value: String) {
-        context.dataStore.edit { preferences ->
-            preferences[stringPreferencesKey(key)] = value
+    override suspend fun putString(key: String, value: String?) {
+        value?.let { stringData ->
+            context.dataStore.edit { preferences ->
+                preferences[stringPreferencesKey(key)] = stringData
+            }
         }
     }
 
-    override suspend fun putStringSet(key: String, value: Set<String>) {
-        context.dataStore.edit { preferences ->
-            preferences[stringSetPreferencesKey(key)] = value
+    override suspend fun putStringSet(key: String, value: Set<String>?) {
+        value?.let { stringSetData ->
+            context.dataStore.edit { preferences ->
+                preferences[stringSetPreferencesKey(key)] = stringSetData
+            }
         }
     }
 

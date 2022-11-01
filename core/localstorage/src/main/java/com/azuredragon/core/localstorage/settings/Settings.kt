@@ -1,8 +1,8 @@
-package com.azuredragon.core.localstorage
+package com.azuredragon.core.localstorage.settings
 
 import kotlinx.coroutines.flow.Flow
 
-interface Prefs {
+interface Settings {
 
     fun getInt(key: String, default: Int = Int.MIN_VALUE): Flow<Int>
 
@@ -24,9 +24,9 @@ interface Prefs {
 
     suspend fun putBoolean(key: String, value: Boolean)
 
-    suspend fun putString(key: String, value: String)
+    suspend fun putString(key: String, value: String?)
 
-    suspend fun putStringSet(key: String, value: Set<String>)
+    suspend fun putStringSet(key: String, value: Set<String>?)
 
     suspend fun removeInt(key: String)
 
