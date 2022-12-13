@@ -95,7 +95,13 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
 
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.test.junit)
+
     implementation(libs.firebase.crashlytics.ndk)
+    implementation(libs.firebase.performance)
 
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext)

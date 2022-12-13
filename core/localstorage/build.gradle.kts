@@ -1,6 +1,7 @@
 plugins {
     id("android.library")
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -29,5 +30,9 @@ dependencies {
     api(libs.room.ktx)
     ksp(libs.room.compiler)
 
+    implementation(libs.koin.core)
+
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.test.junit)
     testImplementation(libs.junit4)
 }

@@ -1,5 +1,6 @@
 plugins {
     id("android.library")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -22,6 +23,9 @@ dependencies {
 
     implementation(projects.core.data)
     implementation(projects.core.log)
+    implementation(libs.koin.core)
 
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.test.junit)
     testImplementation(libs.junit4)
 }

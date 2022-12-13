@@ -21,6 +21,9 @@ dependencies {
     implementation(projects.core.network)
     implementation(projects.core.time)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.koin.core)
 
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.test.junit)
     testImplementation(libs.junit4)
 }

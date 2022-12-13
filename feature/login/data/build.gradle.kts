@@ -17,7 +17,12 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.data)
     implementation(projects.core.network)
+    implementation(libs.koin.core)
+
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.test.junit)
 
     testImplementation(libs.junit4)
 }

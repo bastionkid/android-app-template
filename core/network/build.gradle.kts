@@ -1,5 +1,6 @@
 plugins {
     id("android.library")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -29,6 +30,10 @@ dependencies {
     debugImplementation(libs.chucker)
     implementation(libs.kotlin.shell)
     releaseImplementation(libs.chucker.no.op)
+    implementation(libs.koin.core)
+
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.test.junit)
 
     testImplementation(libs.junit4)
 }

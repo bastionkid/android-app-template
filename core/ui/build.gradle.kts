@@ -1,6 +1,7 @@
 plugins {
     id("android.library")
     id("android.library.compose")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -29,8 +30,10 @@ dependencies {
     api(libs.androidx.constraintlayout.compose)
     api(libs.androidx.fragment)
     implementation(libs.androidx.navigation.fragment)
+    api(libs.androidx.browser)
 
     implementation(libs.lottie.compose)
+    implementation(libs.rive.android)
 
     api(libs.androidx.compose.ui)
     api(libs.androidx.compose.runtime)
@@ -50,6 +53,10 @@ dependencies {
 
     implementation(libs.coil.kt.compose)
     implementation(libs.coil.kt.svg)
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
 
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.test.junit)
     androidTestImplementation(libs.junit4)
 }

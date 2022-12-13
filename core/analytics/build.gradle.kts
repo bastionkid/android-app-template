@@ -23,7 +23,12 @@ dependencies {
     implementation(projects.core.log)
     implementation(projects.core.time)
 
+    implementation(libs.firebase.analytics)
     implementation(libs.kotlinx.coroutines.core)
+
+    implementation(libs.koin.core)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.test.junit)
 
     testImplementation(libs.junit4)
 }
