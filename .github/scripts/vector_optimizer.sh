@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # navigate to the root directory
-cd ../..
+#cd ../..
 
 echo "root directory: $(pwd)"
 
