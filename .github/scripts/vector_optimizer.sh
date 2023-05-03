@@ -12,6 +12,12 @@ cd app/src/main/res/
 for dir in $(find . -type d -name "drawable*"); do
   cd "$dir"
   echo "drawable directory: $(pwd)"
+
+  for vector in $(find . -type f -name "*.xml"); do
+    echo "optimizing file: $vector"
+    avocado "$vector"
+  done
+
   cd ./..
 done
 
@@ -27,6 +33,12 @@ cd core/ui/src/main/res/
 for dir in $(find . -type d -name "drawable*"); do
   cd "$dir"
   echo "drawable directory: $(pwd)"
+
+  for vector in $(find . -type f -name "*.xml"); do
+    echo "optimizing file: $vector"
+    avocado "$vector"
+  done
+
   cd ./..
 done
 
@@ -49,6 +61,12 @@ for dir in */; do
   for dir in $(find . -type d -name "drawable*"); do
   	cd "$dir"
   	echo "drawable directory: $(pwd)"
+
+  	for vector in $(find . -type f -name "*.xml"); do
+  	  echo "optimizing file: $vector"
+  	  avocado "$vector"
+  	done
+
   	cd ./..
   done
 
