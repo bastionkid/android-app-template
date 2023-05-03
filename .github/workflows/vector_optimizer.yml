@@ -27,7 +27,9 @@ jobs:
           git push --set-upstream origin optimize-vectors
         
       - name: Optimizes Vector Drawables
-        run: ./.github/scripts/vector_optimizer.sh
+        run: |
+          chmod +x ./.github/scripts/vector_optimizer.sh
+          ./.github/scripts/vector_optimizer.sh
         shell: bash
       
       - name: Open PR
