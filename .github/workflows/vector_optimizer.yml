@@ -41,5 +41,5 @@ jobs:
           commit-message: 'vectors optimized'
           title: 'Vectors optimized'
           body: 'Vectors optimized'
-          branch: optimize-vectors-${{ github.run_id }}
+          branch: ${{ env.BRANCH_NAME }}
           base: master
