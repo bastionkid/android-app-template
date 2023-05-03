@@ -1,0 +1,40 @@
+name: Vector Optimizer
+
+on:
+  push:
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  optimizer:
+    name: Optimizer
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+
+      - name: Install avocado tool by Alex Lockwood
+        run: npm install -g avocado
+        
+      - name: Optimize vector drawables
+        run: |
+          git config --global user.email "akash.mercer@gmail.com"
+          git config --global user.name "Akash Khunt"
+          git checkout -b optimize-vectors
+          git push --set-upstream origin optimize-vectors
+        
+      - name: Run a script which iterates through all vector drawables and optimizes them
+        run: ./.github/scripts/vector_optimizer.sh
+        shell: bash
+      
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: 'vectors optimized'
+          title: 'Vectors optimized'
+          body: 'Vectors optimized'
+          branch: optimize-vectors
+          base: master
