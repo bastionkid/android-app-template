@@ -24,7 +24,6 @@ jobs:
           git config --global user.email "akash.mercer@gmail.com"
           git config --global user.name "Akash Khunt"
           git checkout -b optimize-vectors
-          git pull
           git push --set-upstream origin optimize-vectors
         
       - name: Optimizes Vector Drawables
