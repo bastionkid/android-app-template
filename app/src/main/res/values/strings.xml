@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">android-app-template</string>
-
-    <string name="label_bottom_nav_home">Home</string>
+    <string name="app_name"/>
+    <string name="label_bottom_nav_home"/>
 </resources>
