@@ -19,18 +19,18 @@ jobs:
       - name: Install avocado tool by Alex Lockwood
         run: npm install -g avocado
         
-      - name: Optimize vector drawables
+      - name: Create optimize-vectors branch
         run: |
           git config --global user.email "akash.mercer@gmail.com"
           git config --global user.name "Akash Khunt"
           git checkout -b optimize-vectors
           git push --set-upstream origin optimize-vectors
         
-      - name: Run a script which iterates through all vector drawables and optimizes them
+      - name: Optimizes Vector Drawables
         run: ./.github/scripts/vector_optimizer.sh
         shell: bash
       
-      - name: Create Pull Request
+      - name: Open PR
         uses: peter-evans/create-pull-request@v5
         with:
           commit-message: 'vectors optimized'
