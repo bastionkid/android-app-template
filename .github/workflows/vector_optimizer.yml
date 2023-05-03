@@ -5,6 +5,9 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  BRANCH_NAME: "optimize-vectors-$(date +%s%3N)"
+
 jobs:
   optimizer:
     name: Optimizer
@@ -23,8 +26,8 @@ jobs:
         run: |
           git config --global user.email "akash.mercer@gmail.com"
           git config --global user.name "Akash Khunt"
-          git checkout -b optimize-vectors
-          git push --set-upstream origin optimize-vectors
+          git checkout -b "$BRANCH_NAME"
+          git push --set-upstream origin "$BRANCH_NAME"
         
       - name: Optimizes Vector Drawables
         run: |
@@ -38,5 +41,5 @@ jobs:
           commit-message: 'vectors optimized'
           title: 'Vectors optimized'
           body: 'Vectors optimized'
-          branch: optimize-vectors
+          branch: "$BRANCH_NAME"
           base: master
