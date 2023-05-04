@@ -3,9 +3,10 @@ name: Vector Optimizer
 on:
   push:
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master", "main", "release/*", "feature/*" ]
 
 env:
+  # Create unique branch name prefixed by optimize-vectors
   BRANCH_NAME: optimize-vectors-${{ github.run_id }}
 
 jobs:
