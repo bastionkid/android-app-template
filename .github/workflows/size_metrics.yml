@@ -9,11 +9,6 @@ on:
   pull_request:
     branches: [ "master", "main", "release/*", "feature/*" ]
 
-#env:
-#  ANDROID_SDK_ROOT: /opt/android-sdk
-#  ANDROID_NDK_ROOT: /opt/android-ndk
-#  PATH: /opt/android-sdk/platform-tools:$PATH
-
 jobs:
   build:
     name: Build apk
@@ -36,24 +31,9 @@ jobs:
             ~/.gradle/wrapper
           key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
 
-#      - name: Setup Android SDK
-#        uses: android-actions/setup-android@v2
-#        with:
-#          sdk-version: '33'
-#
-#      - name: Install Android NDK
-#        run: |
-#          cd /opt
-#          wget -q https://dl.google.com/android/repository/android-ndk-r25c-linux.zip
-#          unzip -q android-ndk-r25c-linux.zip
-#          rm android-ndk-r25c-linux.zip
-
       - name: Build Release APK
         run: |
           ./gradlew assembleDebug -Pdensity=xhdpi -PabiFilters=arm64-v8a
-#        env:
-#            ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
-#            ANDROID_NDK_HOME: ${{ env.ANDROID_NDK_ROOT }}
 
       - name: Upload APK
         uses: actions/upload-artifact@v2
