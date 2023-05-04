@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# navigate to the root directory
-#cd ../..
-
-echo "root directory: $(pwd)"
-
 # navigate to the app modules' res directory
 cd app/src/main/res/
 
