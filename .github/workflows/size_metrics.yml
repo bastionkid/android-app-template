@@ -9,10 +9,10 @@ on:
   pull_request:
     branches: [ "master", "main", "release/*", "feature/*" ]
 
-env:
-  ANDROID_SDK_ROOT: /opt/android-sdk
-  ANDROID_NDK_ROOT: /opt/android-ndk
-  PATH: /opt/android-sdk/platform-tools:$PATH
+#env:
+#  ANDROID_SDK_ROOT: /opt/android-sdk
+#  ANDROID_NDK_ROOT: /opt/android-ndk
+#  PATH: /opt/android-sdk/platform-tools:$PATH
 
 jobs:
   build:
