@@ -28,25 +28,32 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
+      - name: Setup Gradle Cache
+        uses: actions/cache@v2
         with:
-          sdk-version: '33'
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
 
-      - name: Install Android NDK
-        run: |
-          cd /opt
-          wget -q https://dl.google.com/android/repository/android-ndk-r25c-linux.zip
-          unzip -q android-ndk-r25c-linux.zip
-          rm android-ndk-r25c-linux.zip
+#      - name: Setup Android SDK
+#        uses: android-actions/setup-android@v2
+#        with:
+#          sdk-version: '33'
+#
+#      - name: Install Android NDK
+#        run: |
+#          cd /opt
+#          wget -q https://dl.google.com/android/repository/android-ndk-r25c-linux.zip
+#          unzip -q android-ndk-r25c-linux.zip
+#          rm android-ndk-r25c-linux.zip
 
       - name: Build Release APK
         run: |
-          cd $GITHUB_WORKSPACE
           ./gradlew assembleDebug -Pdensity=xhdpi -PabiFilters=arm64-v8a
-        env:
-            ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
-            ANDROID_NDK_HOME: ${{ env.ANDROID_NDK_ROOT }}
+#        env:
+#            ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
+#            ANDROID_NDK_HOME: ${{ env.ANDROID_NDK_ROOT }}
 
       - name: Upload APK
         uses: actions/upload-artifact@v2
