@@ -17,9 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup node
-        uses: actions/setup-node@v3
-
       - name: Install avocado tool by Alex Lockwood
         run: npm install -g avocado
         
