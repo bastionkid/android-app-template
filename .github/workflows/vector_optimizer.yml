@@ -6,6 +6,7 @@ on:
     branches: [ "master" ]
 
 env:
+  # Create unique branch name prefixed by optimize-vectors
   BRANCH_NAME: optimize-vectors-${{ github.run_id }}
 
 jobs:
