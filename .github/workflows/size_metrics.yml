@@ -1,11 +1,18 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Size Metrics
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
 
 on:
   push:
   pull_request:
     branches: [ "master", "main", "release/*", "feature/*" ]
+
+env:
+  ANDROID_SDK_ROOT: /opt/android-sdk
+  ANDROID_NDK_ROOT: /opt/android-ndk
+  PATH: ${{ env.ANDROID_SDK_ROOT }}/platform-tools:$PATH
 
 jobs:
   build:
@@ -15,4 +22,34 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-    
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+        with:
+          sdk-version: '33'
+
+      - name: Install Android NDK
+        run: |
+          cd /opt
+          wget -q https://dl.google.com/android/repository/android-ndk-r25c-linux.zip
+          unzip -q android-ndk-r25c-linux.zip
+          rm android-ndk-r25c-linux.zip
+
+      - name: Build Release APK
+        run: |
+          cd $GITHUB_WORKSPACE
+          ./gradlew assembleDebug -Pdensity=xhdpi -PabiFilters=arm64-v8a
+        env:
+            ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
+            ANDROID_NDK_HOME: ${{ env.ANDROID_NDK_ROOT }}
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: debug
+          path: app/build/outputs/apk/debug/app-debug.apk
