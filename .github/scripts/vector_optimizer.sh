@@ -1,22 +1,29 @@
 #!/bin/bash
 
+# navigate to the root directory (This is only required for local testing)
+#cd ../..
+
+function optimize_vectors() {
+  for dir in $(find . -type d -name "drawable*"); do
+    cd "$dir"
+    echo "drawable directory: $(pwd)"
+
+    for vector in $(find . -type f -name "*.xml"); do
+      echo "optimizing file: $vector"
+      avocado "$vector"
+    done
+
+    cd ./..
+  done
+}
+
 # navigate to the app modules' res directory
 cd app/src/main/res/
 
 # navigate to the drawable directories and print the current directory path
-for dir in $(find . -type d -name "drawable*"); do
-  cd "$dir"
-  echo "drawable directory: $(pwd)"
+optimize_vectors
 
-  for vector in $(find . -type f -name "*.xml"); do
-    echo "optimizing file: $vector"
-    avocado "$vector"
-  done
-
-  cd ./..
-done
-
-# navigate to the root directory
+# navigate back to the root directory
 cd ../../../..
 
 echo "root directory: $(pwd)"
@@ -25,19 +32,9 @@ echo "root directory: $(pwd)"
 cd core/ui/src/main/res/
 
 # navigate to the drawable directories and print the current directory path
-for dir in $(find . -type d -name "drawable*"); do
-  cd "$dir"
-  echo "drawable directory: $(pwd)"
+optimize_vectors
 
-  for vector in $(find . -type f -name "*.xml"); do
-    echo "optimizing file: $vector"
-    avocado "$vector"
-  done
-
-  cd ./..
-done
-
-# navigate to the root directory
+# navigate back to the root directory
 cd ../../../../..
 
 echo "root directory: $(pwd)"
@@ -53,17 +50,8 @@ for dir in */; do
   echo "current directory: $(pwd)"
 
   # navigate to the drawable directories and print the current directory path
-  for dir in $(find . -type d -name "drawable*"); do
-  	cd "$dir"
-  	echo "drawable directory: $(pwd)"
+  optimize_vectors
 
-  	for vector in $(find . -type f -name "*.xml"); do
-  	  echo "optimizing file: $vector"
-  	  avocado "$vector"
-  	done
-
-  	cd ./..
-  done
-
+  # navigate back to the root directory
   cd ../../../../..
 done
