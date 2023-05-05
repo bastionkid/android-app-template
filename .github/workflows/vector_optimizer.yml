@@ -33,8 +33,8 @@ jobs:
         run: |
           git config --global user.email "akash.mercer@gmail.com"
           git config --global user.name "Akash Khunt"
-          git checkout -b optimize-vectors-${{steps.short-sha.outputs.result}}
-          git push --set-upstream origin optimize-vectors-${{steps.short-sha.outputs.result}}
+          git checkout -b optimize-vectors-${{ steps.short-sha.outputs.result }}
+          git push --set-upstream origin optimize-vectors-${{ steps.short-sha.outputs.result }}
 
       - name: Open PR
         uses: peter-evans/create-pull-request@v5
@@ -42,5 +42,5 @@ jobs:
           commit-message: 'vectors optimized'
           title: 'Vectors optimized'
           body: 'Vectors drawables optimized using avocado tool'
-          branch: optimize-vectors-${{steps.short-sha.outputs.result}}
+          branch: optimize-vectors-${{ steps.short-sha.outputs.result }}
           base: master
