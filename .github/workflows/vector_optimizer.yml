@@ -7,7 +7,7 @@ on:
 
 env:
   # Create unique branch name prefixed by optimize-vectors
-  BRANCH_NAME: optimize-vectors-${{ github.run_id:0:7 }}
+  BRANCH_NAME: optimize-vectors-${{ github.sha:0:7 }}
 
 jobs:
   optimizer:
