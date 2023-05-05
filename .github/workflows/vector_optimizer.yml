@@ -22,7 +22,7 @@ jobs:
           ./.github/scripts/vector_optimizer.sh
         shell: bash
 
-      - name: Use github script to generate shorter github.sha
+      - name: Generate shorter github.sha for head branch
         id: short-sha
         uses: actions/github-script@v6
         with:
