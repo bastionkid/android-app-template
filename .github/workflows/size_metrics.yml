@@ -31,12 +31,7 @@ jobs:
             ~/.gradle/wrapper
           key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
 
-      - name: Build debug apk for base (PR target) branch
-        run: |
-          ./gradlew assembleDebug -Pdensity=xhdpi -PabiFilters=arm64-v8a
-          
-
-      - name: Build debug apk for head branch
+      - name: Build Debug APK
         run: |
           ./gradlew assembleDebug -Pdensity=xhdpi -PabiFilters=arm64-v8a
 
@@ -45,10 +40,3 @@ jobs:
         with:
           name: debug
           path: app/build/outputs/apk/debug/app-debug.apk
-
-  size_metrics:
-    name: Generate Size Metrics Report
-    runs-on: ubuntu-latest
-
-    steps:
-      - name:
