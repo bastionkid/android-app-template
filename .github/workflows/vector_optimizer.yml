@@ -5,10 +5,6 @@ on:
   pull_request:
     branches: [ "master", "main", "release/*", "feature/*" ]
 
-env:
-  # Create unique branch name prefixed by optimize-vectors
-  BRANCH_NAME: optimize-vectors-${{ substring(github.sha, 0, 7) }}
-
 jobs:
   optimizer:
     name: Optimizer
@@ -19,14 +15,21 @@ jobs:
 
       - name: Install avocado tool by Alex Lockwood
         run: npm install -g avocado
+
+      - name: Use github script to generate shorter github.sha
+        id: short-sha
+        uses: actions/github-script@v6
+        with:
+          result-encoding: string
+          script: return context.sha.substring(0,7)
         
       - name: Create optimize-vectors branch
         run: |
           git config --global user.email "akash.mercer@gmail.com"
           git config --global user.name "Akash Khunt"
-          git checkout -b ${BRANCH_NAME}
-          git push --set-upstream origin ${BRANCH_NAME}
-        
+          git checkout -b optimize-vectors-${{steps.short-sha.outputs.result}}
+          git push --set-upstream origin optimize-vectors-${{steps.short-sha.outputs.result}}
+
       - name: Optimizes Vector Drawables
         run: |
           chmod +x ./.github/scripts/vector_optimizer.sh
@@ -39,5 +42,5 @@ jobs:
           commit-message: 'vectors optimized'
           title: 'Vectors optimized'
           body: 'Vectors optimized'
-          branch: ${{ env.BRANCH_NAME }}
+          branch: optimize-vectors-${{steps.short-sha.outputs.result}}
           base: master
