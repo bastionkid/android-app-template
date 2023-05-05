@@ -48,10 +48,12 @@ jobs:
           name: ${{steps.head-short-sha.outputs.result}}
           path: app/build/outputs/apk/debug/${{ steps.head-short-sha.outputs.result }}.apk
 
-      - name: Checkout base branch
-        run: git checkout -b ${{ github.base_ref }}
+      - name: Checkout base (PR target) branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.base_ref }}
 
-      - name: Generate shorter github.sha for base (PR target) branch
+      - name: Generate shorter github.sha for base branch
         id: base-short-sha
         uses: actions/github-script@v6
         with:
