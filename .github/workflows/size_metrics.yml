@@ -48,3 +48,24 @@ jobs:
         with:
           name: ${{steps.head-short-sha.outputs.result}}
           path: app/build/outputs/apk/debug/${{ steps.head-short-sha.outputs.result }}.apk
+
+      - name: Checkout base branch
+        run: git checkout ${{ github.base_ref }}
+
+      - name: Generate shorter github.sha for base (PR target) branch
+        id: base-short-sha
+        uses: actions/github-script@v6
+        with:
+          result-encoding: string
+          script: return context.sha.substring(0,7)
+
+      - name: Build Debug APK for base branch and rename it to match base-short-sha result
+        run: |
+          ./gradlew assembleDebug
+          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/${{ steps.base-short-sha.outputs.result }}.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{steps.base-short-sha.outputs.result}}
+          path: app/build/outputs/apk/debug/${{ steps.base-short-sha.outputs.result }}.apk
