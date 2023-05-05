@@ -7,7 +7,7 @@ on:
 
 jobs:
   optimizer:
-    name: Optimizer
+    name: Vector Optimizer
     runs-on: ubuntu-latest
 
     steps:
