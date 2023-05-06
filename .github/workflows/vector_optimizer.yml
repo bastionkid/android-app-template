@@ -28,9 +28,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           result-encoding: string
-          script: |
-            const headSha = (git rev-parse HEAD)
-            return headSha.substring(0,7)
+          script: return context.sha.substring(0,7)
 
       - name: Create optimize-vectors branch
         run: |
