@@ -29,7 +29,7 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const headSha = git rev-parse HEAD
+            const headSha = (git rev-parse HEAD)
             return headSha.substring(0,7)
 
       - name: Create optimize-vectors branch
