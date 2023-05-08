@@ -35,9 +35,10 @@ jobs:
       - name: Generate shorter github.sha for head branch
         id: head-short-sha
         uses: actions/github-script@v6
-        with:
-          result-encoding: string
-          script: return context.sha.substring(0,7)
+        run: |
+          chmod +x ./.github/scripts/commit_short_sha.sh
+          shortSha=$(./.github/scripts/commit_short_sha.sh)
+          echo "result=${shortSha}" >> $GITHUB_OUTPUT
 
       - name: Build Debug APK for head branch and rename it to match head-short-sha result
         run: |
@@ -58,9 +59,10 @@ jobs:
       - name: Generate shorter github.sha for base branch
         id: base-short-sha
         uses: actions/github-script@v6
-        with:
-          result-encoding: string
-          script: return context.sha.substring(0,7)
+        run: |
+          chmod +x ./.github/scripts/commit_short_sha.sh
+          shortSha=$(./.github/scripts/commit_short_sha.sh)
+          echo "result=${shortSha}" >> $GITHUB_OUTPUT
 
       - name: Build Debug APK for base branch and rename it to match base-short-sha result
         run: |
