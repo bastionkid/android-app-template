@@ -25,10 +25,10 @@ jobs:
 
       - name: Generate shorter github.sha for head branch
         id: short-sha
-        uses: actions/github-script@v6
-        with:
-          result-encoding: string
-          script: return context.sha.substring(0,7)
+        run: |
+          chmod +x ./.github/scripts/commit_short_sha.sh
+          shortSha=$(./.github/scripts/commit_short_sha.sh)
+          echo "result=${shortSha}" >> $GITHUB_OUTPUT
 
       - name: Create optimize-vectors branch
         run: |
