@@ -34,7 +34,6 @@ jobs:
 
       - name: Generate shorter github.sha for head branch
         id: head-short-sha
-        uses: actions/github-script@v6
         run: |
           chmod +x ./.github/scripts/commit_short_sha.sh
           shortSha=$(./.github/scripts/commit_short_sha.sh)
@@ -58,7 +57,6 @@ jobs:
 
       - name: Generate shorter github.sha for base branch
         id: base-short-sha
-        uses: actions/github-script@v6
         run: |
           chmod +x ./.github/scripts/commit_short_sha.sh
           shortSha=$(./.github/scripts/commit_short_sha.sh)
