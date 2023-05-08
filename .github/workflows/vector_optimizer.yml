@@ -27,7 +27,7 @@ jobs:
         id: short-sha
         run: |
           chmod +x ./.github/scripts/commit_short_sha.sh
-          shortSha=$(./.github/scripts/vector_optimizer.sh)
+          shortSha=$(./.github/scripts/commit_short_sha.sh)
           echo "shortSha=${shortSha}" >> $GITHUB_OUTPUT
 
       - name: Create optimize-vectors branch
