@@ -14,7 +14,7 @@ plugins {
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.secrets) apply true
     alias(libs.plugins.spotless) apply false
-    id("com.android.test") version "8.0.0" apply false
+    id("com.android.test") version "8.0.1" apply false
 }
 
 secrets {
