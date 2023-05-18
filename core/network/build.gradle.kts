@@ -8,7 +8,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
@@ -28,7 +28,6 @@ dependencies {
     implementation(libs.cronet)
 //    implementation(libs.firebase.performance)
     debugImplementation(libs.chucker)
-    implementation(libs.kotlin.shell)
     releaseImplementation(libs.chucker.no.op)
     implementation(libs.koin.core)
 
