@@ -23,14 +23,25 @@ jobs:
           ./.github/scripts/vector_optimizer.sh
         shell: bash
 
+      - name: Check if any Vector Drawables were optimized
+        id: drawable-checker
+        run: |
+          chmod +x ./.github/scripts/drawable_changes_checker.sh
+          drawableCount=$(./.github/scripts/drawable_changes_checker.sh)
+          echo "result=${drawableCount}" >> $GITHUB_OUTPUT
+        shell: bash
+
       - name: Generate shorter github.sha for head branch
         id: short-sha
+        if: ${{ steps.drawable-checker.outputs.result != '0' }}
         run: |
           chmod +x ./.github/scripts/commit_short_sha.sh
           shortSha=$(./.github/scripts/commit_short_sha.sh)
           echo "result=${shortSha}" >> $GITHUB_OUTPUT
+        shell: bash
 
       - name: Create optimize-vectors branch
+        if: ${{ steps.drawable-checker.outputs.result != '0' }}
         run: |
           git config --global user.email "akash.mercer@gmail.com"
           git config --global user.name "Akash Khunt"
@@ -38,6 +49,7 @@ jobs:
           git push --set-upstream origin optimize-vectors-${{ steps.short-sha.outputs.result }}
 
       - name: Open PR
+        if: ${{ steps.drawable-checker.outputs.result != '0' }}
         uses: peter-evans/create-pull-request@v5
         with:
           commit-message: 'vectors optimized'
