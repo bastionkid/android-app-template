@@ -8,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.azuredragon.app.R
 import com.azuredragon.core.ui.compose.composeWithSurface
@@ -19,7 +18,6 @@ class LaunchRouterFragment: Fragment() {
 
     private val viewModel: LaunchRouterViewModel by viewModels()
 
-    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
