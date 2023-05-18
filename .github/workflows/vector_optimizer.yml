@@ -56,4 +56,4 @@ jobs:
           title: 'Vectors optimized'
           body: 'Vectors drawables optimized using avocado tool'
           branch: optimize-vectors-${{ steps.short-sha.outputs.result }}
-          base: master
+          base: ${{ github.head_ref }}
