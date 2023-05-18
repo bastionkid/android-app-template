@@ -8,10 +8,11 @@ function optimize_vectors() {
     cd "$dir"
     echo "drawable directory: $(pwd)"
 
-    for vector in $(find . -type f -name "*.xml"); do
-      echo "optimizing file: $vector"
-      avocado "$vector"
-    done
+    avocado -d $(pwd)
+#    for vector in $(find . -type f -name "*.xml"); do
+#      echo "optimizing file: $vector"
+#      avocado "$vector"
+#    done
 
     cd ./..
   done
