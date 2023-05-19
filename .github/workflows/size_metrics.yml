@@ -110,7 +110,7 @@ jobs:
       - name: Generate size report
         run: |
           chmod +x ./.github/scripts/compare_apks.py
-          ./.github/scripts/compare_apks.py ${{ needs.build.outputs.base_short_sha }} ${{ needs.build.outputs.head_short_sha }}
+          python3 ./.github/scripts/compare_apks.py ${{ needs.build.outputs.base_short_sha }} ${{ needs.build.outputs.head_short_sha }}
 
       - name: Upload Size Report html file
         uses: actions/upload-artifact@v3
