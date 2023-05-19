@@ -10,7 +10,7 @@ on:
     branches: [ "master", "main", "release/*", "feature/*" ]
 
 env:
-  size_report_file_name: 'apk_size_diff_report.html'
+  size_report_file_name: apk_size_diff_report.html
 
 jobs:
   build:
