@@ -44,7 +44,6 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-#            /home/runner/work/android-app-template/android-app-template/.gradle/configuration-cache
             /usr/local/lib/android/sdk/build-tools/34.0.0-rc3
           key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
 
