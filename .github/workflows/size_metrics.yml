@@ -138,7 +138,7 @@ jobs:
             const fs = require('fs');
 
             try {
-              const filePath = ${{ env.size_report_file_name }}
+              const filePath = 'apk_size_diff_report.html'
               const sizeReportContent = fs.readFileSync(filePath, 'utf8')
             
               console.log(sizeReportContent)
