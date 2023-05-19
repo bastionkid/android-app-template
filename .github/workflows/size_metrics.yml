@@ -1,5 +1,6 @@
 name: Size Metrics
 
+# cancel in-progress workflow if new commits are pushed to same head branch
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
@@ -31,6 +32,8 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
 
+      # setup cache so that every build trigger doesn't require downloading all the
+      # dependencies used in project again and again saving tonnes of time
       - name: Setup Gradle Cache
         uses: actions/cache@v3
         with:
@@ -43,19 +46,19 @@ jobs:
         id: head-short-sha
         run: |
           chmod +x ./.github/scripts/commit_short_sha.sh
-          shortSha=$(./.github/scripts/commit_short_sha.sh)
-          echo "result=${shortSha}" >> $GITHUB_OUTPUT
+          short_sha=$(./.github/scripts/commit_short_sha.sh)
+          echo "head_short_sha=${short_sha}" >> $GITHUB_ENV
 
       - name: Build Debug APK for head branch and rename it to match head-short-sha result
         run: |
           ./gradlew assembleDebug
-          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/${{ steps.head-short-sha.outputs.result }}.apk
+          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/${{ env.head_short_sha }}.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
-          name: ${{steps.head-short-sha.outputs.result}}
-          path: app/build/outputs/apk/debug/${{ steps.head-short-sha.outputs.result }}.apk
+          name: ${{ env.head_short_sha }}
+          path: app/build/outputs/apk/debug/${{ env.head_short_sha }}.apk
 
       - name: Checkout base (PR target) branch
         uses: actions/checkout@v3
@@ -66,16 +69,16 @@ jobs:
         id: base-short-sha
         run: |
           chmod +x ./.github/scripts/commit_short_sha.sh
-          shortSha=$(./.github/scripts/commit_short_sha.sh)
-          echo "result=${shortSha}" >> $GITHUB_OUTPUT
+          short_sha=$(./.github/scripts/commit_short_sha.sh)
+          echo "base_short_sha=${short_sha}" >> $GITHUB_ENV
 
       - name: Build Debug APK for base branch and rename it to match base-short-sha result
         run: |
           ./gradlew assembleDebug
-          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/${{ steps.base-short-sha.outputs.result }}.apk
+          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/${{ env.head_short_sha }}.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
-          name: ${{steps.base-short-sha.outputs.result}}
-          path: app/build/outputs/apk/debug/${{ steps.base-short-sha.outputs.result }}.apk
+          name: ${{ env.head_short_sha }}
+          path: app/build/outputs/apk/debug/${{ env.head_short_sha }}.apk
