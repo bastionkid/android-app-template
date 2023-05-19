@@ -118,8 +118,8 @@ jobs:
       - name: Upload Size Report html file
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ size_report_file_name }}
-          path: ${{ size_report_file_name }}
+          name: ${{ env.size_report_file_name }}
+          path: ${{ env.size_report_file_name }}
 
   pr_comment:
     needs: size_report
@@ -129,7 +129,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: ${{ size_report_file_name }}
+          name: ${{ env.size_report_file_name }}
 
       - name: Add PR Comment
         uses: actions/github-script@v6
@@ -138,7 +138,7 @@ jobs:
             const fs = require('fs');
 
             try {
-              const filePath = ${{ size_report_file_name }}
+              const filePath = ${{ env.size_report_file_name }}
               const sizeReportContent = fs.readFileSync(filePath, 'utf8')
             
               console.log(sizeReportContent)
