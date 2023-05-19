@@ -1,5 +1,6 @@
 name: Size Metrics
 
+# cancel in-progress workflow if new commits are pushed to same head branch
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
@@ -8,47 +9,65 @@ on:
   pull_request:
     branches: [ "master", "main", "release/*", "feature/*" ]
 
+env:
+  size_report_file_name: apk_size_diff_report.html
+
 jobs:
   build:
     name: Build apk
     runs-on: ubuntu-latest
+
+    outputs:
+      head_short_sha: ${{ steps.head-short-sha.outputs.head_short_sha }}
+      base_short_sha: ${{ steps.base-short-sha.outputs.base_short_sha }}
 
     steps:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
 
+      # this step is optional if you don't use JDK 17 as ubuntu-latest runner already
+      # has java setup which defaults to JDK 11
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
 
+      # this step is optional and should be added in case you get "Failed to install the following
+      # Android SDK packages as some licences have not been accepted" error
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      # setup cache so that every build trigger doesn't require downloading all the
+      # dependencies used in project again and again saving tonnes of time
       - name: Setup Gradle Cache
         uses: actions/cache@v3
         with:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
+            /usr/local/lib/android/sdk/build-tools/34.0.0-rc3
           key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
 
       - name: Generate shorter github.sha for head branch
         id: head-short-sha
         run: |
           chmod +x ./.github/scripts/commit_short_sha.sh
-          shortSha=$(./.github/scripts/commit_short_sha.sh)
-          echo "result=${shortSha}" >> $GITHUB_OUTPUT
+          short_sha=$(./.github/scripts/commit_short_sha.sh)
+          echo "head_short_sha=${short_sha}" >> "$GITHUB_ENV"
+          echo "head_short_sha=${short_sha}" >> "$GITHUB_OUTPUT"
 
       - name: Build Debug APK for head branch and rename it to match head-short-sha result
         run: |
           ./gradlew assembleDebug
-          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/${{ steps.head-short-sha.outputs.result }}.apk
+          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/${{ env.head_short_sha }}.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
-          name: ${{steps.head-short-sha.outputs.result}}
-          path: app/build/outputs/apk/debug/${{ steps.head-short-sha.outputs.result }}.apk
+          name: ${{ env.head_short_sha }}.apk
+          path: app/build/outputs/apk/debug/${{ env.head_short_sha }}.apk
 
       - name: Checkout base (PR target) branch
         uses: actions/checkout@v3
@@ -59,16 +78,79 @@ jobs:
         id: base-short-sha
         run: |
           chmod +x ./.github/scripts/commit_short_sha.sh
-          shortSha=$(./.github/scripts/commit_short_sha.sh)
-          echo "result=${shortSha}" >> $GITHUB_OUTPUT
+          short_sha=$(./.github/scripts/commit_short_sha.sh)
+          echo "base_short_sha=${short_sha}" >> "$GITHUB_ENV"
+          echo "base_short_sha=${short_sha}" >> "$GITHUB_OUTPUT"
 
       - name: Build Debug APK for base branch and rename it to match base-short-sha result
         run: |
           ./gradlew assembleDebug
-          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/${{ steps.base-short-sha.outputs.result }}.apk
+          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/${{ env.base_short_sha }}.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
-          name: ${{steps.base-short-sha.outputs.result}}
-          path: app/build/outputs/apk/debug/${{ steps.base-short-sha.outputs.result }}.apk
+          name: ${{ env.base_short_sha }}.apk
+          path: app/build/outputs/apk/debug/${{ env.base_short_sha }}.apk
+
+  size_report:
+    needs: build
+    name: Size Report
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.build.outputs.head_short_sha }}.apk
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.build.outputs.base_short_sha }}.apk
+
+      # here we use our custom python script to generate file matching size_report_file_name
+      - name: Generate size report
+        run: |
+          chmod +x ./.github/scripts/compare_apks.py
+          python3 ./.github/scripts/compare_apks.py ${{ needs.build.outputs.base_short_sha }} ${{ needs.build.outputs.head_short_sha }}
+
+      - name: Upload Size Report html file
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.size_report_file_name }}
+          path: ${{ env.size_report_file_name }}
+
+  pr_comment:
+    needs: size_report
+    name: PR Comment (Size Report)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.size_report_file_name }}
+
+      - name: Add PR Comment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+
+            try {
+              const filePath = 'apk_size_diff_report.html'
+              const sizeReportContent = fs.readFileSync(filePath, 'utf8')
+            
+              console.log(sizeReportContent)
+            
+              const result = await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: sizeReportContent
+              })
+            
+              console.log(result)
+            } catch (error) {
+              console.error('Error reading file:', error);
+            }

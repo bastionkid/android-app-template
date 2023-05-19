@@ -17,43 +17,50 @@ jobs:
       - name: Install avocado tool by Alex Lockwood
         run: npm install -g avocado
 
+      # here we run our custom script which navigates to drawable directories of different modules
+      # of "known" modularization strategy
       - name: Optimizes Vector Drawables
         run: |
           chmod +x ./.github/scripts/vector_optimizer.sh
           ./.github/scripts/vector_optimizer.sh
         shell: bash
 
+      # this steps puts the count of optimized vector drawables (using git diff) in step's output
       - name: Check if any Vector Drawables were optimized
         id: drawable-checker
         run: |
           chmod +x ./.github/scripts/drawable_changes_checker.sh
-          drawableCount=$(./.github/scripts/drawable_changes_checker.sh)
-          echo "result=${drawableCount}" >> $GITHUB_OUTPUT
+          drawable_count=$(./.github/scripts/drawable_changes_checker.sh)
+          echo "drawable_count=${drawable_count}" >> "$GITHUB_ENV"
+#          echo "result=${drawable_count}" >> "$GITHUB_OUTPUT"
         shell: bash
 
+      # generate a shorter 7 character SHA (from head branch) which we'll use as
+      # a suffix to new PR branch
       - name: Generate shorter github.sha for head branch
         id: short-sha
-        if: ${{ steps.drawable-checker.outputs.result != '0' }}
+        if: ${{ env.drawable_count != '0' }}
         run: |
           chmod +x ./.github/scripts/commit_short_sha.sh
-          shortSha=$(./.github/scripts/commit_short_sha.sh)
-          echo "result=${shortSha}" >> $GITHUB_OUTPUT
+          short_sha=$(./.github/scripts/commit_short_sha.sh)
+          echo "short_sha=${short_sha}" >> "$GITHUB_ENV"
+#          echo "result=${short_sha}" >> "$GITHUB_OUTPUT"
         shell: bash
 
       - name: Create optimize-vectors branch
-        if: ${{ steps.drawable-checker.outputs.result != '0' }}
+        if: ${{ env.drawable_count != '0' }}
         run: |
           git config --global user.email "akash.mercer@gmail.com"
           git config --global user.name "Akash Khunt"
-          git checkout -b optimize-vectors-${{ steps.short-sha.outputs.result }}
-          git push --set-upstream origin optimize-vectors-${{ steps.short-sha.outputs.result }}
+          git checkout -b optimize-vectors-${{ env.short_sha }}
+          git push --set-upstream origin optimize-vectors-${{ env.short_sha }}
 
       - name: Open PR
-        if: ${{ steps.drawable-checker.outputs.result != '0' }}
+        if: ${{ env.drawable_count != '0' }}
         uses: peter-evans/create-pull-request@v5
         with:
           commit-message: 'vectors optimized'
           title: 'Vectors optimized'
           body: 'Vectors drawables optimized using avocado tool'
-          branch: optimize-vectors-${{ steps.short-sha.outputs.result }}
-          base: master
+          branch: optimize-vectors-${{ env.short_sha }}
+          base: ${{ github.head_ref }}
