@@ -14,6 +14,10 @@ jobs:
     name: Build apk
     runs-on: ubuntu-latest
 
+    outputs:
+      head_short_sha: ${{ steps.head-short-sha.outputs.head_short_sha }}
+      base_short_sha: ${{ steps.base-short-sha.outputs.base_short_sha }}
+
     steps:
       - uses: actions/checkout@v3
         with:
@@ -47,7 +51,8 @@ jobs:
         run: |
           chmod +x ./.github/scripts/commit_short_sha.sh
           short_sha=$(./.github/scripts/commit_short_sha.sh)
-          echo "head_short_sha=${short_sha}" >> $GITHUB_ENV
+          echo "head_short_sha=${short_sha}" >> "$GITHUB_ENV"
+          echo "head_short_sha=${short_sha}" >> "$GITHUB_OUTPUT"
 
       - name: Build Debug APK for head branch and rename it to match head-short-sha result
         run: |
@@ -70,7 +75,8 @@ jobs:
         run: |
           chmod +x ./.github/scripts/commit_short_sha.sh
           short_sha=$(./.github/scripts/commit_short_sha.sh)
-          echo "base_short_sha=${short_sha}" >> $GITHUB_ENV
+          echo "base_short_sha=${short_sha}" >> "$GITHUB_ENV"
+          echo "base_short_sha=${short_sha}" >> "$GITHUB_OUTPUT"
 
       - name: Build Debug APK for base branch and rename it to match base-short-sha result
         run: |
@@ -91,17 +97,17 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: ${{ env.head_short_sha }}.apk
+          name: ${{ needs.build.outputs.head_short_sha }}.apk
 
       - uses: actions/download-artifact@v3
         with:
-          name: ${{ env.base_short_sha }}.apk
+          name: ${{ needs.build.outputs.base_short_sha }}.apk
 
       # here we use our custom python script to generate "apk_size_diff_report.html" file
       - name: Generate size report
         run: |
           chmod +x ./.github/scripts/compare_apks.py
-          ./.github/scripts/compare_apks.py ${{ env.base_short_sha }} ${{ env.head_short_sha }}
+          ./.github/scripts/compare_apks.py ${{ needs.build.outputs.base_short_sha }} ${{ needs.build.outputs.head_short_sha }}
 
       - name: Upload Size Report html file
         uses: actions/upload-artifact@v3
