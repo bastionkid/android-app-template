@@ -120,3 +120,37 @@ jobs:
         with:
           name: ${{ size_report_file_name }}
           path: ${{ size_report_file_name }}
+
+  pr_comment:
+    needs: size_report
+    name: PR Comment (Size Report)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ size_report_file_name }}
+
+      - name: Add PR Comment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+
+            try {
+              const filePath = ${{ size_report_file_name }}
+              const sizeReportContent = fs.readFileSync(filePath, 'utf8')
+            
+              console.log(sizeReportContent)
+            
+              const result = await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: sizeReportContent
+              })
+            
+              console.log(result)
+            } catch (error) {
+              console.error('Error reading file:', error);
+            }
