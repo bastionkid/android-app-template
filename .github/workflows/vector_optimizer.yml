@@ -17,12 +17,15 @@ jobs:
       - name: Install avocado tool by Alex Lockwood
         run: npm install -g avocado
 
+      # here we run our custom script which navigates to drawable directories of different modules
+      # of "known" modularization strategy
       - name: Optimizes Vector Drawables
         run: |
           chmod +x ./.github/scripts/vector_optimizer.sh
           ./.github/scripts/vector_optimizer.sh
         shell: bash
 
+      # this steps puts the count of optimized vector drawables (using git diff) in step's output
       - name: Check if any Vector Drawables were optimized
         id: drawable-checker
         run: |
@@ -31,6 +34,8 @@ jobs:
           echo "result=${drawableCount}" >> $GITHUB_OUTPUT
         shell: bash
 
+      # generate a shorter 7 character SHA (from head branch) which we'll use as
+      # a suffix to new PR branch
       - name: Generate shorter github.sha for head branch
         id: short-sha
         if: ${{ steps.drawable-checker.outputs.result != '0' }}
