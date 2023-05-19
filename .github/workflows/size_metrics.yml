@@ -84,6 +84,7 @@ jobs:
           path: app/build/outputs/apk/debug/${{ env.base_short_sha }}.apk
 
   size_report:
+    needs: build
     name: Size Report
     runs-on: ubuntu-latest
 
