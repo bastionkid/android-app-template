@@ -197,12 +197,12 @@ def format_size_with_indicator(size):
   return f"{format_size(size)} {size_indicator}"
 
 # generate html file containing size diff in HRF
-def generate_size_diff_html(components1, components2, apk1, apk2, apk1Size, apk2Size):
+def generate_size_diff_html(components1, components2, apk1Sha, apk2Sha, apk1Size, apk2Size):
     html = "<html>"
     html += html_head
     html += "<body><h1>Raw Size Report</h1><h3>Affected Products</h3>"
     html += "<ul><li><h4><code>apk</code></h4><table>"
-    html += f"<tr><th>Component</th><th>Base ({apk1})</th><th>Merge ({apk2})</th><th>Diff</th></tr>"
+    html += f"<tr><th>Component</th><th>Base ({apk1Sha})</th><th>Merge ({apk2Sha})</th><th>Diff</th></tr>"
 
     # print diff of each components of both of the apk files
     for component in set(components1.keys()) | set(components2.keys()):
@@ -214,20 +214,23 @@ def generate_size_diff_html(components1, components2, apk1, apk2, apk1Size, apk2
     html += f"<tr><td>apk</td><td>{format_size(apk1Size)}</td><td>{format_size(apk2Size)}</td><td>{format_size_with_indicator(apk2Size - apk1Size)}</td></tr>"
     html += "</li></ul></table></body></html>"
 
-    with open(f"apk_size_diff.html", "w") as file:
+    with open("apk_size_diff_report.html", "w") as file:
         file.write(html)
 
 # read arguments passed to this script
-apk1 = sys.argv[1]
-apk2 = sys.argv[2]
+apk1Sha = sys.argv[1]
+apk2Sha = sys.argv[2]
+
+apk1Name = f"{apk1Sha}.apk"
+apk2Name = f"{apk2Sha}.apk"
 
 # calculate size of the apk files
-apk1Size = os.path.getsize(apk1)
-apk2Size = os.path.getsize(apk2)
+apk1Size = os.path.getsize(apk1Name)
+apk2Size = os.path.getsize(apk2Name)
 
 # generate dictionaries for the apk components size
-components1 = get_apk_components(apk1)
-components2 = get_apk_components(apk2)
+components1 = get_apk_components(apk1Name)
+components2 = get_apk_components(apk2Name)
 
-generate_size_diff_html(components1, components2, apk1, apk2, apk1Size, apk2Size)
+generate_size_diff_html(components1, components2, apk1Sha, apk2Sha, apk1Size, apk2Size)
 
