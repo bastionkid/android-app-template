@@ -82,3 +82,29 @@ jobs:
         with:
           name: ${{ env.base_short_sha }}.apk
           path: app/build/outputs/apk/debug/${{ env.base_short_sha }}.apk
+
+  size_report:
+    name: Size Report
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.head_short_sha }}.apk
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.base_short_sha }}.apk
+
+      # here we use our custom python script to generate "apk_size_diff_report.html" file
+      - name: Generate size report
+        run: |
+          chmod +x ./.github/scripts/compare_apks.py
+          ./.github/scripts/compare_apks.py ${{ env.base_short_sha }} ${{ env.head_short_sha }}
+
+      - name: Upload Size Report html file
+        uses: actions/upload-artifact@v3
+        with:
+          name: apk_size_diff_report.html
+          path: apk_size_diff_report.html
+          
