@@ -18,12 +18,16 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
+      # this step is optional if you don't use JDK 17 as ubuntu-latest runner already
+      # has java setup which defaults to JDK 11
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
 
+      # this step is optional and should be added in case you get "Failed to install the following
+      # Android SDK packages as some licences have not been accepted" error
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
 
