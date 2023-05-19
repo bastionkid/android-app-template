@@ -72,6 +72,7 @@ playServicesAuth = "20.5.0"
 playServicesAuthApiPhone = "18.0.1"
 rootbeer = "0.1.0"
 riveAndroid = "4.0.0"
+barcodeScanning = "17.1.0"
 
 [libraries]
 accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanist" }
@@ -176,6 +177,7 @@ firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging
 play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
 play-services-auth-api-phone = { group = "com.google.android.gms", name = "play-services-auth-api-phone", version.ref = "playServicesAuthApiPhone" }
 rive-android = { group = "app.rive", name = "rive-android", version.ref = "riveAndroid" }
+barcode = { group = "com.google.mlkit", name = "barcode-scanning", version.ref = "barcodeScanning" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
