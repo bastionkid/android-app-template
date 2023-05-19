@@ -32,7 +32,7 @@ jobs:
           chmod +x ./.github/scripts/drawable_changes_checker.sh
           drawable_count=$(./.github/scripts/drawable_changes_checker.sh)
           echo "drawable_count=${drawable_count}" >> "$GITHUB_ENV"
-#          echo "result=${drawable_count}" >> $GITHUB_OUTPUT
+#          echo "result=${drawable_count}" >> "$GITHUB_OUTPUT"
         shell: bash
 
       # generate a shorter 7 character SHA (from head branch) which we'll use as
@@ -44,7 +44,7 @@ jobs:
           chmod +x ./.github/scripts/commit_short_sha.sh
           short_sha=$(./.github/scripts/commit_short_sha.sh)
           echo "short_sha=${short_sha}" >> "$GITHUB_ENV"
-#          echo "result=${short_sha}" >> $GITHUB_OUTPUT
+#          echo "result=${short_sha}" >> "$GITHUB_OUTPUT"
         shell: bash
 
       - name: Create optimize-vectors branch
