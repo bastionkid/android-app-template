@@ -9,6 +9,9 @@ on:
   pull_request:
     branches: [ "master", "main", "release/*", "feature/*" ]
 
+env:
+  size_report_file_name: apk_size_diff_report.html
+
 jobs:
   build:
     name: Build apk
@@ -106,7 +109,7 @@ jobs:
         with:
           name: ${{ needs.build.outputs.base_short_sha }}.apk
 
-      # here we use our custom python script to generate "apk_size_diff_report.html" file
+      # here we use our custom python script to generate file matching size_report_file_name
       - name: Generate size report
         run: |
           chmod +x ./.github/scripts/compare_apks.py
@@ -115,6 +118,5 @@ jobs:
       - name: Upload Size Report html file
         uses: actions/upload-artifact@v3
         with:
-          name: apk_size_diff_report.html
-          path: apk_size_diff_report.html
-          
+          name: ${{ size_report_file_name }}
+          path: ${{ size_report_file_name }}
