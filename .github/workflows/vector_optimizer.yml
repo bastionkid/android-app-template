@@ -9,6 +9,10 @@ jobs:
     name: Vector Optimizer
     runs-on: ubuntu-latest
 
+    env:
+      DRAWABLE_COUNT: ${{ steps.drawable-checker.outputs.result }}
+      SHORT_SHA: ${{ steps.short-sha.outputs.result }}
+
     steps:
       - uses: actions/checkout@v3
         with:
@@ -38,7 +42,7 @@ jobs:
       # a suffix to new PR branch
       - name: Generate shorter github.sha for head branch
         id: short-sha
-        if: ${{ steps.drawable-checker.outputs.result != '0' }}
+        if: ${{ DRAWABLE_COUNT != '0' }}
         run: |
           chmod +x ./.github/scripts/commit_short_sha.sh
           shortSha=$(./.github/scripts/commit_short_sha.sh)
@@ -46,19 +50,19 @@ jobs:
         shell: bash
 
       - name: Create optimize-vectors branch
-        if: ${{ steps.drawable-checker.outputs.result != '0' }}
+        if: ${{ DRAWABLE_COUNT != '0' }}
         run: |
           git config --global user.email "akash.mercer@gmail.com"
           git config --global user.name "Akash Khunt"
-          git checkout -b optimize-vectors-${{ steps.short-sha.outputs.result }}
-          git push --set-upstream origin optimize-vectors-${{ steps.short-sha.outputs.result }}
+          git checkout -b optimize-vectors-${{ SHORT_SHA }}
+          git push --set-upstream origin optimize-vectors-${{ SHORT_SHA }}
 
       - name: Open PR
-        if: ${{ steps.drawable-checker.outputs.result != '0' }}
+        if: ${{ DRAWABLE_COUNT != '0' }}
         uses: peter-evans/create-pull-request@v5
         with:
           commit-message: 'vectors optimized'
           title: 'Vectors optimized'
           body: 'Vectors drawables optimized using avocado tool'
-          branch: optimize-vectors-${{ steps.short-sha.outputs.result }}
+          branch: optimize-vectors-${{ SHORT_SHA }}
           base: ${{ github.head_ref }}
