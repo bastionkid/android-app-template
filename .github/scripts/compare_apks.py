@@ -211,7 +211,7 @@ def generate_size_diff_html(components1, components2, apk1Sha, apk2Sha, apk1Size
         # if size1 != size2:
         html += f"<tr><td>{component}</td><td>{format_size(size1)}</td><td>{format_size(size2)}</td><td>{format_size_with_indicator(size2 - size1)}</td></tr>"
 
-    html += f"<tr><td>apk</td><td>{format_size(apk1Size)}</td><td>{format_size(apk2Size)}</td><td>{format_size_with_indicator(apk2Size - apk1Size)}</td></tr>"
+    html += f"<tr><td>apk (Download Size)</td><td>{format_size(apk1Size)}</td><td>{format_size(apk2Size)}</td><td>{format_size_with_indicator(apk2Size - apk1Size)}</td></tr>"
     html += "</li></ul></table></body></html>"
 
     with open("apk_size_diff_report.html", "w") as file:
