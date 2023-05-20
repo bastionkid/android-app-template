@@ -26,6 +26,7 @@ dependencies {
     api(libs.kotlinx.serialization.json)
     implementation(libs.okhttp.logging)
     implementation(libs.cronet)
+//    implementation(platform(libs.firebase.bom))
 //    implementation(libs.firebase.performance)
     debugImplementation(libs.chucker)
     releaseImplementation(libs.chucker.no.op)

@@ -151,9 +151,9 @@ import zipfile
 # add/update the value (i.e. size) based on the present of key
 def update_if_present(components, key, value):
     if key in components:
-      components[key] = components[key] + value
+        components[key] = components[key] + value
     else:
-      components[key] = value
+        components[key] = value
     return
 
 # generate dictionary of the grouped contents of an apk file
@@ -162,39 +162,39 @@ def get_apk_components(apk_file):
     with zipfile.ZipFile(apk_file, 'r') as z:
         for info in z.infolist():
             if info.filename.startswith('lib/arm64-v8a'):
-              update_if_present(components, 'lib/arm64-v8a/', info.file_size)
+                update_if_present(components, 'lib/arm64-v8a/', info.file_size)
             elif info.filename.startswith('classes') and info.filename.endswith('.dex'):
-              update_if_present(components, 'classes*.dex', info.file_size)
+                update_if_present(components, 'classes*.dex', info.file_size)
             elif info.filename.startswith('res'):
-              update_if_present(components, 'res/', info.file_size)
+                update_if_present(components, 'res/', info.file_size)
             elif info.filename.startswith('resources.arsc'):
-              update_if_present(components, 'resources.arsc', info.file_size)
+                update_if_present(components, 'resources.arsc', info.file_size)
             elif info.filename.startswith('assets/'):
-              update_if_present(components, 'assets', info.file_size)
+                update_if_present(components, 'assets', info.file_size)
             elif info.filename.startswith('META-INF'):
-              update_if_present(components, 'META-INF/', info.file_size)
+                update_if_present(components, 'META-INF/', info.file_size)
             else:
-              update_if_present(components, 'miscellaneous', info.file_size)
+                update_if_present(components, 'miscellaneous', info.file_size)
     return components
 
 # format size
 def format_size(size):
-  kb_in_bytes = 1024
-  mb_in_bytes = 1024 * 1024
+    kb_in_bytes = 1024
+    mb_in_bytes = 1024 * 1024
 
-  if size == 0:
-    return "0 KB"
-  elif abs(size) > mb_in_bytes:
-    return f"{round(size / mb_in_bytes, 2)} MB"
-  elif abs(size) > kb_in_bytes:
-    return f"{round(size / kb_in_bytes, 2)} KB"
-  else:
-    return f"{size} bytes"
+    if size == 0:
+        return "0 KB"
+    elif abs(size) > mb_in_bytes:
+        return f"{round(size / mb_in_bytes, 2)} MB"
+    elif abs(size) > kb_in_bytes:
+        return f"{round(size / kb_in_bytes, 2)} KB"
+    else:
+        return f"{size} bytes"
 
 def format_size_with_indicator(size):
-  size_indicator = "🔴" if size > 0 else "🟢"
+    size_indicator = "🔴" if size > 0 else "🟢"
 
-  return f"{format_size(size)} {size_indicator}"
+    return f"{format_size(size)} {size_indicator}"
 
 # generate html file containing size diff in HRF
 def generate_size_diff_html(components1, components2, apk1Sha, apk2Sha, apk1Size, apk2Size):
@@ -205,7 +205,7 @@ def generate_size_diff_html(components1, components2, apk1Sha, apk2Sha, apk1Size
     html += f"<tr><th>Component</th><th>Base ({apk1Sha})</th><th>Merge ({apk2Sha})</th><th>Diff</th></tr>"
 
     # print diff of each components of both of the apk files
-    for component in set(components1.keys()) | set(components2.keys()):
+    for component in set(sorted(set(components1.keys()))) | set(sorted(set(components2.keys()))):
         size1 = components1.get(component, 0)
         size2 = components2.get(component, 0)
         # if size1 != size2:
