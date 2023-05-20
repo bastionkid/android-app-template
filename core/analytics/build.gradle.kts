@@ -22,6 +22,7 @@ dependencies {
     implementation(projects.core.log)
     implementation(projects.core.time)
 
+    implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.kotlinx.coroutines.core)
 
