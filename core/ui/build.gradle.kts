@@ -34,18 +34,10 @@ dependencies {
     implementation(libs.lottie.compose)
     implementation(libs.rive.android)
 
-    api(libs.androidx.compose.ui)
-    api(libs.androidx.compose.runtime)
+    api(platform(libs.androidx.compose.bom))
     api(libs.androidx.lifecycle.runtimeCompose)
-    api(libs.androidx.compose.foundation)
-    api(libs.androidx.compose.foundation.layout)
-    api(libs.androidx.compose.ui.util)
     api(libs.androidx.compose.material)
 //    api(libs.androidx.compose.material3)
-    api(libs.androidx.compose.animation)
-    api(libs.androidx.compose.material.iconsExtended)
-    api(libs.androidx.compose.ui.tooling.preview)
-    debugApi(libs.androidx.compose.ui.tooling)
 
     api(libs.accompanist.systemuicontroller)
     api(libs.accompanist.flowlayout)
@@ -60,4 +52,6 @@ dependencies {
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestApi(platform(libs.androidx.compose.bom))
+
 }
