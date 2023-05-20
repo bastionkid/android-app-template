@@ -63,12 +63,9 @@ lottie = "6.0.0"
 cronet = "18.0.1"
 chucker = "3.5.2"
 googleServices = "4.3.14"
-firebasePerformance = "20.3.2"
+firebaseBom = "32.0.0"
 firebasePerformancePlugin = "1.4.2"
-firebaseCrashlytics = "18.3.7"
 firebaseCrashlyticsPlugin = "2.9.2"
-firebaseAnalytics = "21.2.2"
-firebaseMessaging = "23.1.2"
 playServicesAuth = "20.5.0"
 playServicesAuthApiPhone = "18.0.1"
 rootbeer = "0.1.0"
@@ -171,10 +168,11 @@ lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", versio
 cronet = { group = "com.google.android.gms", name = "play-services-cronet", version.ref = "cronet" }
 chucker = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chucker" }
 chucker-no-op = { group = "com.github.chuckerteam.chucker", name = "library-no-op", version.ref = "chucker" }
-firebase-performance = { group = "com.google.firebase", name = "firebase-perf", version.ref = "firebasePerformance" }
-firebase-crashlytics-ndk = { group = "com.google.firebase", name = "firebase-crashlytics-ndk", version.ref = "firebaseCrashlytics" }
-firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx", version.ref = "firebaseAnalytics" }
-firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessaging" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-performance = { group = "com.google.firebase", name = "firebase-perf" }
+firebase-crashlytics-ndk = { group = "com.google.firebase", name = "firebase-crashlytics-ndk" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx" }
 play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
 play-services-auth-api-phone = { group = "com.google.android.gms", name = "play-services-auth-api-phone", version.ref = "playServicesAuthApiPhone" }
 rive-android = { group = "app.rive", name = "rive-android", version.ref = "riveAndroid" }
