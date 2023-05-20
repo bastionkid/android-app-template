@@ -205,7 +205,7 @@ def generate_size_diff_html(components1, components2, apk1Sha, apk2Sha, apk1Size
     html += f"<tr><th>Component</th><th>Base ({apk1Sha})</th><th>Merge ({apk2Sha})</th><th>Diff</th></tr>"
 
     # print diff of each components of both of the apk files
-    for component in set(components1.keys()) | set(components2.keys()):
+    for component in set(sorted(set(components1.keys()))) | set(sorted(set(components2.keys()))):
         size1 = components1.get(component, 0)
         size2 = components2.get(component, 0)
         # if size1 != size2:
