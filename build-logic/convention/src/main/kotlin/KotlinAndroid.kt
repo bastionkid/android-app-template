@@ -1,4 +1,3 @@
-
 import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
@@ -27,13 +26,6 @@ internal fun Project.configureKotlinAndroid(
             sourceCompatibility = JavaVersion.VERSION_17
             targetCompatibility = JavaVersion.VERSION_17
             isCoreLibraryDesugaringEnabled = true
-        }
-
-        buildFeatures {
-            buildConfig = false
-            aidl = false
-            renderScript = false
-            shaders = false
         }
 
         kotlinOptions {

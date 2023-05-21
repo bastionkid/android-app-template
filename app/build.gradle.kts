@@ -1,4 +1,5 @@
 import org.gradle.api.JavaVersion
+import com.android.build.gradle.internal.core.Abi
 
 plugins {
     alias(libs.plugins.android.application)
@@ -21,6 +22,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -63,6 +65,50 @@ android {
 
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
+    }
+
+    splits {
+        abi {
+            val onlyInclude = fun(abiTag: kotlin.String) {
+                // Enables building multiple APKs per ABI.
+                isEnable = true
+
+                // By default all ABIs are included, so use reset() and include to specify that you only
+                // want APKs for e.g. arm64-v8a, armeabi-v7a & x86_64.
+
+                // Resets the list of ABIs for Gradle to create APKs for to none.
+                reset()
+
+                include(abiTag)
+            }
+
+            when (properties["targetAbi"]) {
+                Abi.ARM64_V8A.tag -> onlyInclude(Abi.ARM64_V8A.tag)
+                Abi.ARMEABI_V7A.tag -> onlyInclude(Abi.ARMEABI_V7A.tag)
+                Abi.X86_64.tag -> onlyInclude(Abi.X86_64.tag)
+            }
+        }
+
+        density {
+            val onlyInclude = fun (density: kotlin.String) {
+                // Enables building multiple APKs per ABI.
+                isEnable = true
+
+                // By default all ABIs are included, so use reset() and include to specify that you only
+                // want APKs for e.g. xxxhdpi, xxhdpi & xhdpi.
+
+                // Resets the list of ABIs for Gradle to create APKs for to none.
+                reset()
+
+                include(density)
+            }
+
+            when (properties["targetDensity"]) {
+                "xxxhdpi" -> onlyInclude("xxxhdpi")
+                "xxhdpi" -> onlyInclude("xxhdpi")
+                "xhdpi" -> onlyInclude("xhdpi")
+            }
+        }
     }
 
     lint {
