@@ -3,7 +3,6 @@ import subprocess
 import sys
 import zipfile
 
-
 # html_head = """
 #     <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="css/style.css" rel="stylesheet"><script defer="" src="js/script.js"></script><style>
 # * {
@@ -208,7 +207,7 @@ def apk_download_size(apk_file):
     return int(output.decode())
 
 # generate html file containing size diff in HRF
-def generate_size_diff_html(components1, components2, apk1Sha, apk2Sha, apk1FileSize, apk2FileSize, apk1DownloadSize, apk2DownloadSize):
+def generate_size_diff_html():
     html = "<html>"
     # html += html_head
     html += "<body><h1>Raw Size Report</h1><h3>Affected Products</h3>"
@@ -248,5 +247,4 @@ apk2DownloadSize = apk_download_size(apk2Name)
 components1 = get_apk_components(apk1Name)
 components2 = get_apk_components(apk2Name)
 
-generate_size_diff_html(components1, components2, apk1Sha, apk2Sha, apk1FileSize, apk2FileSize, apk1DownloadSize, apk2DownloadSize)
-
+generate_size_diff_html()
