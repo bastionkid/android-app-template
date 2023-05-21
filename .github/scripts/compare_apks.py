@@ -1,6 +1,8 @@
 import os
+import subprocess
 import sys
 import zipfile
+
 
 # html_head = """
 #     <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="css/style.css" rel="stylesheet"><script defer="" src="js/script.js"></script><style>
@@ -196,8 +198,17 @@ def format_size_with_indicator(size):
 
     return f"{format_size(size)} {size_indicator}"
 
+def apk_download_size(apk_file):
+    command = f"{apk_analyzer_path} apk download-size {apk_file}"
+
+    # Run the command using subprocess
+    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output, error = process.communicate()
+
+    return int(output.decode())
+
 # generate html file containing size diff in HRF
-def generate_size_diff_html(components1, components2, apk1Sha, apk2Sha, apk1Size, apk2Size):
+def generate_size_diff_html(components1, components2, apk1Sha, apk2Sha, apk1FileSize, apk2FileSize, apk1DownloadSize, apk2DownloadSize):
     html = "<html>"
     # html += html_head
     html += "<body><h1>Raw Size Report</h1><h3>Affected Products</h3>"
@@ -211,11 +222,14 @@ def generate_size_diff_html(components1, components2, apk1Sha, apk2Sha, apk1Size
         # if size1 != size2:
         html += f"<tr><td>{component}</td><td>{format_size(size1)}</td><td>{format_size(size2)}</td><td>{format_size_with_indicator(size2 - size1)}</td></tr>"
 
-    html += f"<tr><td>apk (Download Size)</td><td>{format_size(apk1Size)}</td><td>{format_size(apk2Size)}</td><td>{format_size_with_indicator(apk2Size - apk1Size)}</td></tr>"
+    html += f"<tr><td>apk (File Size)</td><td>{format_size(apk1FileSize)}</td><td>{format_size(apk2FileSize)}</td><td>{format_size_with_indicator(apk2FileSize - apk1FileSize)}</td></tr>"
+    html += f"<tr><td>apk (Download Size)</td><td>{format_size(apk1DownloadSize)}</td><td>{format_size(apk2DownloadSize)}</td><td>{format_size_with_indicator(apk2DownloadSize - apk1DownloadSize)}</td></tr>"
     html += "</li></ul></table></body></html>"
 
     with open("apk_size_diff_report.html", "w") as file:
         file.write(html)
+
+apk_analyzer_path = "/usr/local/lib/android/sdk/cmdline-tools/latest/bin/apkanalyzer"
 
 # read arguments passed to this script
 apk1Sha = sys.argv[1]
@@ -225,12 +239,14 @@ apk1Name = f"{apk1Sha}.apk"
 apk2Name = f"{apk2Sha}.apk"
 
 # calculate size of the apk files
-apk1Size = os.path.getsize(apk1Name)
-apk2Size = os.path.getsize(apk2Name)
+apk1FileSize = os.path.getsize(apk1Name)
+apk2FileSize = os.path.getsize(apk2Name)
+apk1DownloadSize = apk_download_size(apk1Name)
+apk2DownloadSize = apk_download_size(apk2Name)
 
 # generate dictionaries for the apk components size
 components1 = get_apk_components(apk1Name)
 components2 = get_apk_components(apk2Name)
 
-generate_size_diff_html(components1, components2, apk1Sha, apk2Sha, apk1Size, apk2Size)
+generate_size_diff_html(components1, components2, apk1Sha, apk2Sha, apk1FileSize, apk2FileSize, apk1DownloadSize, apk2DownloadSize)
 
