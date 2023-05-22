@@ -59,6 +59,7 @@ jobs:
         with:
           commit-message: 'vectors optimized'
           title: 'Vectors optimized'
-          body: ${{ github.event.issue.number }}
+          body: |
+            Vectors drawables optimized using avocado tool for PR - \#${{ github.event.issue.number }}
           branch: optimize-vectors-${{ env.short_sha }}
           base: ${{ github.head_ref }}
