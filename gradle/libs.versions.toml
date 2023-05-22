@@ -56,6 +56,7 @@ protobufPlugin = "0.8.19"
 retrofit = "2.9.0"
 retrofitKotlinxSerializationJson = "1.0.0"
 room = "2.6.0-alpha01"
+rulerGradlePlugin = "2.0.0-alpha-3"
 secrets = "2.0.1"
 spotless = "6.18.0"
 turbine = "0.8.0"
@@ -177,6 +178,7 @@ play-services-auth = { group = "com.google.android.gms", name = "play-services-a
 play-services-auth-api-phone = { group = "com.google.android.gms", name = "play-services-auth-api-phone", version.ref = "playServicesAuthApiPhone" }
 rive-android = { group = "app.rive", name = "rive-android", version.ref = "riveAndroid" }
 barcode = { group = "com.google.mlkit", name = "barcode-scanning", version.ref = "barcodeScanning" }
+ruler-gradle-plugin = { module = "com.spotify.ruler:ruler-gradle-plugin", version.ref = "rulerGradlePlugin" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
