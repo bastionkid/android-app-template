@@ -59,7 +59,7 @@ jobs:
           echo "head_short_sha=${short_sha}" >> "$GITHUB_OUTPUT"
 
       - name: Build Debug APK for head branch and rename it to match head-short-sha result
-        run: ./gradlew assembleRelease -PtargetDensity=xxhdpi -PtargetAbi=arm64-v8a
+        run: ./gradlew assembleRelease -PtargetDensity=xxhdpi -PtargetAbi=arm64-v8a -PresConfig=en
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
@@ -81,7 +81,7 @@ jobs:
           echo "base_short_sha=${short_sha}" >> "$GITHUB_OUTPUT"
 
       - name: Build Debug APK for base branch and rename it to match base-short-sha result
-        run: ./gradlew assembleRelease -PtargetDensity=xxhdpi -PtargetAbi=arm64-v8a
+        run: ./gradlew assembleRelease -PtargetDensity=xxhdpi -PtargetAbi=arm64-v8a -PresConfig=en
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
