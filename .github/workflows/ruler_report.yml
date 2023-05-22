@@ -1,0 +1,13 @@
+name: Ruler Report
+
+on:
+  pull_request:
+    branches: [ "master", "main", "release/*", "feature/*" ]
+
+jobs:
+  generate_report:
+    name: Generate Ruler Report
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3

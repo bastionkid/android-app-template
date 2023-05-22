@@ -1,0 +1,8 @@
+- identifier: :app
+  owner: app-core-team
+
+- identifier: :feature:login:*
+  owner: login-team
+
+- identifier: :feature:home:*
+  owner: home-team
