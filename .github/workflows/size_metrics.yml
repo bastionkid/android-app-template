@@ -141,8 +141,6 @@ jobs:
               const filePath = 'apk_size_diff_report.html'
               const sizeReportContent = fs.readFileSync(filePath, 'utf8')
             
-              console.log(sizeReportContent)
-            
               const result = await github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
