@@ -59,15 +59,13 @@ jobs:
           echo "head_short_sha=${short_sha}" >> "$GITHUB_OUTPUT"
 
       - name: Build Debug APK for head branch and rename it to match head-short-sha result
-        run: |
-          ./gradlew assembleRelease -PtargetDensity=xxhdpi -PtargetAbi=arm64-v8a
-          mv app/build/outputs/apk/release/app-xxhdpiArm64-v8a-release-unsigned.apk app/build/outputs/apk/release/${{ env.head_short_sha }}.apk
+        run: ./gradlew assembleRelease -PtargetDensity=xxhdpi -PtargetAbi=arm64-v8a
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.head_short_sha }}.apk
-          path: app/build/outputs/apk/release/${{ env.head_short_sha }}.apk
+          path: app/build/outputs/apk/release/app-xxhdpiArm64-v8a-release-unsigned.apk
 
       - name: Checkout base (PR target) branch
         uses: actions/checkout@v3
@@ -83,15 +81,13 @@ jobs:
           echo "base_short_sha=${short_sha}" >> "$GITHUB_OUTPUT"
 
       - name: Build Debug APK for base branch and rename it to match base-short-sha result
-        run: |
-          ./gradlew assembleRelease -PtargetDensity=xxhdpi -PtargetAbi=arm64-v8a
-          mv app/build/outputs/apk/release/app-xxhdpiArm64-v8a-release-unsigned.apk app/build/outputs/apk/release/${{ env.base_short_sha }}.apk
+        run: ./gradlew assembleRelease -PtargetDensity=xxhdpi -PtargetAbi=arm64-v8a
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.base_short_sha }}.apk
-          path: app/build/outputs/apk/release/${{ env.base_short_sha }}.apk
+          path: app/build/outputs/apk/release/app-xxhdpiArm64-v8a-release-unsigned.apk
 
   size_report:
     needs: build
