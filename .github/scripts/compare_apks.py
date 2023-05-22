@@ -166,10 +166,10 @@ def get_apk_components(apk_file):
                 update_if_present(components, 'lib/arm64-v8a/', info.file_size)
             elif info.filename.startswith('classes') and info.filename.endswith('.dex'):
                 update_if_present(components, 'classes*.dex', info.file_size)
-            elif info.filename.startswith('res'):
-                update_if_present(components, 'res/', info.file_size)
             elif info.filename.startswith('resources.arsc'):
                 update_if_present(components, 'resources.arsc', info.file_size)
+            elif info.filename.startswith('res'):
+                update_if_present(components, 'res/', info.file_size)
             elif info.filename.startswith('assets/'):
                 update_if_present(components, 'assets', info.file_size)
             elif info.filename.startswith('META-INF'):
