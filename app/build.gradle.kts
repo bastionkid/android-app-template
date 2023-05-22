@@ -126,7 +126,7 @@ ruler {
     screenDensity.set(480)
     sdkVersion.set(33)
 
-    ownershipFile.set(project.file("../.github/scripts/ownership.yml"))
+    ownershipFile.set(project.file("./../.github/scripts/ownership.yml"))
 }
 
 dependencies {
