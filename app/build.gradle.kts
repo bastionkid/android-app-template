@@ -1,5 +1,5 @@
-import org.gradle.api.JavaVersion
 import com.android.build.gradle.internal.core.Abi
+import org.gradle.api.JavaVersion
 
 plugins {
     alias(libs.plugins.android.application)
@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.firebase.performance)
     alias(libs.plugins.navigation.safeargs)
+    id("com.spotify.ruler")
 }
 
 android {
@@ -121,6 +122,15 @@ android {
 //        enable("StopShip")
 //        fatal("StopShip")
     }
+}
+
+ruler {
+    abi.set("arm64-v8a")
+    locale.set("en")
+    screenDensity.set(480)
+    sdkVersion.set(33)
+
+    ownershipFile.set(project.file("./../.github/scripts/ownership.yml"))
 }
 
 dependencies {

@@ -1,0 +1,64 @@
+name: Ruler Report
+
+on:
+  pull_request:
+    branches: [ "master", "main", "release/*", "feature/*" ]
+
+jobs:
+  generate_report:
+    name: Generate Ruler Report
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+
+      # this step is optional if you don't use JDK 17 as ubuntu-latest runner already
+      # has java setup which defaults to JDK 11
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # this step is optional and should be added in case you get "Failed to install the following
+      # Android SDK packages as some licences have not been accepted" error
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      # setup cache so that every build trigger doesn't require downloading all the
+      # dependencies used in project again and again saving tonnes of time
+      - name: Setup Gradle Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            /usr/local/lib/android/sdk/build-tools/34.0.0-rc3
+          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+
+      - name: Generate shorter github.sha for head branch
+        id: head-short-sha
+        run: |
+          chmod +x ./.github/scripts/commit_short_sha.sh
+          short_sha=$(./.github/scripts/commit_short_sha.sh)
+          echo "head_short_sha=${short_sha}" >> "$GITHUB_ENV"
+
+      # generate component wise report using ruler gradle task
+      - name: Generate Report
+        run: ./gradlew analyzeReleaseBundle
+
+      # upload generated ruler reports
+      - name: Upload the generated html report
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.head_short_sha }}.html
+          path: app/build/reports/ruler/release/report.html
+
+      # upload generated ruler reports
+      - name: Upload the generated json report
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.head_short_sha }}.json
+          path: app/build/reports/ruler/release/report.json
