@@ -155,8 +155,6 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
 
-    implementation(libs.barcode)
-
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     testImplementation(libs.koin.test)
