@@ -211,10 +211,14 @@ def generate_size_diff_html():
         # if size1 != size2:
         html += f"<tr><td>{component}</td><td>{format_size(size1)}</td><td>{format_size(size2)}</td><td>{format_size_with_indicator(size2 - size1)}</td></tr>"
 
+    # calculate size of the apk files
+    apk1FileSize = apk1Json['installSize']
+    apk2FileSize = apk2Json['installSize']
     apk1DownloadSize = apk1Json['downloadSize']
     apk2DownloadSize = apk2Json['downloadSize']
 
-    html += f"<tr><td>apk</td><td>{format_size(apk1DownloadSize)}</td><td>{format_size(apk2DownloadSize)}</td><td>{format_size_with_indicator(apk2DownloadSize - apk1DownloadSize)}</td></tr>"
+    html += f"<tr><td>apk (Install Size)</td><td>{format_size(apk1FileSize)}</td><td>{format_size(apk2FileSize)}</td><td>{format_size_with_indicator(apk2FileSize - apk1FileSize)}</td></tr>"
+    html += f"<tr><td>apk (Download Size)</td><td>{format_size(apk1DownloadSize)}</td><td>{format_size(apk2DownloadSize)}</td><td>{format_size_with_indicator(apk2DownloadSize - apk1DownloadSize)}</td></tr>"
     html += "</li></ul></table></body></html>"
 
     with open("ruler_diff_report.html", "w") as file:
@@ -224,11 +228,8 @@ def generate_size_diff_html():
 apk1Sha = sys.argv[1]
 apk2Sha = sys.argv[2]
 
-apk1Name = f"{apk1Sha}.json"
-apk2Name = f"{apk2Sha}.json"
-
-apk1Json = read_report_file(apk1Name)
-apk2Json = read_report_file(apk2Name)
+apk1Json = read_report_file(f"{apk1Sha}.json")
+apk2Json = read_report_file(f"{apk2Sha}.json")
 
 # generate dictionaries for the apk components size
 components1 = get_apk_components(apk1Json)

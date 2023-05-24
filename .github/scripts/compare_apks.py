@@ -220,7 +220,13 @@ def generate_size_diff_html():
         # if size1 != size2:
         html += f"<tr><td>{component}</td><td>{format_size(size1)}</td><td>{format_size(size2)}</td><td>{format_size_with_indicator(size2 - size1)}</td></tr>"
 
-    html += f"<tr><td>apk (File Size)</td><td>{format_size(apk1FileSize)}</td><td>{format_size(apk2FileSize)}</td><td>{format_size_with_indicator(apk2FileSize - apk1FileSize)}</td></tr>"
+    # calculate size of the apk files
+    apk1FileSize = os.path.getsize(apk1Name)
+    apk2FileSize = os.path.getsize(apk2Name)
+    apk1DownloadSize = apk_download_size(apk1Name)
+    apk2DownloadSize = apk_download_size(apk2Name)
+
+    html += f"<tr><td>apk (Install Size)</td><td>{format_size(apk1FileSize)}</td><td>{format_size(apk2FileSize)}</td><td>{format_size_with_indicator(apk2FileSize - apk1FileSize)}</td></tr>"
     html += f"<tr><td>apk (Download Size)</td><td>{format_size(apk1DownloadSize)}</td><td>{format_size(apk2DownloadSize)}</td><td>{format_size_with_indicator(apk2DownloadSize - apk1DownloadSize)}</td></tr>"
     html += "</li></ul></table></body></html>"
 
@@ -235,12 +241,6 @@ apk2Sha = sys.argv[2]
 
 apk1Name = f"{apk1Sha}.apk"
 apk2Name = f"{apk2Sha}.apk"
-
-# calculate size of the apk files
-apk1FileSize = os.path.getsize(apk1Name)
-apk2FileSize = os.path.getsize(apk2Name)
-apk1DownloadSize = apk_download_size(apk1Name)
-apk2DownloadSize = apk_download_size(apk2Name)
 
 # generate dictionaries for the apk components size
 components1 = get_apk_components(apk1Name)
