@@ -182,7 +182,7 @@ def format_size(size):
     kb_in_bytes = 1024
     mb_in_bytes = 1024 * 1024
 
-    if size == 0:
+    if abs(size) < kb_in_bytes:
         return "0 KB"
     elif abs(size) > mb_in_bytes:
         return f"{round(size / mb_in_bytes, 2)} MB"
