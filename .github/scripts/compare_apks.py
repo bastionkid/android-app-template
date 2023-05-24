@@ -209,8 +209,8 @@ def apk_download_size(apk_file):
 def generate_size_diff_html():
     html = "<html>"
     # html += html_head
-    html += "<body><h1>Raw Size Report</h1><h3>Affected Products</h3>"
-    html += "<ul><li><h4><code>apk</code></h4><table>"
+    html += "<body><h1>Raw Size Diff Report</h1><h3>Affected Products</h3>"
+    html += "<ul><li><h4><code>release</code></h4><table>"
     html += f"<tr><th>Component</th><th>Base ({apk1Sha})</th><th>Merge ({apk2Sha})</th><th>Diff</th></tr>"
 
     # print diff of each components of both of the apk files

@@ -200,7 +200,7 @@ def format_size_with_indicator(size):
 def generate_size_diff_html():
     html = "<html>"
     # html += html_head
-    html += "<body><h1>Raw Size Report</h1><h3>Affected Products</h3>"
+    html += "<body><h1>Ruler Size Diff Report</h1><h3>Affected Products</h3>"
     html += "<ul><li><h4><code>release</code></h4><table>"
     html += f"<tr><th>Component</th><th>Base ({apk1Sha})</th><th>Merge ({apk2Sha})</th><th>Diff</th></tr>"
 
