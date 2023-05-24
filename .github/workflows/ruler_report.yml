@@ -126,8 +126,8 @@ jobs:
       # here we use our custom python script to generate file matching size_report_file_name
       - name: Generate size report
         run: |
-          chmod +x ./.github/scripts/ruler_report_parser.py.py
-          python3 ./.github/scripts/ruler_report_parser.py.py ${{ needs.generate_report.outputs.base_short_sha }} ${{ needs.generate_report.outputs.head_short_sha }}
+          chmod +x ./.github/scripts/ruler_report_parser.py
+          python3 ./.github/scripts/ruler_report_parser.py ${{ needs.generate_report.outputs.base_short_sha }} ${{ needs.generate_report.outputs.head_short_sha }}
 
       - name: Upload Size Report html file
         uses: actions/upload-artifact@v3
