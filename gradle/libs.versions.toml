@@ -72,6 +72,7 @@ playServicesAuthApiPhone = "18.0.1"
 rootbeer = "0.1.0"
 riveAndroid = "4.0.0"
 barcodeScanning = "17.1.0"
+androidx-baselineprofile = "1.2.0-alpha13"
 
 [libraries]
 accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanist" }
@@ -200,3 +201,4 @@ spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 firebase-performance = { id = "com.google.firebase.firebase-perf", version.ref = "firebasePerformancePlugin" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
+androidx-baselineprofile = { id = "androidx.baselineprofile", version.ref = "androidx-baselineprofile" }

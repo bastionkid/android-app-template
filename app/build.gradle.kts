@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.firebase.performance)
     alias(libs.plugins.navigation.safeargs)
     id("com.spotify.ruler")
+    alias(libs.plugins.androidx.baselineprofile)
 }
 
 android {
@@ -169,4 +170,5 @@ dependencies {
     androidTestImplementation(libs.androidx.test.espresso.core)
 
     implementation(libs.androidx.profileinstaller)
+    "baselineProfile"(project(mapOf("path" to ":baselineprofile")))
 }
