@@ -56,6 +56,7 @@ jobs:
           chmod +x ./.github/scripts/commit_short_sha.sh
           short_sha=$(./.github/scripts/commit_short_sha.sh)
           echo "head_short_sha=${short_sha}" >> "$GITHUB_ENV"
+          echo "head_short_sha=${short_sha}" >> "$GITHUB_OUTPUT"
 
       # generate component wise report using ruler gradle task
       - name: Generate Report
@@ -86,6 +87,7 @@ jobs:
           chmod +x ./.github/scripts/commit_short_sha.sh
           short_sha=$(./.github/scripts/commit_short_sha.sh)
           echo "base_short_sha=${short_sha}" >> "$GITHUB_ENV"
+          echo "base_short_sha=${short_sha}" >> "$GITHUB_OUTPUT"
 
       # generate component wise report using ruler gradle task
       - name: Generate Report
