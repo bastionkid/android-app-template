@@ -129,7 +129,7 @@ jobs:
         with:
           name: ${{ needs.generate_report.outputs.base_short_sha }}.json
 
-      # here we use our custom python script to generate file matching size_report_file_name
+      # here we use our custom python script to generate file matching ruler_diff_report_file
       - name: Generate size report
         run: |
           chmod +x ./.github/scripts/ruler_report_parser.py
@@ -138,8 +138,8 @@ jobs:
       - name: Upload Size Report html file
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.size_report_file_name }}
-          path: ${{ env.size_report_file_name }}
+          name: ${{ env.ruler_diff_report_file }}
+          path: ${{ env.ruler_diff_report_file }}
 
   pr_comment:
     needs: size_report
@@ -149,7 +149,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: ${{ env.size_report_file_name }}
+          name: ${{ env.ruler_diff_report_file }}
 
       - name: Add PR Comment
         uses: actions/github-script@v6
