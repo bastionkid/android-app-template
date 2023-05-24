@@ -60,21 +60,24 @@ jobs:
 
       # generate component wise report using ruler gradle task
       - name: Generate Report
-        run: ./gradlew analyzeReleaseBundle
+        run: |
+          ./gradlew analyzeReleaseBundle
+          mv app/build/reports/ruler/release/report.html app/build/reports/ruler/release/${{ env.head_short_sha }}.html
+          mv app/build/reports/ruler/release/report.json app/build/reports/ruler/release/${{ env.head_short_sha }}.json
 
       # upload generated ruler reports
       - name: Upload the generated html report
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.head_short_sha }}.html
-          path: app/build/reports/ruler/release/report.html
+          path: app/build/reports/ruler/release/${{ env.head_short_sha }}.html
 
       # upload generated ruler reports
       - name: Upload the generated json report
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.head_short_sha }}.json
-          path: app/build/reports/ruler/release/report.json
+          path: app/build/reports/ruler/release/${{ env.head_short_sha }}.json
 
       - name: Checkout base (PR target) branch
         uses: actions/checkout@v3
@@ -91,21 +94,24 @@ jobs:
 
       # generate component wise report using ruler gradle task
       - name: Generate Report
-        run: ./gradlew analyzeReleaseBundle
+        run: |
+          ./gradlew analyzeReleaseBundle
+          mv app/build/reports/ruler/release/report.html app/build/reports/ruler/release/${{ env.base_short_sha }}.html
+          mv app/build/reports/ruler/release/report.json app/build/reports/ruler/release/${{ env.base_short_sha }}.json
 
       # upload generated ruler reports
       - name: Upload the generated html report
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.base_short_sha }}.html
-          path: app/build/reports/ruler/release/report.html
+          path: app/build/reports/ruler/release/${{ env.base_short_sha }}.html
 
       # upload generated ruler reports
       - name: Upload the generated json report
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.base_short_sha }}.json
-          path: app/build/reports/ruler/release/report.json
+          path: app/build/reports/ruler/release/${{ env.base_short_sha }}.json
 
   size_report:
     needs: generate_report
