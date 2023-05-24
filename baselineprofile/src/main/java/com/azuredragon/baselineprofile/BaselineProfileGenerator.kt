@@ -39,7 +39,10 @@ class BaselineProfileGenerator {
     @RequiresApi(Build.VERSION_CODES.P)
     @Test
     fun generate() {
-        rule.collectBaselineProfile("com.azuredragon.app") {
+        rule.collectBaselineProfile(
+            packageName = "com.azuredragon.app",
+            includeInStartupProfile = true,
+        ) {
             // This block defines the app's critical user journey. Here we are interested in
             // optimizing for app startup. But you can also navigate and scroll
             // through your most important UI.
