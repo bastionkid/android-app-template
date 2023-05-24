@@ -147,6 +147,9 @@ import json
 # </style></head>
 #     """
 
+kb_in_bytes = 1024
+mb_in_bytes = 1024 * 1024
+
 def read_report_file(file_path):
     with open(file_path, 'r') as file:
         json_data = json.load(file)
@@ -179,9 +182,6 @@ def get_apk_components(json_data):
     return components
 
 def format_size(size):
-    kb_in_bytes = 1024
-    mb_in_bytes = 1024 * 1024
-
     if abs(size) < kb_in_bytes:
         return "0 KB"
     elif abs(size) > mb_in_bytes:
@@ -192,7 +192,7 @@ def format_size(size):
         return f"{size} bytes"
 
 def format_size_with_indicator(size):
-    size_indicator = "🔴" if size > 0 else "🟢"
+    size_indicator = "🔴" if size > kb_in_bytes else "🟢"
 
     return f"{format_size(size)} {size_indicator}"
 
