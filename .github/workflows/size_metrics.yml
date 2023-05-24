@@ -10,7 +10,7 @@ on:
     branches: [ "master", "main", "release/*", "feature/*" ]
 
 env:
-  size_report_file_name: apk_size_diff_report.html
+  size_diff_report_file: apk_size_diff_report.html
 
 jobs:
   build:
@@ -93,7 +93,7 @@ jobs:
           name: ${{ env.base_short_sha }}.apk
           path: app/build/outputs/apk/release/${{ env.base_short_sha }}.apk
 
-  size_report:
+  size_diff_report:
     needs: build
     name: Size Report
     runs-on: ubuntu-latest
@@ -109,7 +109,7 @@ jobs:
         with:
           name: ${{ needs.build.outputs.base_short_sha }}.apk
 
-      # here we use our custom python script to generate file matching size_report_file_name
+      # here we use our custom python script to generate file matching size_diff_report_file
       - name: Generate size report
         run: |
           chmod +x ./.github/scripts/compare_apks.py
@@ -118,18 +118,18 @@ jobs:
       - name: Upload Size Report html file
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.size_report_file_name }}
-          path: ${{ env.size_report_file_name }}
+          name: ${{ env.size_diff_report_file }}
+          path: ${{ env.size_diff_report_file }}
 
   pr_comment:
-    needs: size_report
+    needs: size_diff_report
     name: PR Comment (Size Report)
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: ${{ env.size_report_file_name }}
+          name: ${{ env.size_diff_report_file }}
 
       - name: Add PR Comment
         uses: actions/github-script@v6
