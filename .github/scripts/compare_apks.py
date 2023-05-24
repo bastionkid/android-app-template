@@ -155,7 +155,6 @@ def update_if_present(components, key, value):
         components[key] = components[key] + value
     else:
         components[key] = value
-    return
 
 # generate dictionary of the grouped contents of an apk file
 def get_apk_components(apk_file):
