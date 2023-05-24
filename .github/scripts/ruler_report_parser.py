@@ -217,7 +217,7 @@ def generate_size_diff_html():
     html += f"<tr><td>apk</td><td>{format_size(apk1DownloadSize)}</td><td>{format_size(apk2DownloadSize)}</td><td>{format_size_with_indicator(apk2DownloadSize - apk1DownloadSize)}</td></tr>"
     html += "</li></ul></table></body></html>"
 
-    with open("apk_size_diff_report.html", "w") as file:
+    with open("ruler_diff_report.html", "w") as file:
         file.write(html)
 
 # read arguments passed to this script
