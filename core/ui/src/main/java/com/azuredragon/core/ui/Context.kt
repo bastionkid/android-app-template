@@ -2,7 +2,6 @@ package com.azuredragon.core.ui
 
 import android.content.Context
 import android.content.ContextWrapper
-import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.widget.Toast
@@ -34,9 +33,6 @@ fun Context.vibrate(pattern: LongArray) {
     val vibrator = getSystemService<Vibrator>()
 
     if (vibrator?.hasVibrator() == true) {
-        if (Build.VERSION.SDK_INT >= 26)
-            vibrator.vibrate(VibrationEffect.createWaveform(pattern, -1))
-        else
-            vibrator.vibrate(pattern, -1)
+        vibrator.vibrate(VibrationEffect.createWaveform(pattern, -1))
     }
 }
