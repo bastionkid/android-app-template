@@ -158,7 +158,6 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
-    implementation(libs.androidx.window.manager)
 
     implementation(libs.koin.core)
     implementation(libs.koin.android)
