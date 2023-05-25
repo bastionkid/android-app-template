@@ -123,6 +123,11 @@ android {
     experimentalProperties["android.experimental.r8.dex-startup-optimization"] = true
 }
 
+baselineProfile {
+    enableR8BaselineProfileRewrite = true
+    automaticGenerationDuringBuild = true
+}
+
 ruler {
     abi.set("arm64-v8a")
     locale.set("en")
