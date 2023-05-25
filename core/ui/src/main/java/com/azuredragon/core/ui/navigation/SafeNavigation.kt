@@ -83,9 +83,7 @@ fun Fragment.navigateUpSafely(@IdRes currentDestinationId: Int): Boolean {
         val navController = findNavController()
 
         if (navController.currentDestination?.id == currentDestinationId) {
-            lifecycleScope.launchWhenStarted {
-                navController.navigateUp()
-            }
+            navController.navigateUp()
             true
         } else {
             false
@@ -103,9 +101,7 @@ fun Fragment.popUpToSafely(
         val navController = findNavController()
 
         if (navController.currentDestination?.id == currentDestinationId) {
-            lifecycleScope.launchWhenStarted {
-                navController.navigateUp()
-            }
+            navController.navigateUp()
             true
         } else {
             false
@@ -122,17 +118,15 @@ private fun LifecycleCoroutineScope.navigateSafely(
     bundle: Bundle? = null,
     navOptions: NavOptions? = null,
 ) {
-    launchWhenStarted {
-        if (navController.currentDestination?.id == currentDestinationId) {
-            navController.navigate(
-                resId = targetDestinationId,
-                args = bundle,
-                navOptions = navOptions,
-                navigatorExtras = FragmentNavigatorExtras()
-            )
-        } else {
-            // TODO(akashkhunt): 24/09/22 Log an event here
-        }
+    if (navController.currentDestination?.id == currentDestinationId) {
+        navController.navigate(
+            resId = targetDestinationId,
+            args = bundle,
+            navOptions = navOptions,
+            navigatorExtras = FragmentNavigatorExtras()
+        )
+    } else {
+        // TODO(akashkhunt): 24/09/22 Log an event here
     }
 }
 
@@ -142,15 +136,13 @@ private fun LifecycleCoroutineScope.navigateToDeepLinkSafely(
     deepLink: String,
     navOptions: NavOptions? = null,
 ) {
-    launchWhenStarted {
-        if (navController.currentDestination?.id == currentDestinationId) {
-            navController.navigate(
-                deepLink = Uri.parse(deepLink),
-                navOptions = navOptions,
-            )
-        } else {
-            // TODO(akashkhunt): 24/09/22 Log an event here
-        }
+    if (navController.currentDestination?.id == currentDestinationId) {
+        navController.navigate(
+            deepLink = Uri.parse(deepLink),
+            navOptions = navOptions,
+        )
+    } else {
+        // TODO(akashkhunt): 24/09/22 Log an event here
     }
 }
 
