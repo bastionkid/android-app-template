@@ -47,7 +47,8 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-            /usr/local/lib/android/sdk/build-tools/34.0.0-rc3
+            /Users/runner/Library/Android/sdk/build-tools
+            /Users/runner/Library/Android/sdk/system-images
           key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
 
       - name: Generate shorter github.sha for head branch
@@ -58,9 +59,9 @@ jobs:
           echo "head_short_sha=${short_sha}" >> "$GITHUB_ENV"
           echo "head_short_sha=${short_sha}" >> "$GITHUB_OUTPUT"
 
-      - name: Build Debug APK for head branch and rename it to match head-short-sha result
+      - name: Build release APK for head branch and rename it to match head-short-sha result
         run: |
-          ./gradlew assembleRelease -PtargetDensity=xxhdpi -PtargetAbi=arm64-v8a -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile
+          ./gradlew assembleRelease -PtargetDensity=xxhdpi -PtargetAbi=arm64-v8a -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect
           mv app/build/outputs/apk/release/app-xxhdpiArm64-v8a-release-unsigned.apk app/build/outputs/apk/release/${{ env.head_short_sha }}.apk
 
       - name: Upload APK
@@ -82,9 +83,9 @@ jobs:
           echo "base_short_sha=${short_sha}" >> "$GITHUB_ENV"
           echo "base_short_sha=${short_sha}" >> "$GITHUB_OUTPUT"
 
-      - name: Build Debug APK for base branch and rename it to match base-short-sha result
+      - name: Build release APK for base branch and rename it to match base-short-sha result
         run: |
-          ./gradlew assembleRelease -PtargetDensity=xxhdpi -PtargetAbi=arm64-v8a -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile
+          ./gradlew assembleRelease -PtargetDensity=xxhdpi -PtargetAbi=arm64-v8a -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect
           mv app/build/outputs/apk/release/app-xxhdpiArm64-v8a-release-unsigned.apk app/build/outputs/apk/release/${{ env.base_short_sha }}.apk
 
       - name: Upload APK

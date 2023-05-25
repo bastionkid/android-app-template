@@ -15,7 +15,7 @@ env:
 jobs:
   generate_report:
     name: Generate Ruler Report
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     outputs:
       head_short_sha: ${{ steps.head-short-sha.outputs.head_short_sha }}
@@ -47,7 +47,8 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-            /usr/local/lib/android/sdk/build-tools/34.0.0-rc3
+            /usr/local/lib/android/sdk/build-tools
+            /usr/local/lib/android/sdk/system-images
           key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
 
       - name: Generate shorter github.sha for head branch
@@ -61,7 +62,7 @@ jobs:
       # generate component wise report using ruler gradle task
       - name: Generate Report
         run: |
-          ./gradlew analyzeReleaseBundle -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile
+          ./gradlew analyzeReleaseBundle -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect
           mv app/build/reports/ruler/release/report.html app/build/reports/ruler/release/${{ env.head_short_sha }}.html
           mv app/build/reports/ruler/release/report.json app/build/reports/ruler/release/${{ env.head_short_sha }}.json
 
@@ -95,7 +96,7 @@ jobs:
       # generate component wise report using ruler gradle task
       - name: Generate Report
         run: |
-          ./gradlew analyzeReleaseBundle -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile
+          ./gradlew analyzeReleaseBundle -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect
           mv app/build/reports/ruler/release/report.html app/build/reports/ruler/release/${{ env.base_short_sha }}.html
           mv app/build/reports/ruler/release/report.json app/build/reports/ruler/release/${{ env.base_short_sha }}.json
 
