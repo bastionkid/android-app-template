@@ -18,7 +18,7 @@ android {
 
     defaultConfig {
         applicationId = "com.azuredragon.app"
-        minSdk = 23
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -46,11 +46,6 @@ android {
             // who clones the code to sign and run the release variant, use the debug signing key.
             //TODO(akashkhunt): 18/09/22 Abstract the signing configuration to a separate file to avoid hardcoding this.
             //signingConfig = signingConfigs.getByName("debug")
-        }
-        create("benchmark") {
-            isDebuggable = false
-            signingConfig = signingConfigs.getByName("debug")
-            matchingFallbacks += listOf("release")
         }
     }
 
@@ -123,6 +118,14 @@ android {
 //        enable("StopShip")
 //        fatal("StopShip")
     }
+
+    experimentalProperties["android.experimental.art-profile-r8-rewriting"] = true
+    experimentalProperties["android.experimental.r8.dex-startup-optimization"] = true
+}
+
+baselineProfile {
+    enableR8BaselineProfileRewrite = true
+    automaticGenerationDuringBuild = true
 }
 
 ruler {
@@ -170,5 +173,5 @@ dependencies {
     androidTestImplementation(libs.androidx.test.espresso.core)
 
     implementation(libs.androidx.profileinstaller)
-    "baselineProfile"(project(mapOf("path" to ":baselineprofile")))
+    baselineProfile(projects.baselineprofile)
 }

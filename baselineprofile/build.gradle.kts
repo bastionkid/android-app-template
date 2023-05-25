@@ -11,7 +11,7 @@ android {
     compileSdk = 33
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 26
         targetSdk = 33
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -29,7 +29,7 @@ android {
     targetProjectPath = ":app"
 
     testOptions.managedDevices.devices {
-        create<ManagedVirtualDevice>("pixel6Api31") {
+        create<ManagedVirtualDevice>("pixel6Api31Aosp") {
             device = "Pixel 6"
             apiLevel = 31
             systemImageSource = "aosp"
@@ -40,7 +40,7 @@ android {
 // This is the configuration block for the Baseline Profile plugin.
 // You can specify to run the generators on a managed devices or connected devices.
 baselineProfile {
-    managedDevices += "pixel6Api31"
+    managedDevices += "pixel6Api31Aosp"
     useConnectedDevices = false
 }
 

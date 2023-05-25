@@ -61,7 +61,7 @@ jobs:
       # generate component wise report using ruler gradle task
       - name: Generate Report
         run: |
-          ./gradlew analyzeReleaseBundle
+          ./gradlew analyzeReleaseBundle -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile
           mv app/build/reports/ruler/release/report.html app/build/reports/ruler/release/${{ env.head_short_sha }}.html
           mv app/build/reports/ruler/release/report.json app/build/reports/ruler/release/${{ env.head_short_sha }}.json
 
@@ -95,7 +95,7 @@ jobs:
       # generate component wise report using ruler gradle task
       - name: Generate Report
         run: |
-          ./gradlew analyzeReleaseBundle
+          ./gradlew analyzeReleaseBundle -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile
           mv app/build/reports/ruler/release/report.html app/build/reports/ruler/release/${{ env.base_short_sha }}.html
           mv app/build/reports/ruler/release/report.json app/build/reports/ruler/release/${{ env.base_short_sha }}.json
 
