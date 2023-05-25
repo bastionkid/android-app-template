@@ -170,5 +170,5 @@ dependencies {
     androidTestImplementation(libs.androidx.test.espresso.core)
 
     implementation(libs.androidx.profileinstaller)
-    "baselineProfile"(project(mapOf("path" to ":baselineprofile")))
+    baselineProfile(projects.baselineprofile)
 }
