@@ -18,7 +18,7 @@ android {
 
     defaultConfig {
         applicationId = "com.azuredragon.app"
-        minSdk = 23
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
