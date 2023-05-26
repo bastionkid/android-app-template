@@ -15,7 +15,7 @@ env:
 jobs:
   generate_report:
     name: Generate Ruler Report
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     outputs:
       head_short_sha: ${{ steps.head-short-sha.outputs.head_short_sha }}

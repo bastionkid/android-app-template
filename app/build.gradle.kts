@@ -125,7 +125,10 @@ android {
 
 baselineProfile {
     enableR8BaselineProfileRewrite = true
-    automaticGenerationDuringBuild = true
+
+    // This should be enabled on runners supporting GMD, which required support
+    // for nested-virtualization
+    automaticGenerationDuringBuild = false
 }
 
 ruler {
