@@ -1,7 +1,6 @@
-import os
-import subprocess
 import sys
 import zipfile
+import subprocess
 
 # html_head = """
 #     <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="css/style.css" rel="stylesheet"><script defer="" src="js/script.js"></script><style>
@@ -196,8 +195,8 @@ def format_size_with_indicator(size):
 
     return f"{format_size(size)} {size_indicator}"
 
-def apk_download_size(apk_file):
-    command = f"{apk_analyzer_path} apk download-size {apk_file}"
+def apk_size(apk_file, size_type):
+    command = f"{apk_analyzer_path} apk {size_type} {apk_file}"
 
     # Run the command using subprocess
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -221,10 +220,10 @@ def generate_size_diff_html():
         html += f"<tr><td>{component}</td><td>{format_size(size1)}</td><td>{format_size(size2)}</td><td>{format_size_with_indicator(size2 - size1)}</td></tr>"
 
     # calculate size of the apk files
-    apk1FileSize = os.path.getsize(apk1Name)
-    apk2FileSize = os.path.getsize(apk2Name)
-    apk1DownloadSize = apk_download_size(apk1Name)
-    apk2DownloadSize = apk_download_size(apk2Name)
+    apk1FileSize = apk_size(apk1Name, 'file-size')
+    apk2FileSize = apk_size(apk2Name, 'file-size')
+    apk1DownloadSize = apk_size(apk1Name, 'download-size')
+    apk2DownloadSize = apk_size(apk2Name, 'download-size')
 
     html += f"<tr><td>apk (Install Size)</td><td>{format_size(apk1FileSize)}</td><td>{format_size(apk2FileSize)}</td><td>{format_size_with_indicator(apk2FileSize - apk1FileSize)}</td></tr>"
     html += f"<tr><td>apk (Download Size)</td><td>{format_size(apk1DownloadSize)}</td><td>{format_size(apk2DownloadSize)}</td><td>{format_size_with_indicator(apk2DownloadSize - apk1DownloadSize)}</td></tr>"
