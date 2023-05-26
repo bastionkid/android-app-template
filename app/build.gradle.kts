@@ -74,8 +74,8 @@ android {
                 // Enables building multiple APKs per ABI.
                 isEnable = true
 
-                // By default all ABIs are included, so use reset() and include to specify that you only
-                // want APKs for e.g. arm64-v8a, armeabi-v7a & x86_64.
+                // By default all ABIs are included, so use reset() and include to specify that
+                // you only want APKs for e.g. arm64-v8a, armeabi-v7a & x86_64.
 
                 // Resets the list of ABIs for Gradle to create APKs for to none.
                 reset()
@@ -95,8 +95,8 @@ android {
                 // Enables building multiple APKs per ABI.
                 isEnable = true
 
-                // By default all ABIs are included, so use reset() and include to specify that you only
-                // want APKs for e.g. xxxhdpi, xxhdpi & xhdpi.
+                // By default all ABIs are included, so use reset() and include to specify that
+                // you only want APKs for e.g. xxxhdpi, xxhdpi & xhdpi.
 
                 // Resets the list of ABIs for Gradle to create APKs for to none.
                 reset()

@@ -169,7 +169,7 @@ def get_apk_components(json_data):
     for component in json_data['components']:
         for file in component['files']:
             if file['name'].startswith('/lib/'):
-                update_if_present(components, 'Native libraries', file['downloadSize'])
+                update_if_present(components, 'Native libraries (arm64-v8a)', file['downloadSize'])
             elif file['name'].startswith('/resources.arsc') or file['name'].startswith('/res/'):
                 update_if_present(components, 'Resources', file['downloadSize'])
             elif file['name'].startswith('/assets/'):
