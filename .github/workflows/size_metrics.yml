@@ -47,8 +47,8 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-            /Users/runner/Library/Android/sdk/build-tools
-            /Users/runner/Library/Android/sdk/system-images
+            /usr/local/lib/android/sdk/build-tools
+            /usr/local/lib/android/sdk/system-images
           key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
 
       - name: Generate shorter github.sha for head branch
