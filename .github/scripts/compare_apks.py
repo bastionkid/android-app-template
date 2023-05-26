@@ -225,7 +225,7 @@ def generate_size_diff_html():
     apk1DownloadSize = apk_size(apk1Name, 'download-size')
     apk2DownloadSize = apk_size(apk2Name, 'download-size')
 
-    html += f"<tr><td>apk (Install Size)</td><td>{format_size(apk1FileSize)}</td><td>{format_size(apk2FileSize)}</td><td>{format_size_with_indicator(apk2FileSize - apk1FileSize)}</td></tr>"
+    html += f"<tr><td>apk (File Size)</td><td>{format_size(apk1FileSize)}</td><td>{format_size(apk2FileSize)}</td><td>{format_size_with_indicator(apk2FileSize - apk1FileSize)}</td></tr>"
     html += f"<tr><td>apk (Download Size)</td><td>{format_size(apk1DownloadSize)}</td><td>{format_size(apk2DownloadSize)}</td><td>{format_size_with_indicator(apk2DownloadSize - apk1DownloadSize)}</td></tr>"
     html += "</li></ul></table></body></html>"
 
