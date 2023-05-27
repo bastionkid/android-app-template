@@ -151,6 +151,14 @@ import subprocess
 kb_in_bytes = 1024
 mb_in_bytes = 1024 * 1024
 
+# command executor
+def execute_command(command):
+    # Run the command using subprocess
+    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output, error = process.communicate()
+
+    return output.decode()
+
 # add/update the value (i.e. size) based on the present of key
 def update_if_present(components, key, value):
     if key in components:
@@ -159,27 +167,37 @@ def update_if_present(components, key, value):
         components[key] = value
 
 # generate dictionary of the grouped contents of an apk file
-def get_apk_components(apk_file):
+def get_apk_components(apk_file, size_type):
+    command = f"{apk_analyzer_path} files list --{size_type} {apk_file}"
+
+    files_with_size_string = execute_command(command)
+    files_with_size_list = files_with_size_string.split('\n')
+
     components = {}
-    with zipfile.ZipFile(apk_file, 'r') as z:
-        for info in z.infolist():
-            if info.filename.startswith('lib/arm64-v8a'):
-                update_if_present(components, 'lib/arm64-v8a/', info.file_size)
-            elif info.filename.startswith('classes') and info.filename.endswith('.dex'):
-                update_if_present(components, 'classes*.dex', info.file_size)
-            elif info.filename.startswith('resources.arsc'):
-                update_if_present(components, 'resources.arsc', info.file_size)
-            elif info.filename.startswith('res'):
-                update_if_present(components, 'res/', info.file_size)
-            elif info.filename.startswith('assets/'):
-                update_if_present(components, 'assets', info.file_size)
-            elif info.filename.startswith('META-INF'):
-                update_if_present(components, 'META-INF/', info.file_size)
-            else:
-                update_if_present(components, 'miscellaneous', info.file_size)
+
+    for item in files_with_size_list:
+        size_and_file_name = item.split('\t')
+
+        # this will filter out empty lines and just the lines with size and no file name
+        if len(size_and_file_name) == 2 and len(size_and_file_name[1]) > 1:
+            size = int(size_and_file_name[0])
+            file_name = size_and_file_name[1]
+
+            if file_name == '/lib/arm64-v8a/':
+                update_if_present(components, 'Native libraries (arm64-v8a)', size)
+            elif file_name.startswith('/classes') and file_name.endswith('.dex'):
+                update_if_present(components, 'Classes', size)
+            elif file_name == '/resources.arsc' or file_name == '/res/':
+                update_if_present(components, 'Resources', size)
+            elif file_name == '/assets/':
+                update_if_present(components, 'Assets', size)
+            elif not file_name.startswith('/lib/') and not file_name.startswith('/classes') and not file_name.startswith('/resources.arsc') and not file_name.startswith('/res/') and not file_name.startswith('/assets/') and not file_name.endswith('/'):
+                print(file_name)
+                update_if_present(components, 'Others', size)
+
     return components
 
-# format size
+# format bytes to KB or MB
 def format_size(size):
     if abs(size) < kb_in_bytes:
         return "0 KB"
@@ -190,19 +208,17 @@ def format_size(size):
     else:
         return f"{size} bytes"
 
+# add an indicator to highlight the size diff
 def format_size_with_indicator(size):
     size_indicator = "🔴" if size > kb_in_bytes else "🟢"
 
     return f"{format_size(size)} {size_indicator}"
 
+# get apk size based on size_type i.e. file-size or download-size
 def apk_size(apk_file, size_type):
     command = f"{apk_analyzer_path} apk {size_type} {apk_file}"
 
-    # Run the command using subprocess
-    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    output, error = process.communicate()
-
-    return int(output.decode())
+    return int(execute_command(command))
 
 # generate html file containing size diff in HRF
 def generate_size_diff_html():
@@ -242,7 +258,7 @@ apk1Name = f"{apk1Sha}.apk"
 apk2Name = f"{apk2Sha}.apk"
 
 # generate dictionaries for the apk components size
-components1 = get_apk_components(apk1Name)
-components2 = get_apk_components(apk2Name)
+components1 = get_apk_components(apk1Name, 'download-size')
+components2 = get_apk_components(apk2Name, 'download-size')
 
 generate_size_diff_html()
