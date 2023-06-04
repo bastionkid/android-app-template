@@ -192,7 +192,6 @@ def get_apk_components(apk_file, size_type):
             elif file_name == '/assets/':
                 update_if_present(components, 'Assets', size)
             elif not file_name.startswith('/lib/') and not file_name.startswith('/classes') and not file_name.startswith('/resources.arsc') and not file_name.startswith('/res/') and not file_name.startswith('/assets/') and not file_name.endswith('/'):
-                print(file_name)
                 update_if_present(components, 'Others', size)
 
     return components
