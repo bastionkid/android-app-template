@@ -12,24 +12,24 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class TimeModel(
-    val days: Int,
-    val hours: Int,
-    val minutes: Int,
-    val seconds: Int,
-): Parcelable {
-    companion object {
-        fun createFromTimeInMillis(timeInMillis: Long): TimeModel {
-            val seconds = (timeInMillis / ONE_SECOND_IN_MILLIS) % ONE_MINUTE_IN_SECONDS
-            val minutes = (timeInMillis / ONE_MINUTE_IN_MILLIS) % ONE_HOUR_IN_MINUTES
-            val hours = (timeInMillis / ONE_HOUR_IN_MILLIS) % ONE_DAY_IN_HOURS
-            val days = (timeInMillis / ONE_DAY_IN_MILLIS)
+	val days: Int,
+	val hours: Int,
+	val minutes: Int,
+	val seconds: Int,
+) : Parcelable {
+	companion object {
+		fun createFromTimeInMillis(timeInMillis: Long): TimeModel {
+			val seconds = (timeInMillis / ONE_SECOND_IN_MILLIS) % ONE_MINUTE_IN_SECONDS
+			val minutes = (timeInMillis / ONE_MINUTE_IN_MILLIS) % ONE_HOUR_IN_MINUTES
+			val hours = (timeInMillis / ONE_HOUR_IN_MILLIS) % ONE_DAY_IN_HOURS
+			val days = (timeInMillis / ONE_DAY_IN_MILLIS)
 
-            return TimeModel(
-                days = days.toInt(),
-                hours = hours.toInt(),
-                minutes = minutes.toInt(),
-                seconds = seconds.toInt(),
-            )
-        }
-    }
+			return TimeModel(
+				days = days.toInt(),
+				hours = hours.toInt(),
+				minutes = minutes.toInt(),
+				seconds = seconds.toInt(),
+			)
+		}
+	}
 }

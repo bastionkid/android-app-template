@@ -13,20 +13,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.Fragment
 import com.azuredragon.core.ui.compose.composeWithSurface
 
-class HomeFragment: Fragment() {
+class HomeFragment : Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        return composeWithSurface(requireContext()) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                Text(
-                    text = stringResource(id = R.string.label_home),
-                    modifier = Modifier.align(Alignment.Center),
-                )
-            }
-        }
-    }
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?,
+	): View {
+		return composeWithSurface(requireContext()) {
+			Box(modifier = Modifier.fillMaxSize()) {
+				Text(
+					text = stringResource(id = R.string.label_home),
+					modifier = Modifier.align(Alignment.Center),
+				)
+			}
+		}
+	}
 }

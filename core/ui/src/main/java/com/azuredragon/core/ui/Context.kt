@@ -11,28 +11,28 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 
 fun Context.showToast(text: CharSequence) {
-    Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+	Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
 }
 
 fun Context.showToastLong(text: CharSequence) {
-    Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+	Toast.makeText(this, text, Toast.LENGTH_LONG).show()
 }
 
 @ColorInt
 fun Context.getTransparentColor(): Int {
-    return ContextCompat.getColor(this, android.R.color.transparent)
+	return ContextCompat.getColor(this, android.R.color.transparent)
 }
 
 fun Context.getActivity(): AppCompatActivity = when (this) {
-    is AppCompatActivity -> this
-    is ContextWrapper -> baseContext.getActivity()
-    else -> throw Exception("Activity not found")
+	is AppCompatActivity -> this
+	is ContextWrapper -> baseContext.getActivity()
+	else -> throw Exception("Activity not found")
 }
 
 fun Context.vibrate(pattern: LongArray) {
-    val vibrator = getSystemService<Vibrator>()
+	val vibrator = getSystemService<Vibrator>()
 
-    if (vibrator?.hasVibrator() == true) {
-        vibrator.vibrate(VibrationEffect.createWaveform(pattern, -1))
-    }
+	if (vibrator?.hasVibrator() == true) {
+		vibrator.vibrate(VibrationEffect.createWaveform(pattern, -1))
+	}
 }

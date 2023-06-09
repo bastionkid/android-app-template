@@ -7,21 +7,21 @@ import kotlinx.serialization.serializer
 import kotlin.reflect.KClass
 
 class JsonSerializerImpl(
-    private val json: Json,
-): Serializer {
+	private val json: Json,
+) : Serializer {
 
-    @OptIn(InternalSerializationApi::class)
-    override fun <T: Any> fromJson(jsonString: String, clazz: KClass<T>): T {
-        return json.decodeFromString(clazz.serializer(), jsonString)
-    }
+	@OptIn(InternalSerializationApi::class)
+	override fun <T : Any> fromJson(jsonString: String, clazz: KClass<T>): T {
+		return json.decodeFromString(clazz.serializer(), jsonString)
+	}
 
-    @OptIn(InternalSerializationApi::class)
-    override fun <T: Any> listFromJson(jsonString: String, clazz: KClass<T>): List<T> {
-        return json.decodeFromString(ListSerializer(clazz.serializer()), jsonString)
-    }
+	@OptIn(InternalSerializationApi::class)
+	override fun <T : Any> listFromJson(jsonString: String, clazz: KClass<T>): List<T> {
+		return json.decodeFromString(ListSerializer(clazz.serializer()), jsonString)
+	}
 
-    @OptIn(InternalSerializationApi::class)
-    override fun <T: Any> toJson(data: T, clazz: KClass<T>): String {
-        return json.encodeToString(clazz.serializer(), data)
-    }
+	@OptIn(InternalSerializationApi::class)
+	override fun <T : Any> toJson(data: T, clazz: KClass<T>): String {
+		return json.encodeToString(clazz.serializer(), data)
+	}
 }

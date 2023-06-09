@@ -14,42 +14,42 @@ import com.azuredragon.core.ui.compose.composeWithSurface
 import com.azuredragon.core.ui.navigation.getNavOptionsForPopUpToSelfInclusive
 import com.azuredragon.core.ui.navigation.navigateToDeepLinkSafely
 
-class LaunchRouterFragment: Fragment() {
+class LaunchRouterFragment : Fragment() {
 
-    private val viewModel: LaunchRouterViewModel by viewModels()
+	private val viewModel: LaunchRouterViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return composeWithSurface(
-            context = requireContext(),
-            backgroundColor = Color.Transparent,
-            statusBarColor = Color.Transparent,
-            navigationBarColor = Color.Transparent,
-        ) {
-            val uiState by viewModel.launchRoute.collectAsStateWithLifecycle()
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?,
+	): View {
+		return composeWithSurface(
+			context = requireContext(),
+			backgroundColor = Color.Transparent,
+			statusBarColor = Color.Transparent,
+			navigationBarColor = Color.Transparent,
+		) {
+			val uiState by viewModel.launchRoute.collectAsStateWithLifecycle()
 
-            when (uiState) {
-                LaunchRoute.Login -> {
-                    navigateToDeepLink("app://azuredragon.com/login")
-                }
-                LaunchRoute.Home -> {
-                    navigateToDeepLink("app://azuredragon.com/home")
-                }
-                else -> {
-                    // default is null so no need to do anything here
-                }
-            }
-        }
-    }
+			when (uiState) {
+				LaunchRoute.Login -> {
+					navigateToDeepLink("app://azuredragon.com/login")
+				}
+				LaunchRoute.Home -> {
+					navigateToDeepLink("app://azuredragon.com/home")
+				}
+				else -> {
+					// default is null so no need to do anything here
+				}
+			}
+		}
+	}
 
-    private fun navigateToDeepLink(deepLink: String) {
-        navigateToDeepLinkSafely(
-            currentDestinationId = R.id.launchRouterFragment,
-            deepLink = deepLink,
-            navOptions = getNavOptionsForPopUpToSelfInclusive(R.id.launchRouterFragment),
-        )
-    }
+	private fun navigateToDeepLink(deepLink: String) {
+		navigateToDeepLinkSafely(
+			currentDestinationId = R.id.launchRouterFragment,
+			deepLink = deepLink,
+			navOptions = getNavOptionsForPopUpToSelfInclusive(R.id.launchRouterFragment),
+		)
+	}
 }

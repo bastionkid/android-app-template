@@ -3,13 +3,13 @@ package com.azuredragon.core.ui
 import android.view.View
 
 fun View.show() {
-    visibility = View.VISIBLE
+	visibility = View.VISIBLE
 }
 
 fun View.hide() {
-    visibility = View.INVISIBLE
+	visibility = View.INVISIBLE
 }
 
 fun View.gone() {
-    visibility = View.GONE
+	visibility = View.GONE
 }

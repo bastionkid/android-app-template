@@ -7,23 +7,23 @@ import com.azuredragon.core.ui.compose.theme.AppTheme
 
 @Composable
 fun SurfaceWithAppTheme(
-    backgroundColor: Color = Color.Unspecified,
-    statusBarColor: Color = Color.Unspecified,
-    navigationBarColor: Color = Color.Unspecified,
-    content: @Composable () -> Unit,
+	backgroundColor: Color = Color.Unspecified,
+	statusBarColor: Color = Color.Unspecified,
+	navigationBarColor: Color = Color.Unspecified,
+	content: @Composable () -> Unit,
 ) {
-    AppTheme(
-        statusBarColor = statusBarColor,
-        navigationBarColor = navigationBarColor,
-    ) {
-        val color = if (backgroundColor == Color.Unspecified) {
-            AppTheme.colors.uiBackground
-        } else {
-            backgroundColor
-        }
+	AppTheme(
+		statusBarColor = statusBarColor,
+		navigationBarColor = navigationBarColor,
+	) {
+		val color = if (backgroundColor == Color.Unspecified) {
+			AppTheme.colors.uiBackground
+		} else {
+			backgroundColor
+		}
 
-        Surface(color = color) {
-            content()
-        }
-    }
+		Surface(color = color) {
+			content()
+		}
+	}
 }

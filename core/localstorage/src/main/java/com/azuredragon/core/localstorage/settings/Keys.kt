@@ -2,5 +2,5 @@ package com.azuredragon.core.localstorage.settings
 
 object Keys {
 
-    const val TOKEN = "token"
+	const val TOKEN = "token"
 }

@@ -12,27 +12,27 @@ import com.azuredragon.core.ui.R
 
 @Composable
 fun ShowLoadingAnimation(modifier: Modifier = Modifier) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading))
+	val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading))
 
-    LottieAnimation(
-        composition = composition,
-        restartOnPlay = true,
-        iterations = Int.MAX_VALUE,
-        modifier = modifier.fillMaxSize(),
-    )
+	LottieAnimation(
+		composition = composition,
+		restartOnPlay = true,
+		iterations = Int.MAX_VALUE,
+		modifier = modifier.fillMaxSize(),
+	)
 }
 
 @Composable
 fun ShowLottieAnimation(
-    @RawRes lottieRes: Int,
-    modifier: Modifier = Modifier,
+	@RawRes lottieRes: Int,
+	modifier: Modifier = Modifier,
 ) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(lottieRes))
+	val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(lottieRes))
 
-    LottieAnimation(
-        composition = composition,
-        restartOnPlay = true,
-        iterations = Int.MAX_VALUE,
-        modifier = modifier,
-    )
+	LottieAnimation(
+		composition = composition,
+		restartOnPlay = true,
+		iterations = Int.MAX_VALUE,
+		modifier = modifier,
+	)
 }
