@@ -1,0 +1,50 @@
+name: Spotless
+
+# cancel in-progress workflow if new commits are pushed to same head branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  check:
+    name: Spotless Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+
+      # this step is optional if you don't use JDK 17 as ubuntu-latest runner already
+      # has java setup which defaults to JDK 11
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # this step is optional and should be added in case you get "Failed to install the following
+      # Android SDK packages as some licences have not been accepted" error
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      # setup cache so that every build trigger doesn't require downloading all the
+      # dependencies used in project again and again saving tonnes of time
+      - name: Setup Gradle Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            /usr/local/lib/android/sdk/build-tools
+            /usr/local/lib/android/sdk/system-images
+          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+
+      - name: Run Spotless Check
+        run: |
+          ./gradlew spotlessCheck
