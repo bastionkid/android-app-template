@@ -16,9 +16,10 @@ plugins {
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.secrets) apply true
-    alias(libs.plugins.spotless) apply false
     alias(libs.plugins.android.test) apply false
     alias(libs.plugins.androidx.baselineprofile) apply false
+
+    alias(libs.plugins.spotless)
 }
 
 secrets {
@@ -29,4 +30,15 @@ secrets {
     // A properties file containing default secret values. This file can be
     // checked in version control.
     //defaultPropertiesFileName = 'local.defaults.properties'
+}
+
+spotless {
+    kotlin {
+        target("**/*.kt")
+        ktlint()
+            .setUseExperimental(true)
+        trimTrailingWhitespace()
+        indentWithTabs()
+        endWithNewline()
+    }
 }
