@@ -7,22 +7,22 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class LaunchRouterViewModel: ViewModel() {
+class LaunchRouterViewModel : ViewModel() {
 
-    private val viewModelState = MutableStateFlow<LaunchRoute?>(null)
+	private val viewModelState = MutableStateFlow<LaunchRoute?>(null)
 
-    val launchRoute = viewModelState.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(),
-        viewModelState.value,
-    )
+	val launchRoute = viewModelState.stateIn(
+		viewModelScope,
+		SharingStarted.WhileSubscribed(),
+		viewModelState.value,
+	)
 
-    init {
-        viewModelScope.launch {
-            viewModelState.value = when (true) {
-                true -> LaunchRoute.Login
-                else -> LaunchRoute.Home
-            }
-        }
-    }
+	init {
+		viewModelScope.launch {
+			viewModelState.value = when (true) {
+				true -> LaunchRoute.Login
+				else -> LaunchRoute.Home
+			}
+		}
+	}
 }

@@ -16,33 +16,33 @@ import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val LightColorPalette = ThemeColors(
-    brand = NeonBlue,
-    brandSecondary = NeonBlue,
-    uiBackground = White,
-    uiBorder = Transparent,
-    textPrimary = Biscay,
-    textSecondary = RockBlue,
-    iconPrimary = NeonBlue,
-    iconSecondary = NeonBlue,
-    iconInteractive = Gainsboro,
-    iconInteractiveInactive = Gainsboro,
-    error = VenetianRed,
-    isDark = false,
+	brand = NeonBlue,
+	brandSecondary = NeonBlue,
+	uiBackground = White,
+	uiBorder = Transparent,
+	textPrimary = Biscay,
+	textSecondary = RockBlue,
+	iconPrimary = NeonBlue,
+	iconSecondary = NeonBlue,
+	iconInteractive = Gainsboro,
+	iconInteractiveInactive = Gainsboro,
+	error = VenetianRed,
+	isDark = false,
 )
 
 private val DarkColorPalette = ThemeColors(
-    brand = NeonBlue,
-    brandSecondary = NeonBlue,
-    uiBackground = White,
-    uiBorder = Transparent,
-    textPrimary = Biscay,
-    textSecondary = RockBlue,
-    iconPrimary = NeonBlue,
-    iconSecondary = NeonBlue,
-    iconInteractive = Gainsboro,
-    iconInteractiveInactive = Gainsboro,
-    error = VenetianRed,
-    isDark = false,
+	brand = NeonBlue,
+	brandSecondary = NeonBlue,
+	uiBackground = White,
+	uiBorder = Transparent,
+	textPrimary = Biscay,
+	textSecondary = RockBlue,
+	iconPrimary = NeonBlue,
+	iconSecondary = NeonBlue,
+	iconInteractive = Gainsboro,
+	iconInteractiveInactive = Gainsboro,
+	error = VenetianRed,
+	isDark = false,
 )
 
 /**
@@ -50,139 +50,139 @@ private val DarkColorPalette = ThemeColors(
  */
 @Stable
 class ThemeColors(
-    brand: Color,
-    brandSecondary: Color,
-    uiBackground: Color,
-    uiBorder: Color,
-    textPrimary: Color,
-    textSecondary: Color,
-    iconPrimary: Color = brand,
-    iconSecondary: Color,
-    iconInteractive: Color,
-    iconInteractiveInactive: Color,
-    error: Color,
-    notificationBadge: Color = error,
-    isDark: Boolean
+	brand: Color,
+	brandSecondary: Color,
+	uiBackground: Color,
+	uiBorder: Color,
+	textPrimary: Color,
+	textSecondary: Color,
+	iconPrimary: Color = brand,
+	iconSecondary: Color,
+	iconInteractive: Color,
+	iconInteractiveInactive: Color,
+	error: Color,
+	notificationBadge: Color = error,
+	isDark: Boolean,
 ) {
-    var brand by mutableStateOf(brand)
-        private set
-    var brandSecondary by mutableStateOf(brandSecondary)
-        private set
-    var uiBackground by mutableStateOf(uiBackground)
-        private set
-    var uiBorder by mutableStateOf(uiBorder)
-        private set
-    var textPrimary by mutableStateOf(textPrimary)
-        private set
-    var textSecondary by mutableStateOf(textSecondary)
-        private set
-    var iconPrimary by mutableStateOf(iconPrimary)
-        private set
-    var iconSecondary by mutableStateOf(iconSecondary)
-        private set
-    var iconInteractive by mutableStateOf(iconInteractive)
-        private set
-    var iconInteractiveInactive by mutableStateOf(iconInteractiveInactive)
-        private set
-    var error by mutableStateOf(error)
-        private set
-    var notificationBadge by mutableStateOf(notificationBadge)
-        private set
-    var isDark by mutableStateOf(isDark)
-        private set
+	var brand by mutableStateOf(brand)
+		private set
+	var brandSecondary by mutableStateOf(brandSecondary)
+		private set
+	var uiBackground by mutableStateOf(uiBackground)
+		private set
+	var uiBorder by mutableStateOf(uiBorder)
+		private set
+	var textPrimary by mutableStateOf(textPrimary)
+		private set
+	var textSecondary by mutableStateOf(textSecondary)
+		private set
+	var iconPrimary by mutableStateOf(iconPrimary)
+		private set
+	var iconSecondary by mutableStateOf(iconSecondary)
+		private set
+	var iconInteractive by mutableStateOf(iconInteractive)
+		private set
+	var iconInteractiveInactive by mutableStateOf(iconInteractiveInactive)
+		private set
+	var error by mutableStateOf(error)
+		private set
+	var notificationBadge by mutableStateOf(notificationBadge)
+		private set
+	var isDark by mutableStateOf(isDark)
+		private set
 
-    fun update(other: ThemeColors) {
-        brand = other.brand
-        brandSecondary = other.brandSecondary
-        uiBackground = other.uiBackground
-        uiBorder = other.uiBorder
-        textPrimary = other.textPrimary
-        textSecondary = other.textSecondary
-        iconPrimary = other.iconPrimary
-        iconSecondary = other.iconSecondary
-        iconInteractive = other.iconInteractive
-        iconInteractiveInactive = other.iconInteractiveInactive
-        error = other.error
-        notificationBadge = other.notificationBadge
-        isDark = other.isDark
-    }
+	fun update(other: ThemeColors) {
+		brand = other.brand
+		brandSecondary = other.brandSecondary
+		uiBackground = other.uiBackground
+		uiBorder = other.uiBorder
+		textPrimary = other.textPrimary
+		textSecondary = other.textSecondary
+		iconPrimary = other.iconPrimary
+		iconSecondary = other.iconSecondary
+		iconInteractive = other.iconInteractive
+		iconInteractiveInactive = other.iconInteractiveInactive
+		error = other.error
+		notificationBadge = other.notificationBadge
+		isDark = other.isDark
+	}
 
-    fun copy(): ThemeColors = ThemeColors(
-        brand = brand,
-        brandSecondary = brandSecondary,
-        uiBackground = uiBackground,
-        uiBorder = uiBorder,
-        textPrimary = textPrimary,
-        textSecondary = textSecondary,
-        iconPrimary = iconPrimary,
-        iconSecondary = iconSecondary,
-        iconInteractive = iconInteractive,
-        iconInteractiveInactive = iconInteractiveInactive,
-        error = error,
-        notificationBadge = notificationBadge,
-        isDark = isDark,
-    )
+	fun copy(): ThemeColors = ThemeColors(
+		brand = brand,
+		brandSecondary = brandSecondary,
+		uiBackground = uiBackground,
+		uiBorder = uiBorder,
+		textPrimary = textPrimary,
+		textSecondary = textSecondary,
+		iconPrimary = iconPrimary,
+		iconSecondary = iconSecondary,
+		iconInteractive = iconInteractive,
+		iconInteractiveInactive = iconInteractiveInactive,
+		error = error,
+		notificationBadge = notificationBadge,
+		isDark = isDark,
+	)
 }
 
 @Composable
 fun AppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    statusBarColor: Color = Color.Unspecified,
-    navigationBarColor: Color = Color.Unspecified,
-    content: @Composable () -> Unit,
+	darkTheme: Boolean = isSystemInDarkTheme(),
+	statusBarColor: Color = Color.Unspecified,
+	navigationBarColor: Color = Color.Unspecified,
+	content: @Composable () -> Unit,
 ) {
-    val colors = if (darkTheme) DarkColorPalette else LightColorPalette
+	val colors = if (darkTheme) DarkColorPalette else LightColorPalette
 
-    val sysUiController = rememberSystemUiController()
-    SideEffect {
-        val finalizedStatusBarColor = if (statusBarColor == Color.Unspecified) {
-            colors.uiBackground.copy(alpha = AlphaNearOpaque)
-        } else {
-            statusBarColor
-        }
+	val sysUiController = rememberSystemUiController()
+	SideEffect {
+		val finalizedStatusBarColor = if (statusBarColor == Color.Unspecified) {
+			colors.uiBackground.copy(alpha = AlphaNearOpaque)
+		} else {
+			statusBarColor
+		}
 
-        val finalizedNavigationBarColor = if (navigationBarColor == Color.Unspecified) {
-            colors.uiBackground.copy(alpha = AlphaNearOpaque)
-        } else {
-            navigationBarColor
-        }
+		val finalizedNavigationBarColor = if (navigationBarColor == Color.Unspecified) {
+			colors.uiBackground.copy(alpha = AlphaNearOpaque)
+		} else {
+			navigationBarColor
+		}
 
-        sysUiController.setStatusBarColor(color = finalizedStatusBarColor)
-        sysUiController.setNavigationBarColor(color = finalizedNavigationBarColor)
-    }
+		sysUiController.setStatusBarColor(color = finalizedStatusBarColor)
+		sysUiController.setNavigationBarColor(color = finalizedNavigationBarColor)
+	}
 
-    ProvideThemeColors(colors) {
-        MaterialTheme(
-            colors = debugColors(darkTheme),
-            typography = MaterialTypography,
-            shapes = Shapes,
-            content = content
-        )
-    }
+	ProvideThemeColors(colors) {
+		MaterialTheme(
+			colors = debugColors(darkTheme),
+			typography = MaterialTypography,
+			shapes = Shapes,
+			content = content,
+		)
+	}
 }
 
 object AppTheme {
-    val colors: ThemeColors
-        @Composable
-        get() = LocalThemeColors.current
+	val colors: ThemeColors
+		@Composable
+		get() = LocalThemeColors.current
 }
 
 @Composable
 fun ProvideThemeColors(
-    colors: ThemeColors,
-    content: @Composable () -> Unit
+	colors: ThemeColors,
+	content: @Composable () -> Unit,
 ) {
-    val colorPalette = remember {
-        // Explicitly creating a new object here so we don't mutate the initial [colors]
-        // provided, and overwrite the values set in it.
-        colors.copy()
-    }
-    colorPalette.update(colors)
-    CompositionLocalProvider(LocalThemeColors provides colorPalette, content = content)
+	val colorPalette = remember {
+		// Explicitly creating a new object here so we don't mutate the initial [colors]
+		// provided, and overwrite the values set in it.
+		colors.copy()
+	}
+	colorPalette.update(colors)
+	CompositionLocalProvider(LocalThemeColors provides colorPalette, content = content)
 }
 
 private val LocalThemeColors = staticCompositionLocalOf<ThemeColors> {
-    error("No ThemeColorPalette provided")
+	error("No ThemeColorPalette provided")
 }
 
 /**
@@ -190,20 +190,20 @@ private val LocalThemeColors = staticCompositionLocalOf<ThemeColors> {
  * [MaterialTheme.colors] in preference to [AppTheme.colors].
  */
 fun debugColors(
-    darkTheme: Boolean,
-    debugColor: Color = Color.Red
+	darkTheme: Boolean,
+	debugColor: Color = Color.Red,
 ) = Colors(
-    primary = debugColor,
-    primaryVariant = debugColor,
-    secondary = debugColor,
-    secondaryVariant = debugColor,
-    background = debugColor,
-    surface = debugColor,
-    error = debugColor,
-    onPrimary = debugColor,
-    onSecondary = debugColor,
-    onBackground = debugColor,
-    onSurface = debugColor,
-    onError = debugColor,
-    isLight = !darkTheme
+	primary = debugColor,
+	primaryVariant = debugColor,
+	secondary = debugColor,
+	secondaryVariant = debugColor,
+	background = debugColor,
+	surface = debugColor,
+	error = debugColor,
+	onPrimary = debugColor,
+	onSecondary = debugColor,
+	onBackground = debugColor,
+	onSurface = debugColor,
+	onError = debugColor,
+	isLight = !darkTheme,
 )

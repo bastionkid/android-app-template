@@ -4,11 +4,11 @@ import com.azuredragon.core.common.DataState
 
 interface HttpClient {
 
-    suspend fun <Req, Res> makeRequest(
-        requestBody: Req,
-        endPoint: String,
-        requestType: RequestType,
-    ): DataState<Res>
+	suspend fun <Req, Res> makeRequest(
+		requestBody: Req,
+		endPoint: String,
+		requestType: RequestType,
+	): DataState<Res>
 
-    fun clearApiCache()
+	fun clearApiCache()
 }

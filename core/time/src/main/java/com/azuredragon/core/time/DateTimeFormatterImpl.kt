@@ -6,28 +6,28 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 
 class DateTimeFormatterImpl(
-    val logger: Logger,
-): DateTimeFormatter {
+	val logger: Logger,
+) : DateTimeFormatter {
 
-    private val contestDateFormatter = java.time.format.DateTimeFormatter.ofPattern("dd MMM")
+	private val contestDateFormatter = java.time.format.DateTimeFormatter.ofPattern("dd MMM")
 
-    override fun parseToDateInMillis(dateString: String): Long {
-        return dateString.toInstant().toEpochMilliseconds()
-    }
+	override fun parseToDateInMillis(dateString: String): Long {
+		return dateString.toInstant().toEpochMilliseconds()
+	}
 
-    override fun getContestDateRange(startDate: Long, endDate: Long): String {
-        val timeZone = TimeZone.currentSystemDefault()
+	override fun getContestDateRange(startDate: Long, endDate: Long): String {
+		val timeZone = TimeZone.currentSystemDefault()
 
-        val startDateTime = Instant.fromEpochMilliseconds(startDate).totoJavaLocalDateTime(timeZone)
-        val endDateTime = Instant.fromEpochMilliseconds(endDate).totoJavaLocalDateTime(timeZone)
+		val startDateTime = Instant.fromEpochMilliseconds(startDate).totoJavaLocalDateTime(timeZone)
+		val endDateTime = Instant.fromEpochMilliseconds(endDate).totoJavaLocalDateTime(timeZone)
 
-        return "${contestDateFormatter.format(startDateTime)} to ${contestDateFormatter.format(endDateTime)}"
-    }
+		return "${contestDateFormatter.format(startDateTime)} to ${contestDateFormatter.format(endDateTime)}"
+	}
 
-    override fun getContestDateRange(startDate: String, endDate: String): String {
-        return getContestDateRange(
-            startDate = startDate.toInstant().toEpochMilliseconds(),
-            endDate = endDate.toInstant().toEpochMilliseconds(),
-        )
-    }
+	override fun getContestDateRange(startDate: String, endDate: String): String {
+		return getContestDateRange(
+			startDate = startDate.toInstant().toEpochMilliseconds(),
+			endDate = endDate.toInstant().toEpochMilliseconds(),
+		)
+	}
 }

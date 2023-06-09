@@ -13,20 +13,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.Fragment
 import com.azuredragon.core.ui.compose.composeWithSurface
 
-class LoginFragment: Fragment() {
+class LoginFragment : Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        return composeWithSurface(requireContext()) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                Text(
-                    text = stringResource(id = R.string.label_login),
-                    modifier = Modifier.align(Alignment.Center),
-                )
-            }
-        }
-    }
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?,
+	): View {
+		return composeWithSurface(requireContext()) {
+			Box(modifier = Modifier.fillMaxSize()) {
+				Text(
+					text = stringResource(id = R.string.label_login),
+					modifier = Modifier.align(Alignment.Center),
+				)
+			}
+		}
+	}
 }

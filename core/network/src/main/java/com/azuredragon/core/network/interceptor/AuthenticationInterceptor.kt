@@ -8,37 +8,37 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 class AuthenticationInterceptor(
-    private val logger: Logger,
-    private val appInfo: AppInfo,
-    private val tokenProvider: suspend () -> String?,
+	private val logger: Logger,
+	private val appInfo: AppInfo,
+	private val tokenProvider: suspend () -> String?,
 ) : Interceptor {
 
-    private val tokenScheme = "Bearer"
+	private val tokenScheme = "Bearer"
 
-    override fun intercept(chain: Interceptor.Chain): Response {
-        var request = chain.request()
+	override fun intercept(chain: Interceptor.Chain): Response {
+		var request = chain.request()
 
-        val token = runBlocking {
-            tokenProvider()
-        }
+		val token = runBlocking {
+			tokenProvider()
+		}
 
-        if (token == null) {
-            logger.w(TAG, "could not retrieve token")
-        }
+		if (token == null) {
+			logger.w(TAG, "could not retrieve token")
+		}
 
-        val headers = request.headers.newBuilder()
-            .apply {
-                token?.let { add(API_TOKEN_HEADER, "$tokenScheme $token") }
-            }
-            .add(APP_VERSION_CODE_HEADER, appInfo.versionCode)
-            .add(APP_FLAVOR_HEADER, appInfo.flavor)
-            .add(APP_VERSION_NAME_HEADER, appInfo.versionName)
-            .addUnsafeNonAscii(DEVICE_INFO_HEADER, appInfo.deviceInfo)
-            .build()
+		val headers = request.headers.newBuilder()
+			.apply {
+				token?.let { add(API_TOKEN_HEADER, "$tokenScheme $token") }
+			}
+			.add(APP_VERSION_CODE_HEADER, appInfo.versionCode)
+			.add(APP_FLAVOR_HEADER, appInfo.flavor)
+			.add(APP_VERSION_NAME_HEADER, appInfo.versionName)
+			.addUnsafeNonAscii(DEVICE_INFO_HEADER, appInfo.deviceInfo)
+			.build()
 
-        request = request.newBuilder().headers(headers).build()
-        return chain.proceed(request)
-    }
+		request = request.newBuilder().headers(headers).build()
+		return chain.proceed(request)
+	}
 }
 
 const val API_TOKEN_HEADER = "Authorization"

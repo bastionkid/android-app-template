@@ -1,5 +1,4 @@
 import com.android.build.gradle.internal.core.Abi
-import org.gradle.api.JavaVersion
 
 plugins {
     alias(libs.plugins.android.application)
