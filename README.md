@@ -39,12 +39,10 @@ Reference: https://github.com/android/nowinandroid
 ## TODO
 
 - [ ] Add Compose checks - https://github.com/twitter/compose-rules
-- [ ] Integrate Play Integrity API for better App Security - https://developer.android.com/google/play/integrity/overview
 - [ ] Add material3 support & dynamic color scheme for Android 12+
 - [ ] Add https://github.com/littlerobots/version-catalog-update-plugin to know about dependency updates
 - [ ] Add lint checks for TODO & STOPSHIP formatter
 - [ ] Add lint check so that NavController is not directly used in Fragments. SafeNavigation should be used in Fragments to avoid app crash when both navigation attempt and lifecycle is destroying at the same time.
-- [ ] Add MacroBenchmark module
 - [ ] Add JankStats compose extensions from https://github.com/android/nowinandroid/blob/main/core/ui/src/main/java/com/google/samples/apps/nowinandroid/core/ui/JankStatsExtensions.kt
 - [ ] Integrate https://github.com/jayasuryat/mendable for better readability of compose compiler metrics data
 - [ ] Integrate https://github.com/jraska/modules-graph-assert for assertion of module dependencies
