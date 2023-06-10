@@ -72,6 +72,7 @@ rootbeer = "0.1.0"
 riveAndroid = "5.1.1"
 barcodeScanning = "17.1.0"
 androidx-baselineprofile = "1.2.0-alpha13"
+licensee = "1.7.0"
 
 [libraries]
 accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanist" }
@@ -201,3 +202,4 @@ google-services = { id = "com.google.gms.google-services", version.ref = "google
 firebase-performance = { id = "com.google.firebase.firebase-perf", version.ref = "firebasePerformancePlugin" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
 androidx-baselineprofile = { id = "androidx.baselineprofile", version.ref = "androidx-baselineprofile" }
+licensee-gradlePlugin = { id = "app.cash.licensee", version.ref = "licensee" }

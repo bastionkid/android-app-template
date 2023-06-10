@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.navigation.safeargs)
     id("com.spotify.ruler")
     alias(libs.plugins.androidx.baselineprofile)
+    alias(libs.plugins.licensee.gradlePlugin)
 }
 
 android {
@@ -137,6 +138,24 @@ ruler {
     sdkVersion.set(33)
 
     ownershipFile.set(project.file("./../.github/scripts/ownership.yml"))
+}
+
+licensee {
+    allow("Apache-2.0")
+    allow("MIT")
+    allow("BSD-3-Clause")
+    allowUrl("https://github.com/rive-app/rive-android/blob/master/LICENSE") {
+        because("MIT, but self-hosted copy of the license")
+    }
+    allowUrl("https://developer.android.com/studio/terms.html") {
+        because("SDK License from Google")
+    }
+    allowUrl("https://developers.google.com/ml-kit/terms") {
+        because("Google APIs Terms of Service")
+    }
+    allowUrl("https://storage.cloud.google.com/chromium-cronet/android/72.0.3626.96/Release/cronet/LICENSE") {
+        because("Self-hosted license")
+    }
 }
 
 dependencies {

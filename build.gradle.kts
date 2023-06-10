@@ -18,6 +18,7 @@ plugins {
     alias(libs.plugins.secrets) apply true
     alias(libs.plugins.android.test) apply false
     alias(libs.plugins.androidx.baselineprofile) apply false
+    alias(libs.plugins.licensee.gradlePlugin) apply false
 
     alias(libs.plugins.spotless)
 }
