@@ -2,7 +2,6 @@ package com.azuredragon.app.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -25,7 +24,8 @@ class MainActivity : AppCompatActivity() {
 
 		// WindowCompat.setDecorFitsSystemWindows(window, false)
 
-		mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+		mainBinding = ActivityMainBinding.inflate(layoutInflater)
+		setContentView(mainBinding.root)
 		mainBinding.bottomNavigationView.setupWithNavController(navController)
 
 		navController.addOnDestinationChangedListener { _, destination, _ ->
