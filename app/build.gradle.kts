@@ -143,7 +143,7 @@ ruler {
 licensee {
     allow("Apache-2.0")
     allow("MIT")
-    allow("BSD-3-Clause")
+//    allow("BSD-3-Clause")
     allowUrl("https://github.com/rive-app/rive-android/blob/master/LICENSE") {
         because("MIT, but self-hosted copy of the license")
     }
