@@ -36,7 +36,9 @@ secrets {
 spotless {
     kotlin {
         target("**/*.kt")
-        ktlint()
+        targetExclude("**/build/**/*.kt")
+        ktlint(libs.versions.ktlint.get())
+            .userData(mapOf("android" to "true"))
             .setUseExperimental(true)
         trimTrailingWhitespace()
         indentWithTabs()
