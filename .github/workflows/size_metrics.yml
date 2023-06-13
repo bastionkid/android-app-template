@@ -18,13 +18,14 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      head_short_sha: ${{ steps.head-short-sha.outputs.head_short_sha }}
       base_short_sha: ${{ steps.base-short-sha.outputs.base_short_sha }}
+      merge_short_sha: ${{ steps.merge-short-sha.outputs.merge_short_sha }}
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout base (PR target) branch
+        uses: actions/checkout@v3
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.base_ref }}
 
       # this step is optional if you don't use JDK 17 as ubuntu-latest runner already
       # has java setup which defaults to JDK 11
@@ -51,30 +52,6 @@ jobs:
             /usr/local/lib/android/sdk/system-images
           key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
 
-      - name: Generate shorter github.sha for head branch
-        id: head-short-sha
-        run: |
-          chmod +x ./.github/scripts/commit_short_sha.sh
-          short_sha=$(./.github/scripts/commit_short_sha.sh)
-          echo "head_short_sha=${short_sha}" >> "$GITHUB_ENV"
-          echo "head_short_sha=${short_sha}" >> "$GITHUB_OUTPUT"
-
-      - name: Build release APK for head branch and rename it to match head-short-sha result
-        run: |
-          ./gradlew assembleRelease -PtargetDensity=xxhdpi -PtargetAbi=arm64-v8a -PresConfig=en -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile
-          mv app/build/outputs/apk/release/app-xxhdpiArm64-v8a-release-unsigned.apk app/build/outputs/apk/release/${{ env.head_short_sha }}.apk
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.head_short_sha }}.apk
-          path: app/build/outputs/apk/release/${{ env.head_short_sha }}.apk
-
-      - name: Checkout base (PR target) branch
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.base_ref }}
-
       - name: Generate shorter github.sha for base branch
         id: base-short-sha
         run: |
@@ -94,6 +71,34 @@ jobs:
           name: ${{ env.base_short_sha }}.apk
           path: app/build/outputs/apk/release/${{ env.base_short_sha }}.apk
 
+      - name: Checkout head branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Merge base (PR target) branch
+        run: |
+          git merge ${{ github.base_ref }}
+
+      - name: Generate shorter github.sha for head branch
+        id: merge-short-sha
+        run: |
+          chmod +x ./.github/scripts/commit_short_sha.sh
+          short_sha=$(./.github/scripts/commit_short_sha.sh)
+          echo "merge_short_sha=${short_sha}" >> "$GITHUB_ENV"
+          echo "merge_short_sha=${short_sha}" >> "$GITHUB_OUTPUT"
+
+      - name: Build release APK for head branch and rename it to match merge-short-sha result
+        run: |
+          ./gradlew assembleRelease -PtargetDensity=xxhdpi -PtargetAbi=arm64-v8a -PresConfig=en -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile
+          mv app/build/outputs/apk/release/app-xxhdpiArm64-v8a-release-unsigned.apk app/build/outputs/apk/release/${{ env.merge_short_sha }}.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.merge_short_sha }}.apk
+          path: app/build/outputs/apk/release/${{ env.merge_short_sha }}.apk
+
   size_diff_report:
     needs: build
     name: Size Report
@@ -104,7 +109,7 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: ${{ needs.build.outputs.head_short_sha }}.apk
+          name: ${{ needs.build.outputs.merge_short_sha }}.apk
 
       - uses: actions/download-artifact@v3
         with:
@@ -114,7 +119,7 @@ jobs:
       - name: Generate size report
         run: |
           chmod +x ./.github/scripts/compare_apks.py
-          python3 ./.github/scripts/compare_apks.py ${{ needs.build.outputs.base_short_sha }} ${{ needs.build.outputs.head_short_sha }}
+          python3 ./.github/scripts/compare_apks.py ${{ needs.build.outputs.base_short_sha }} ${{ needs.build.outputs.merge_short_sha }}
 
       - name: Upload Size Report html file
         uses: actions/upload-artifact@v3
