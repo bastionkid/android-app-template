@@ -189,6 +189,7 @@ dependencies {
     implementation(libs.firebase.crashlytics.ndk)
     implementation(libs.firebase.performance)
 
+    implementation(libs.barcode)
     implementation("com.google.android.gms:play-services-ads:22.1.0")
 
     testImplementation(libs.junit4)
