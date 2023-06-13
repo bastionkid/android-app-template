@@ -77,8 +77,9 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Merge base (PR target) branch
+        uses: actions/checkout@v3
         run: |
-          git merge ${{ github.base_ref }}
+          git merge origin/${{ github.base_ref }}
 
       - name: Generate shorter github.sha for head branch
         id: merge-short-sha
