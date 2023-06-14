@@ -18,13 +18,14 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      head_short_sha: ${{ steps.head-short-sha.outputs.head_short_sha }}
       base_short_sha: ${{ steps.base-short-sha.outputs.base_short_sha }}
+      head_short_sha: ${{ steps.head-short-sha.outputs.head_short_sha }}
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout base (PR target) branch
+        uses: actions/checkout@v3
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.base_ref }}
 
       # this step is optional if you don't use JDK 17 as ubuntu-latest runner already
       # has java setup which defaults to JDK 11
@@ -50,40 +51,6 @@ jobs:
             /usr/local/lib/android/sdk/build-tools
             /usr/local/lib/android/sdk/system-images
           key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
-
-      - name: Generate shorter github.sha for head branch
-        id: head-short-sha
-        run: |
-          chmod +x ./.github/scripts/commit_short_sha.sh
-          short_sha=$(./.github/scripts/commit_short_sha.sh)
-          echo "head_short_sha=${short_sha}" >> "$GITHUB_ENV"
-          echo "head_short_sha=${short_sha}" >> "$GITHUB_OUTPUT"
-
-      # generate component wise report using ruler gradle task
-      - name: Generate Report
-        run: |
-          ./gradlew analyzeReleaseBundle --no-configuration-cache -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile
-          mv app/build/reports/ruler/release/report.html app/build/reports/ruler/release/${{ env.head_short_sha }}.html
-          mv app/build/reports/ruler/release/report.json app/build/reports/ruler/release/${{ env.head_short_sha }}.json
-
-      # upload generated ruler reports
-      - name: Upload the generated html report
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.head_short_sha }}.html
-          path: app/build/reports/ruler/release/${{ env.head_short_sha }}.html
-
-      # upload generated ruler reports
-      - name: Upload the generated json report
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.head_short_sha }}.json
-          path: app/build/reports/ruler/release/${{ env.head_short_sha }}.json
-
-      - name: Checkout base (PR target) branch
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.base_ref }}
 
       - name: Generate shorter github.sha for base branch
         id: base-short-sha
@@ -113,6 +80,47 @@ jobs:
         with:
           name: ${{ env.base_short_sha }}.json
           path: app/build/reports/ruler/release/${{ env.base_short_sha }}.json
+
+      - name: Checkout head branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Generate shorter github.sha for head branch
+        id: head-short-sha
+        run: |
+          chmod +x ./.github/scripts/commit_short_sha.sh
+          short_sha=$(./.github/scripts/commit_short_sha.sh)
+          echo "head_short_sha=${short_sha}" >> "$GITHUB_ENV"
+          echo "head_short_sha=${short_sha}" >> "$GITHUB_OUTPUT"
+
+      - name: Merge base (PR target) branch
+        run: |
+          git config --global user.email "akash.mercer@gmail.com"
+          git config --global user.name "Akash Khunt"
+          git merge origin/${{ github.base_ref }}
+
+      # generate component wise report using ruler gradle task
+      - name: Generate Report
+        run: |
+          ./gradlew analyzeReleaseBundle --no-configuration-cache -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile
+          mv app/build/reports/ruler/release/report.html app/build/reports/ruler/release/${{ env.head_short_sha }}.html
+          mv app/build/reports/ruler/release/report.json app/build/reports/ruler/release/${{ env.head_short_sha }}.json
+
+      # upload generated ruler reports
+      - name: Upload the generated html report
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.head_short_sha }}.html
+          path: app/build/reports/ruler/release/${{ env.head_short_sha }}.html
+
+      # upload generated ruler reports
+      - name: Upload the generated json report
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.head_short_sha }}.json
+          path: app/build/reports/ruler/release/${{ env.head_short_sha }}.json
 
   size_report:
     needs: generate_report
