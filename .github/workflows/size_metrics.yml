@@ -79,6 +79,8 @@ jobs:
 
       - name: Merge base (PR target) branch
         run: |
+          git config --global user.email "akash.mercer@gmail.com"
+          git config --global user.name "Akash Khunt"
           git merge origin/${{ github.base_ref }}
 
       - name: Generate shorter github.sha for head branch
