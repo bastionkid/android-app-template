@@ -1,152 +1,5 @@
 import sys
-import zipfile
 import subprocess
-
-# html_head = """
-#     <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="css/style.css" rel="stylesheet"><script defer="" src="js/script.js"></script><style>
-# * {
-#   font-family:
-#     -apple-system,
-#     "system-ui",
-#     BlinkMacSystemFont,
-#     "Segoe UI",
-#     Helvetica,
-#     Arial,
-#     sans-serif,
-#     "Apple Color Emoji",
-#     "Segoe UI Emoji";
-# }
-#
-# body {
-#   padding: 15px;
-#   font-size: 14px;
-#   line-height: 1.5;
-#   word-wrap: break-word;
-# }
-#
-# h1, h2, h3, h4, h5 {
-#   margin-top: 24px;
-#   margin-bottom: 16px;
-#   font-weight: 600;
-# }
-#
-# h1 {
-#   margin-top: 0px;
-#   border-bottom: 1px solid rgb(216, 222, 228);
-#   font-size: 2em;
-#   padding-bottom: 0.3em;
-# }
-#
-# h3 {
-#   font-size: 1.25em;
-# }
-#
-# h4 {
-#   font-size: 1em;
-# }
-#
-# h3 code, h4 code {
-#   font-size: 100%;
-# }
-#
-# a {
-#   color: rgb(9, 105, 218);
-#   text-decoration: none;
-# }
-#
-# a:hover {
-#   text-decoration: underline;
-# }
-#
-# b {
-#   font-weight: 600;
-# }
-#
-# code, pre {
-#   font-family:
-#     ui-monospace,
-#     SFMono-Regular,
-#     SF Mono,
-#     Menlo,
-#     Consolas,
-#     Liberation Mono,
-#     monospace;
-#   font-size: 85%;
-#   border-radius: 6px;
-# }
-#
-# code {
-#   background-color: rgba(175, 184, 193, 0.2);
-#   padding: 2.38px 4.76px;
-# }
-#
-# pre {
-#   background-color: rgb(246, 248, 250);
-#   padding: 16px;
-# }
-#
-# table, td, th {
-#   border-color: rgb(208, 215, 222);
-#   border-width: 1px;
-#   border-style: solid;
-#   border-collapse: collapse;
-# }
-#
-# td, th {
-#   padding: 6px 13px;
-# }
-#
-# tr:nth-child(even) {
-#   background-color: rgb(234, 238, 242);
-# }
-#
-# .white_table tr:nth-child(even) {
-#   background-color: rgb(255, 255, 255);
-# }
-#
-# sup>a::before {
-#   content: "[";
-# }
-#
-# sup>a::after {
-#   content: "]";
-# }
-#
-# .diff-plus, .diff-minus {
-#   font-family:
-#     ui-monospace,
-#     SFMono-Regular,
-#     SF Mono,
-#     Menlo,
-#     Consolas,
-#     Liberation Mono,
-#     monospace;
-# }
-#
-# .diff-plus {
-#   color: rgb(17, 99, 41);
-#   background-color: rgb(218, 251, 225);
-# }
-#
-# .diff-minus {
-#   color: rgb(130, 7, 30);
-#   background-color: rgb(255, 235, 233);
-# }
-#
-# img {
-#   width: 350px;
-# }
-#
-# .perfetto {
-#   color: rgb(9, 105, 218);
-# }
-#
-# .perfetto:hover {
-#   cursor: pointer;
-#   text-decoration: underline;
-# }
-# </style></head>
-#     """
 
 kb_in_bytes = 1024
 mb_in_bytes = 1024 * 1024
@@ -222,7 +75,6 @@ def apk_size(apk_file, size_type):
 # generate html file containing size diff in HRF
 def generate_size_diff_html():
     html = "<html>"
-    # html += html_head
     html += "<body><h1>Download Size Diff Report</h1><h3>Affected Products</h3>"
     html += "<ul><li><h4><code>release</code></h4><table>"
     html += f"<tr><th>Component</th><th>Base ({apk1Sha})</th><th>Merge ({apk2Sha})</th><th>Diff</th></tr>"
@@ -231,16 +83,12 @@ def generate_size_diff_html():
     for component in set(sorted(set(components1.keys()))) | set(sorted(set(components2.keys()))):
         size1 = components1.get(component, 0)
         size2 = components2.get(component, 0)
-        # if size1 != size2:
         html += f"<tr><td>{component}</td><td>{format_size(size1)}</td><td>{format_size(size2)}</td><td>{format_size_with_indicator(size2 - size1)}</td></tr>"
 
     # calculate size of the apk files
-    apk1FileSize = apk_size(apk1Name, 'file-size')
-    apk2FileSize = apk_size(apk2Name, 'file-size')
     apk1DownloadSize = apk_size(apk1Name, 'download-size')
     apk2DownloadSize = apk_size(apk2Name, 'download-size')
 
-    # html += f"<tr><td>apk (File Size)</td><td>{format_size(apk1FileSize)}</td><td>{format_size(apk2FileSize)}</td><td>{format_size_with_indicator(apk2FileSize - apk1FileSize)}</td></tr>"
     html += f"<tr><td>apk (Download Size)</td><td>{format_size(apk1DownloadSize)}</td><td>{format_size(apk2DownloadSize)}</td><td>{format_size_with_indicator(apk2DownloadSize - apk1DownloadSize)}</td></tr>"
     html += "</li></ul></table></body></html>"
 
