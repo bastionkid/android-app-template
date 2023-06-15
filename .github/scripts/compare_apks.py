@@ -1,24 +1,6 @@
 import sys
 import subprocess
 
-kb_in_bytes = 1024
-mb_in_bytes = 1024 * 1024
-
-# command executor
-def execute_command(command):
-    # Run the command using subprocess
-    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    output, error = process.communicate()
-
-    return output.decode()
-
-# add/update the value (i.e. size) based on the present of key
-def update_if_present(components, key, value):
-    if key in components:
-        components[key] = components[key] + value
-    else:
-        components[key] = value
-
 # generate dictionary of the grouped contents of an apk file
 def get_apk_components(apk_file, size_type):
     command = f"{apk_analyzer_path} files list --{size_type} {apk_file}"
@@ -49,6 +31,21 @@ def get_apk_components(apk_file, size_type):
 
     return components
 
+# shell command executor
+def execute_command(command):
+    # Run the command using subprocess
+    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output, error = process.communicate()
+
+    return output.decode()
+
+# add/update the value (i.e. size) based on the present of key
+def update_if_present(components, key, value):
+    if key in components:
+        components[key] = components[key] + value
+    else:
+        components[key] = value
+
 # format bytes to KB or MB
 def format_size(size):
     if abs(size) < kb_in_bytes:
@@ -77,35 +74,39 @@ def generate_size_diff_html():
     html = "<html>"
     html += "<body><h1>Download Size Diff Report</h1><h3>Affected Products</h3>"
     html += "<ul><li><h4><code>release</code></h4><table>"
-    html += f"<tr><th>Component</th><th>Base ({apk1Sha})</th><th>Merge ({apk2Sha})</th><th>Diff</th></tr>"
+    html += f"<tr><th>Component</th><th>Base ({apk_1_sha})</th><th>Merge ({apk_2_sha})</th><th>Diff</th></tr>"
 
     # print diff of each components of both of the apk files
-    for component in set(sorted(set(components1.keys()))) | set(sorted(set(components2.keys()))):
-        size1 = components1.get(component, 0)
-        size2 = components2.get(component, 0)
-        html += f"<tr><td>{component}</td><td>{format_size(size1)}</td><td>{format_size(size2)}</td><td>{format_size_with_indicator(size2 - size1)}</td></tr>"
+    for component in set(sorted(set(components_1.keys()))) | set(sorted(set(components_2.keys()))):
+        size_1 = components_1.get(component, 0)
+        size_2 = components_2.get(component, 0)
+        html += f"<tr><td>{component}</td><td>{format_size(size_1)}</td><td>{format_size(size_2)}</td><td>{format_size_with_indicator(size_2 - size_1)}</td></tr>"
 
     # calculate size of the apk files
-    apk1DownloadSize = apk_size(apk1Name, 'download-size')
-    apk2DownloadSize = apk_size(apk2Name, 'download-size')
+    apk_1_download_size = apk_size(apk_1_name, 'download-size')
+    apk_2_download_size = apk_size(apk_2_name, 'download-size')
 
-    html += f"<tr><td>apk (Download Size)</td><td>{format_size(apk1DownloadSize)}</td><td>{format_size(apk2DownloadSize)}</td><td>{format_size_with_indicator(apk2DownloadSize - apk1DownloadSize)}</td></tr>"
+    html += f"<tr><td>apk (Download Size)</td><td>{format_size(apk_1_download_size)}</td><td>{format_size(apk_2_download_size)}</td><td>{format_size_with_indicator(apk_2_download_size - apk_1_download_size)}</td></tr>"
     html += "</li></ul></table></body></html>"
 
     with open("apk_size_diff_report.html", "w") as file:
         file.write(html)
 
+# apk_analyzer_path location will change based on the runner that you're using i.e. mac/windows/ubuntu etc
 apk_analyzer_path = "/usr/local/lib/android/sdk/cmdline-tools/latest/bin/apkanalyzer"
 
-# read arguments passed to this script
-apk1Sha = sys.argv[1]
-apk2Sha = sys.argv[2]
+kb_in_bytes = 1024
+mb_in_bytes = 1024 * 1024
 
-apk1Name = f"{apk1Sha}.apk"
-apk2Name = f"{apk2Sha}.apk"
+# read arguments passed to this script
+apk_1_sha = sys.argv[1]
+apk_2_sha = sys.argv[2]
+
+apk_1_name = f"{apk_1_sha}.apk"
+apk_2_name = f"{apk_2_sha}.apk"
 
 # generate dictionaries for the apk components size
-components1 = get_apk_components(apk1Name, 'download-size')
-components2 = get_apk_components(apk2Name, 'download-size')
+components_1 = get_apk_components(apk_1_name, 'download-size')
+components_2 = get_apk_components(apk_2_name, 'download-size')
 
 generate_size_diff_html()
