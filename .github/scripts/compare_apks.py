@@ -39,35 +39,12 @@ def execute_command(command):
 
     return output.decode()
 
-# add/update the value (i.e. size) based on the present of key
+# add/update the value (i.e. size) based on the presence of provided key
 def update_if_present(components, key, value):
     if key in components:
         components[key] = components[key] + value
     else:
         components[key] = value
-
-# format bytes to KB or MB
-def format_size(size):
-    if abs(size) < kb_in_bytes:
-        return "0 KB"
-    elif abs(size) > mb_in_bytes:
-        return f"{round(size / mb_in_bytes, 2)} MB"
-    elif abs(size) > kb_in_bytes:
-        return f"{round(size / kb_in_bytes, 2)} KB"
-    else:
-        return f"{size} bytes"
-
-# add an indicator to highlight the size diff
-def format_size_with_indicator(size):
-    size_indicator = "🔴" if size > kb_in_bytes else "🟢"
-
-    return f"{format_size(size)} {size_indicator}"
-
-# get apk size based on size_type i.e. file-size or download-size
-def apk_size(apk_file, size_type):
-    command = f"{apk_analyzer_path} apk {size_type} {apk_file}"
-
-    return int(execute_command(command))
 
 # generate html file containing size diff in HRF
 def generate_size_diff_html():
@@ -92,11 +69,26 @@ def generate_size_diff_html():
     with open("apk_size_diff_report.html", "w") as file:
         file.write(html)
 
-# apk_analyzer_path location will change based on the runner that you're using i.e. mac/windows/ubuntu etc
-apk_analyzer_path = "/usr/local/lib/android/sdk/cmdline-tools/latest/bin/apkanalyzer"
+# format bytes to KB or MB. Any size less than a KB is treated as 0KB
+def format_size(size):
+    if abs(size) > mb_in_bytes:
+        return f"{round(size / mb_in_bytes, 2)} MB"
+    elif abs(size) > kb_in_bytes:
+        return f"{round(size / kb_in_bytes, 2)} KB"
+    else:
+        return "0 KB"
 
-kb_in_bytes = 1024
-mb_in_bytes = 1024 * 1024
+# add an indicator to highlight the size diff
+def format_size_with_indicator(size):
+    size_indicator = "🔴" if size > kb_in_bytes else "🟢"
+
+    return f"{format_size(size)} {size_indicator}"
+
+# get apk size based on size_type i.e. file-size or download-size
+def apk_size(apk_file, size_type):
+    command = f"{apk_analyzer_path} apk {size_type} {apk_file}"
+
+    return int(execute_command(command))
 
 # read arguments passed to this script
 apk_1_sha = sys.argv[1]
@@ -104,6 +96,12 @@ apk_2_sha = sys.argv[2]
 
 apk_1_name = f"{apk_1_sha}.apk"
 apk_2_name = f"{apk_2_sha}.apk"
+
+# apk_analyzer_path location will change based on the GHA runner that you're using i.e. mac/windows/ubuntu etc
+apk_analyzer_path = "/usr/local/lib/android/sdk/cmdline-tools/latest/bin/apkanalyzer"
+
+kb_in_bytes = 1024
+mb_in_bytes = 1024 * 1024
 
 # generate dictionaries for the apk components size
 components_1 = get_apk_components(apk_1_name, 'download-size')
