@@ -1,6 +1,7 @@
 import sys
 import json
 
+# read json file
 def read_report_file(file_path):
     with open(file_path, 'r') as file:
         json_data = json.load(file)
@@ -25,27 +26,12 @@ def get_apk_components(json_data):
 
     return components
 
-# add/update the value (i.e. size) based on the present of key
+# add/update the value (i.e. size) based on the presence of provided key
 def update_if_present(components, key, value):
     if key in components:
         components[key] = components[key] + value
     else:
         components[key] = value
-
-def format_size(size):
-    if abs(size) < kb_in_bytes:
-        return "0 KB"
-    elif abs(size) > mb_in_bytes:
-        return f"{round(size / mb_in_bytes, 2)} MB"
-    elif abs(size) > kb_in_bytes:
-        return f"{round(size / kb_in_bytes, 2)} KB"
-    else:
-        return f"{size} bytes"
-
-def format_size_with_indicator(size):
-    size_indicator = "🔴" if size > kb_in_bytes else "🟢"
-
-    return f"{format_size(size)} {size_indicator}"
 
 # generate html file containing size diff in HRF
 def generate_size_diff_html():
@@ -70,12 +56,27 @@ def generate_size_diff_html():
     with open("ruler_diff_report.html", "w") as file:
         file.write(html)
 
-kb_in_bytes = 1024
-mb_in_bytes = 1024 * 1024
+# format bytes to KB or MB. Any size less than a KB is treated as 0KB
+def format_size(size):
+    if abs(size) > mb_in_bytes:
+        return f"{round(size / mb_in_bytes, 2)} MB"
+    elif abs(size) > kb_in_bytes:
+        return f"{round(size / kb_in_bytes, 2)} KB"
+    else:
+        return "0 KB"
+
+# add an indicator to highlight the size diff
+def format_size_with_indicator(size):
+    size_indicator = "🔴" if size > kb_in_bytes else "🟢"
+
+    return f"{format_size(size)} {size_indicator}"
 
 # read arguments passed to this script
 apk_1_sha = sys.argv[1]
 apk_2_sha = sys.argv[2]
+
+kb_in_bytes = 1024
+mb_in_bytes = 1024 * 1024
 
 apk_1_json = read_report_file(f"{apk_1_sha}.json")
 apk_2_json = read_report_file(f"{apk_2_sha}.json")
