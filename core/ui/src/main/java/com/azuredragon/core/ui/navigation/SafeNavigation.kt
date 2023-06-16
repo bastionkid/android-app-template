@@ -1,5 +1,6 @@
 package com.azuredragon.core.ui.navigation
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import androidx.annotation.IdRes
@@ -14,6 +15,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.azuredragon.core.ui.R
+import kotlinx.coroutines.flow.firstOrNull
 
 fun Fragment.navigateSafely(
 	@IdRes currentDestinationId: Int,
@@ -171,14 +173,17 @@ fun Fragment.getNavOptionsForPopUpToSelfInclusive(@IdRes currentDestinationId: I
 	return getNavOptionsForPopUpToSelf(currentDestinationId, true)
 }
 
-fun Fragment.getNavOptionsForClearWholeBackstack(@IdRes currentDestinationId: Int): NavOptions? {
+@SuppressLint("RestrictedApi")
+suspend fun Fragment.getNavOptionsForClearWholeBackstack(@IdRes currentDestinationId: Int): NavOptions? {
 	return if (isAdded) {
 		val navController = findNavController()
 
 		if (navController.currentDestination?.id == currentDestinationId) {
-			navOptions {
-				popUpTo(navController.backQueue.first().destination.id) {
-					inclusive = true
+			navController.currentBackStack.firstOrNull()?.let {
+				navOptions {
+					popUpTo(it.first().destination.id) {
+						inclusive = true
+					}
 				}
 			}
 		} else {
@@ -189,14 +194,17 @@ fun Fragment.getNavOptionsForClearWholeBackstack(@IdRes currentDestinationId: In
 	}
 }
 
-fun Fragment.getNavOptionsForClearTillRoot(@IdRes currentDestinationId: Int): NavOptions? {
+@SuppressLint("RestrictedApi")
+suspend fun Fragment.getNavOptionsForClearTillRoot(@IdRes currentDestinationId: Int): NavOptions? {
 	return if (isAdded) {
 		val navController = findNavController()
 
 		if (navController.currentDestination?.id == currentDestinationId) {
-			navOptions {
-				popUpTo(navController.backQueue.first().destination.id) {
-					inclusive = false
+			navController.currentBackStack.firstOrNull()?.let {
+				navOptions {
+					popUpTo(it.first().destination.id) {
+						inclusive = false
+					}
 				}
 			}
 		} else {
