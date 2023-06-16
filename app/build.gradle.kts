@@ -113,10 +113,10 @@ android {
     }
 
     lint {
-        isCheckReleaseBuilds = true
-        isAbortOnError = true
-//        enable("StopShip")
-//        fatal("StopShip")
+        checkReleaseBuilds = true
+        abortOnError = true
+        enable.add("StopShip")
+        fatal.add("StopShip")
     }
 
     experimentalProperties["android.experimental.art-profile-r8-rewriting"] = true
