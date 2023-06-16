@@ -41,7 +41,7 @@ def generate_size_diff_html():
     html += f"<tr><th>Component</th><th>Base ({apk_1_sha})</th><th>Merge ({apk_2_sha})</th><th>Diff</th></tr>"
 
     # print diff of each components of both of the apk files
-    for component in set(sorted(set(components_1.keys()))) | set(sorted(set(components_2.keys()))):
+    for component in set(components_1.keys()) | set(components_2.keys()):
         size_1 = components_1.get(component, 0)
         size_2 = components_2.get(component, 0)
         html += f"<tr><td>{component}</td><td>{format_size(size_1)}</td><td>{format_size(size_2)}</td><td>{format_size_with_indicator(size_2 - size_1)}</td></tr>"
