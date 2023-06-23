@@ -8,36 +8,36 @@ import org.koin.dsl.module
 import java.util.concurrent.Executors
 
 fun getCoreNetworkModule(
-    baseUrl: String,
-    isDebug: Boolean,
-    cache: Cache,
-    getToken: suspend () -> String?,
-    onRefreshToken: suspend () -> String?,
+	baseUrl: String,
+	isDebug: Boolean,
+	cache: Cache,
+	getToken: suspend () -> String?,
+	onRefreshToken: suspend () -> String?,
 ) = module {
-    single {
-        CronetModule(
-            executor = Executors.newSingleThreadExecutor(),
-            logger = get(),
-        ).apply {
-            install(get())
-        }
-    }
+	single {
+		CronetModule(
+			executor = Executors.newSingleThreadExecutor(),
+			logger = get(),
+		).apply {
+			install(get())
+		}
+	}
 
-    single {
-        RetrofitHttpClient(
-            context = get(),
-            baseUrl = baseUrl,
-            logger = get(),
-            json = get(),
-            networkTimeoutConfig = NetworkTimeoutConfig(),
-            appInfo = get(),
-            isDebug = isDebug,
-            applicationContext = get(),
-            cache = cache,
-            cronetModule = get(),
-            serializer = get(),
-            getToken = getToken,
-            onRefreshToken = onRefreshToken,
-        )
-    }
+	single {
+		RetrofitHttpClient(
+			context = get(),
+			baseUrl = baseUrl,
+			logger = get(),
+			json = get(),
+			networkTimeoutConfig = NetworkTimeoutConfig(),
+			appInfo = get(),
+			isDebug = isDebug,
+			applicationContext = get(),
+			cache = cache,
+			cronetModule = get(),
+			serializer = get(),
+			getToken = getToken,
+			onRefreshToken = onRefreshToken,
+		)
+	}
 }
