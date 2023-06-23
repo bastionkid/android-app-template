@@ -2,13 +2,10 @@ package com.azuredragon.core.ui
 
 import android.content.Context
 import android.content.ContextWrapper
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.getSystemService
 
 fun Context.showToast(text: CharSequence) {
 	Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
@@ -27,12 +24,4 @@ fun Context.getActivity(): AppCompatActivity = when (this) {
 	is AppCompatActivity -> this
 	is ContextWrapper -> baseContext.getActivity()
 	else -> throw Exception("Activity not found")
-}
-
-fun Context.vibrate(pattern: LongArray) {
-	val vibrator = getSystemService<Vibrator>()
-
-	if (vibrator?.hasVibrator() == true) {
-		vibrator.vibrate(VibrationEffect.createWaveform(pattern, -1))
-	}
 }

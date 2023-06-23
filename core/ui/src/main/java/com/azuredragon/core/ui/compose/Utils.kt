@@ -16,3 +16,5 @@ val EmptyLambda3 = { _: Any, _: Any, _: Any -> }
 
 @Stable
 val EmptyLambda4 = { _: Any, _: Any, _: Any, _: Any -> }
+
+val EmptyLambda5 = { _: Any, _: Any, _: Any, _: Any, _: Any -> }

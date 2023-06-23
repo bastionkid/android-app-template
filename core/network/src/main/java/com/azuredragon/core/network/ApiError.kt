@@ -11,7 +11,7 @@ class ApiError(
 fun <T> ApiError.toDataStateError(): DataState<T> {
 	return when (code) {
 		else -> {
-			DataState.Error("Cannot Reach GetMega. Please check your connection and try again", null)
+			DataState.Error("Cannot Reach Server. Please check your connection and try again", null)
 		}
 	}
 }

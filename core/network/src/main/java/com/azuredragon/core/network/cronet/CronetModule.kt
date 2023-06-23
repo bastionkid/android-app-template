@@ -1,11 +1,8 @@
 package com.azuredragon.core.network.cronet
 
-// import com.google.firebase.perf.FirebasePerformance
-// import com.google.firebase.perf.metrics.AddTrace
 import android.content.Context
 import com.azuredragon.core.common.TAG
 import com.azuredragon.core.log.Logger
-import com.azuredragon.core.network.Injector
 import com.google.android.gms.net.CronetProviderInstaller
 import okhttp3.Request
 import okio.Buffer
@@ -31,44 +28,31 @@ class CronetModule(
 	 *  It's recommended to create only one instance of CronetEngine. A single instance can send multiple asynchronous requests.
 	 *  Additionally, a storage directory doesn't support concurrent access by multiple CronetEngine instances (setStoragePath())
 	 */
-	private lateinit var engine: CronetEngine
+	internal var engine: CronetEngine? = null
 
 	fun install(context: Context) {
-//        val trace = FirebasePerformance.startTrace("CronetModule.install")
-
 		val installTask = CronetProviderInstaller.installProvider(context)
 		installTask.addOnCompleteListener { task ->
 			when {
 				task.isSuccessful -> {
-//                    trace.putAttribute("success", "true")
 					logger.i(TAG, "CronetProvider installed. registering engine provider")
 
-					Injector.registerCronetEngineProvider {
-						buildEngineOnce(context)
-						engine
-					}
+					buildEngineOnce(context)
 				}
 				else -> {
-//                    trace.putAttribute("success", "false")
 					logger.w(TAG, "Unable to load Cronet from Google play services")
 
 					task.exception?.let { exception ->
-//                        exception.message?.let { trace.putAttribute("exception", it) }
 						logger.w(TAG, "Error loading cronet", exception)
 					}
 				}
 			}
-
-//            trace.stop()
 		}
 	}
 
 	@Synchronized
-//    @AddTrace(name = "CronetModule.buildEngineOnce")
 	private fun buildEngineOnce(context: Context) {
-		if (::engine.isInitialized) {
-			return
-		}
+		if (engine != null) return
 
 		val cacheDir = File(context.cacheDir, "cronet-cache")
 		if (!cacheDir.exists()) {
@@ -89,7 +73,6 @@ class CronetModule(
 		// URL.setURLStreamHandlerFactory(engine.createURLStreamHandlerFactory())
 	}
 
-//    @AddTrace(name = "CronetModule.buildRequest")
 	internal fun buildRequest(engine: CronetEngine, request: Request, callback: UrlRequest.Callback): UrlRequest {
 		val requestBuilder = engine.newUrlRequestBuilder(
 			request.url.toString(),

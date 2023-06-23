@@ -27,7 +27,7 @@ dependencies {
     api(libs.kotlinx.serialization.json)
 
     api(libs.room.ktx)
-//    ksp(libs.room.compiler)
+    ksp(libs.room.compiler)
 
     implementation(libs.koin.core)
 

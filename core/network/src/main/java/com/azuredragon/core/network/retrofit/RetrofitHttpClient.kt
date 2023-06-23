@@ -17,6 +17,7 @@ import com.azuredragon.core.network.interceptor.AuthenticationInterceptor
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.json.Json
 import okhttp3.Cache
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -25,8 +26,10 @@ import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 
 class RetrofitHttpClient(
+	val context: Context,
 	private val baseUrl: String,
 	val logger: Logger,
+	val json: Json,
 	private val networkTimeoutConfig: NetworkTimeoutConfig,
 	private val appInfo: AppInfo,
 	private val isDebug: Boolean,
@@ -35,6 +38,7 @@ class RetrofitHttpClient(
 	private val cronetModule: CronetModule,
 	val serializer: Serializer,
 	val getToken: suspend () -> String?,
+	val onRefreshToken: suspend () -> String?,
 ) : HttpClient {
 
 	override suspend fun <Req, Res> makeRequest(

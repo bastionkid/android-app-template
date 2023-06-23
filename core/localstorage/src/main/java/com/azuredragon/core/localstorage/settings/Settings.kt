@@ -24,9 +24,9 @@ interface Settings {
 
 	suspend fun putBoolean(key: String, value: Boolean)
 
-	suspend fun putString(key: String, value: String?)
+	suspend fun putString(key: String, value: String)
 
-	suspend fun putStringSet(key: String, value: Set<String>?)
+	suspend fun putStringSet(key: String, value: Set<String>)
 
 	suspend fun removeInt(key: String)
 

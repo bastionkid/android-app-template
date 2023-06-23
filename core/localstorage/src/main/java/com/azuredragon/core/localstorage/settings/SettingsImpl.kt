@@ -62,19 +62,15 @@ class SettingsImpl(private val context: Context) : Settings {
 		}
 	}
 
-	override suspend fun putString(key: String, value: String?) {
-		value?.let { stringData ->
-			context.dataStore.edit { preferences ->
-				preferences[stringPreferencesKey(key)] = stringData
-			}
+	override suspend fun putString(key: String, value: String) {
+		context.dataStore.edit { preferences ->
+			preferences[stringPreferencesKey(key)] = value
 		}
 	}
 
-	override suspend fun putStringSet(key: String, value: Set<String>?) {
-		value?.let { stringSetData ->
-			context.dataStore.edit { preferences ->
-				preferences[stringSetPreferencesKey(key)] = stringSetData
-			}
+	override suspend fun putStringSet(key: String, value: Set<String>) {
+		context.dataStore.edit { preferences ->
+			preferences[stringSetPreferencesKey(key)] = value
 		}
 	}
 
