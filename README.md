@@ -31,11 +31,6 @@ Reference: https://github.com/android/nowinandroid
 2. Then you’ll need a **secrets.properties** file from one of the teammate as we don’t push the keys to VCS. We use https://developers.google.com/maps/documentation/android-sdk/secrets-gradle-plugin to read the keys from local file.
 
 
-## Guidelines
-
-1. Please create separate `domain` layer state classes (from `data` layer classes) as we enable compose compiler in the `domain` classes so that the stability of those classes can be infered bu the compiler
-
-
 ## TODO
 
 - [ ] Add Compose checks - https://github.com/twitter/compose-rules
