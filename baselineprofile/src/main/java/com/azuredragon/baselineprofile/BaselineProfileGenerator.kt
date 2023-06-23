@@ -2,7 +2,6 @@ package com.azuredragon.baselineprofile
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.benchmark.macro.ExperimentalStableBaselineProfilesApi
 import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -40,7 +39,7 @@ class BaselineProfileGenerator {
 	@RequiresApi(Build.VERSION_CODES.P)
 	@Test
 	fun generate() {
-		rule.collectStableBaselineProfile(
+		rule.collectBaselineProfile(
 			packageName = "com.azuredragon.app",
 			maxIterations = 3,
 			includeInStartupProfile = true,
