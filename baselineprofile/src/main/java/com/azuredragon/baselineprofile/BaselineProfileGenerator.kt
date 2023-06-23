@@ -37,7 +37,6 @@ class BaselineProfileGenerator {
 	@get:Rule
 	val rule = BaselineProfileRule()
 
-	@OptIn(ExperimentalStableBaselineProfilesApi::class)
 	@RequiresApi(Build.VERSION_CODES.P)
 	@Test
 	fun generate() {

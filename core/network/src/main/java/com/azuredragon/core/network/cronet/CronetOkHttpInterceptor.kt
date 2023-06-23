@@ -1,7 +1,6 @@
 package com.azuredragon.core.network.cronet
 
 import com.azuredragon.core.log.Logger
-import com.azuredragon.core.network.Injector
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -11,7 +10,7 @@ class CronetOkHttpInterceptor(
 ) : Interceptor {
 
 	override fun intercept(chain: Interceptor.Chain): Response {
-		return Injector.provideCronetEngine()?.let { engine ->
+		return cronetModule.engine?.let { engine ->
 			val callback = CronetUrlRequestCallback(
 				originalRequest = chain.request(),
 				call = chain.call(),

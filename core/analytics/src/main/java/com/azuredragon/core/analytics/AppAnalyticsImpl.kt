@@ -2,18 +2,15 @@ package com.azuredragon.core.analytics
 
 import android.content.Context
 import com.azuredragon.core.analytics.provider.AnalyticsAgent
-import com.azuredragon.core.log.Logger
+import com.azuredragon.core.localstorage.settings.Settings
 
 class AppAnalyticsImpl(
 	val context: Context,
+	val settings: Settings,
 	val logger: Logger,
 ) : AppAnalytics {
 
 	override val analyticsAgents = mutableListOf<AnalyticsAgent>()
-
-	init {
-//        analyticsAgents.add(AmplitudeAnalyticsAgent(context, logger))
-	}
 
 	override fun addAnalyticsProvider(analyticsAgent: AnalyticsAgent): Boolean {
 		return analyticsAgents.add(analyticsAgent)
