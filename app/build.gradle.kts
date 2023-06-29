@@ -14,12 +14,12 @@ plugins {
 
 android {
     namespace = "com.azuredragon.app"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.azuredragon.app"
         minSdk = 26
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
