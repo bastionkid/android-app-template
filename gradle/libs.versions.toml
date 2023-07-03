@@ -180,7 +180,7 @@ play-services-auth = { group = "com.google.android.gms", name = "play-services-a
 play-services-auth-api-phone = { group = "com.google.android.gms", name = "play-services-auth-api-phone", version.ref = "playServicesAuthApiPhone" }
 rive-android = { group = "app.rive", name = "rive-android", version.ref = "riveAndroid" }
 barcode = { group = "com.google.mlkit", name = "barcode-scanning", version.ref = "barcodeScanning" }
-ruler-gradle-plugin = { module = "com.spotify.ruler:ruler-gradle-plugin", version.ref = "rulerGradlePlugin" }
+ruler-gradle-plugin = { group = "com.spotify.ruler", name = "ruler-gradle-plugin", version.ref = "rulerGradlePlugin" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
