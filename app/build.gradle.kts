@@ -124,7 +124,8 @@ android {
 }
 
 baselineProfile {
-    enableR8BaselineProfileRewrite = true
+    baselineProfileRulesRewrite = true
+    dexLayoutOptimization = true
 
     // This should be enabled on runners supporting GMD, which required support
     // for nested-virtualization
