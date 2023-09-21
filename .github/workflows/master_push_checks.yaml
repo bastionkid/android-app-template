@@ -1,0 +1,26 @@
+name: Master Push Checks
+
+# cancel in-progress workflow if new commits are pushed to same head branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build apk
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Apk Build Setup
+        uses: ./.github/workflows/apk-build-setup
+
+      - name: Build release APK for base branch and rename it to match base-short-sha result
+        run: |
+          ./gradlew assembleRelease -PtargetDensity=xxhdpi -PtargetAbi=arm64-v8a -PresConfig=en -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile
