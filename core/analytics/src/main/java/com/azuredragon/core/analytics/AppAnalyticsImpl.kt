@@ -3,6 +3,7 @@ package com.azuredragon.core.analytics
 import android.content.Context
 import com.azuredragon.core.analytics.provider.AnalyticsAgent
 import com.azuredragon.core.localstorage.settings.Settings
+import com.azuredragon.core.log.Logger
 
 class AppAnalyticsImpl(
 	val context: Context,
